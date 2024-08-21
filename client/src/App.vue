@@ -96,10 +96,8 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'fylke/sjangerfordeling',
-                fylkeId: 1,
-                season: 2010,
-                excludePlId: 0,
+                controller: 'arrangement/kjonnsfordeling',
+                plId: 3620,
             };
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
 
