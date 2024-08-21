@@ -93,11 +93,13 @@ export default {
     
     methods: {
         testAjax() {
-            console.log('testAjax');
+            console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'arrangement/sjangerfordeling',
-                plId: 3766,
+                controller: 'fylke/sjangerfordeling',
+                fylkeId: 1,
+                season: 2010,
+                excludePlId: 0,
             };
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
 
