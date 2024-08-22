@@ -8,8 +8,9 @@ use UKMNorge\Statistikk\Objekter\StatistikkArrangement;
 
 
 // Det brukes POST fordi WP tillater POST bare
-$handleCall = new HandleAPICall(['plId'], [], ['GET', 'POST'], false);
+$handleCall = new HandleAPICall(['plId', 'unike'], [], ['GET', 'POST'], false);
 $plId = $handleCall->getArgument('plId');
+$erUnike = $handleCall->getArgument('unike');
 
 $arrangement = null;
 try{
@@ -21,64 +22,16 @@ try{
     $handleCall->sendErrorToClient('Kunne ikke hente arrangementet', 401);
 }
 
-
 $statArr = new StatistikkArrangement($arrangement);
 
+$retArr = [];
+$retArr['erUnike'] = $erUnike == 'true';
 
-var_dump('UNIKE antallDeltakere: ' . $statArr->getAntallUnikeDeltakere());
-var_dump('IKKE UNIKE antallDeltakere: ' . $statArr->getAntallDeltakere());
+if($erUnike == 'true') {
+    $retArr['antall'] = $statArr->getAntallUnikeDeltakere();
+}
+else {
+    $retArr['antall'] = $statArr->getAntallDeltakere();
+}
 
-
-
-// $allePlIds = getAllArrangements();
-// $sesong = 2024;
-// $count = 0;
-// // foreach($allePlIds as $plId) {
-//     // $arrangement = new Arrangement($plId);
-//     $statArr = new StatistikkArrangement($arrangement);
-
-//     $antallDeltakere = $statArr->getAntallUnikeDeltakere();
-
-//     var_dump('UNIKE antallDeltakere: ' . $statArr->getAntallUnikeDeltakere());
-//     var_dump('IKKE UNIKE antallDeltakere: ' . $statArr->getAntallIkkeUnikeDeltakere());
-
-// // }
-
-// var_dump('ANTALL: ' . $count);
-
-// die;
-
-
-// $statsObj = $arrangement->getStatistikk();
-
-// // $statsObj->setKommune([$arrangement->getKommune()->getId()]);
-
-
-// // Returner til klienten
-// $handleCall->sendToClient($statsObj->getStatArrayPerson(2024));
-
-
-// function getAntallPersoner(Arrangement $arrangement) : int {
-//     $antallPersoner = 0;
-//     foreach($arrangement->getInnslag()->getAll() as $innslag) {
-//         $antallPersoner += $innslag->getPersoner()->getAntall();
-//     }
-//     return $antallPersoner;
-// }
-
-// function getAllArrangements() : array {
-//     $alleArrangementer = [];
-
-//     $sql = new Query(
-//         "SELECT pl_id FROM `smartukm_place` WHERE season > 2015",
-//     );
-
-//     $res = $sql->run();
-//     if (Query::numRows($res) > 0) {
-//         while ($r = Query::fetch($res)) {
-//             $alleArrangementer[] = $r['pl_id'];
-//         }
-//     }
-
-//     return $alleArrangementer;
-// }
+$handleCall->sendToClient($retArr);

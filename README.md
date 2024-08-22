@@ -6,6 +6,8 @@ UKM Statistikk på arrangørsystemet
 
 ## Arrangement
 
+Alle deltakere på arrangement er kun hentet fra gyldige innslag (fullførte innslag)
+
 ### Aldersfordeling
 
 - **URL:** `arrangement/aldersfordeling`
@@ -34,4 +36,25 @@ UKM Statistikk på arrangørsystemet
     "antall":"1"
   },
 ]
+```
 
+
+### Antall Deltakere
+
+- **URL:** `arrangement/antallDeltakere`
+- **Method:** `POST`
+- **Description:** Henter antall deltakere i et arrangement fra aktive (fullførte) innslag. Det er mulig å hente unike og ikke unike deltakere ved å sende `unike` parameter
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `plId`   | `number` | Arrangement ID |
+| `unike`   | `boolean` | Unike eller ikke unike deltakere |
+
+#### Response Example
+```json
+{
+  "erUnike":true,
+  "antall":15
+}
+```
