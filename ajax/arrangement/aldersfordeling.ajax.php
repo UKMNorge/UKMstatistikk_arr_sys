@@ -8,12 +8,12 @@ use UKMNorge\Statistikk\Objekter\StatistikkArrangement;
 
 
 // Det brukes POST fordi WP tillater POST bare
-$handleCall = new HandleAPICall(['plId'], [], ['GET', 'POST'], false);
+$handleCall = new HandleAPICall(['plId'], [], ['POST'], false);
 $plId = $handleCall->getArgument('plId');
 
 $arrangement = null;
 try{
-    $arrangement = new Arrangement(40);
+    $arrangement = new Arrangement($plId);
 } catch(Exception $e) {
     if($e->getCode() == 401) {
         $handleCall->sendErrorToClient($e->getMessage(), 401);
@@ -24,6 +24,4 @@ try{
 
 $statArr = new StatistikkArrangement($arrangement);
 
-
-echo 'Aldersofrdeling: ';
-echo $statArr->getAldersfordeling();
+$handleCall->sendToClient($statArr->getAldersfordeling());

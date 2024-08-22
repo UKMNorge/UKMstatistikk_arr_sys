@@ -96,14 +96,10 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'fylke/kjonnsfordeling',
-                fylkeId: 50,
-                season: 2024,
+                controller: 'arrangement/aldersfordeling',
+                plId: 3777,
             };
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
-
-            console.log(results)
-            console.log(results);
         }
     }
 }
