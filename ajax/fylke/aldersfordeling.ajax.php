@@ -9,12 +9,17 @@ use UKMNorge\Statistikk\Objekter\StatistikkFylke;
 
 
 // Det brukes POST fordi WP tillater POST bare
-$handleCall = new HandleAPICall(['plId'], [], ['GET', 'POST'], false);
-$plId = $handleCall->getArgument('plId');
+$handleCall = new HandleAPICall(['fylkeId', 'season'], [], ['GET', 'POST'], false);
+$fylkeId = $handleCall->getArgument('fylkeId');
+$season = $handleCall->getArgument('season');
 
-$fylke = Fylker::getById(56);
+$fylke = null;
+try{
+    $fylke = Fylker::getById($fylkeId);
+} catch(Exception $e) {
+    $handleCall->sendErrorToClient('Kunne ikke hente fylke', 401);
+}
 
-$statFylke = new StatistikkFylke($fylke, 2024);
-
+$statFylke = new StatistikkFylke($fylke, $season);
 
 $handleCall->sendToClient($statFylke->getAldersfordeling());

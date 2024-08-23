@@ -131,3 +131,71 @@ OBS: Arrangement tilgang sjekkes gjennom StatistikkManager
   }
 }
 ```
+
+
+## Fylke
+
+
+
+### Aldersfordeling
+
+- **URL:** `fylke/aldersfordeling`
+- **Method:** `POST`
+- **Description:** Aldersfordeling er henter ut alle aldersdataene for personer som er meldt på i aktive innslag i et fylke. Alder begregnes på tidspunktet arrangementet ble holdt
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `fylkeId`   | `number` | Fylke ID |
+| `season`   | `number` | Sesong |
+
+#### Response Example
+```json
+[
+  {
+    "age": "16",
+    "antall": "1"
+  },
+  {
+    "age": "17",
+    "antall": "4"
+  },
+  {
+    "age": "18",
+    "antall": "2"
+  },
+  {
+    "age": "19",
+    "antall": "4"
+  },
+  {
+    "age": "20",
+    "antall": "1"
+  },
+  {
+    "age": "21",
+    "antall": "4"
+  },
+  {
+    "age": "22",
+    "antall": "6"
+  },
+  {
+    "age": "23",
+    "antall": "9"
+  },
+  {
+    "age": "24",
+    "antall": "3"
+  },
+  {
+    "age": "25",
+    "antall": "1"
+  },
+  {
+    "age": "54",
+    "antall": "3"
+  }
+]
+```
+
