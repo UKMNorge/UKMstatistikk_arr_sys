@@ -6,8 +6,6 @@ use UKMNorge\Database\SQL\Query;
 use UKMNorge\Statistikk\Objekter\StatistikkArrangement;
 
 
-
-// Det brukes POST fordi WP tillater POST bare
 $handleCall = new HandleAPICall(['plId'], [], ['GET', 'POST'], false);
 $plId = $handleCall->getArgument('plId');
 
@@ -20,7 +18,6 @@ try{
     }
     $handleCall->sendErrorToClient('Kunne ikke hente arrangementet', 401);
 }
-
 
 $statArr = new StatistikkArrangement($arrangement);
 

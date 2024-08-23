@@ -7,6 +7,7 @@ UKM Statistikk på arrangørsystemet
 ## Arrangement
 
 Alle deltakere på arrangement er kun hentet fra gyldige innslag (fullførte innslag)
+OBS: Arrangement tilgang sjekkes gjennom StatistikkManager
 
 ### Aldersfordeling
 
@@ -43,7 +44,7 @@ Alle deltakere på arrangement er kun hentet fra gyldige innslag (fullførte inn
 
 - **URL:** `arrangement/antallDeltakere`
 - **Method:** `POST`
-- **Description:** Henter antall deltakere i et arrangement fra aktive (fullførte) innslag. Det er mulig å hente unike og ikke unike deltakere ved å sende `unike` parameter
+- **Description:** Returnerer antall deltakere i et arrangement fra aktive (fullførte) innslag. Det er mulig å hente unike og ikke unike deltakere ved å sende `unike` parameter
 #### URL Parameters
 
 | Parameter | Type   | Description                |
@@ -56,5 +57,27 @@ Alle deltakere på arrangement er kun hentet fra gyldige innslag (fullførte inn
 {
   "erUnike":true,
   "antall":15
+}
+```
+
+
+
+### Kjønnsfordeling
+
+- **URL:** `arrangement/kjonnsfordeling`
+- **Method:** `POST`
+- **Description:** Returnerer antall personer fordelt på kjønn. Kjønn er identifisert basert på fornavn og noen ganger kan det bli udefinert
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `plId`   | `number` | Arrangement ID |
+
+#### Response Example
+```json
+{
+  "unknown":2
+  ,"male":5,
+  "female":5
 }
 ```

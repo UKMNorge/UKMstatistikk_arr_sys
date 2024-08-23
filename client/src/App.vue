@@ -96,9 +96,8 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'arrangement/antallDeltakere',
-                plId: 3777,
-                unike: true,
+                controller: 'arrangement/kjonnsfordeling',
+                plId: 3620,
             };
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
         }
