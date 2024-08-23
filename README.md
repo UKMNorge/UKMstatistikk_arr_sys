@@ -76,8 +76,8 @@ OBS: Arrangement tilgang sjekkes gjennom StatistikkManager
 #### Response Example
 ```json
 {
-  "unknown":2
-  ,"male":5,
+  "unknown":2,
+  "male":5,
   "female":5
 }
 ```
