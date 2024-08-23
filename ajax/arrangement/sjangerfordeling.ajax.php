@@ -13,7 +13,7 @@ $plId = $handleCall->getArgument('plId');
 
 $arrangement = null;
 try{
-    $arrangement = new Arrangement(3654);
+    $arrangement = new Arrangement($plId);
 } catch(Exception $e) {
     if($e->getCode() == 401) {
         $handleCall->sendErrorToClient($e->getMessage(), 401);

@@ -96,8 +96,8 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'arrangement/kjonnsfordeling',
-                plId: 3620,
+                controller: 'arrangement/sjangerfordeling',
+                plId: 1,
             };
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
         }

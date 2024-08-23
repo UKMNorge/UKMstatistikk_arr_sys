@@ -81,3 +81,53 @@ OBS: Arrangement tilgang sjekkes gjennom StatistikkManager
   "female":5
 }
 ```
+
+
+### Sjangerfordeling
+
+- **URL:** `arrangement/sjangerfordeling`
+- **Method:** `POST`
+- **Description:** Returnerer antall personer fordelt på sjanger eller innslag type. Typene som ikke kan genereres, blir representert som udefinert
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `plId`   | `number` | Arrangement ID |
+
+#### Response Example
+```json
+{
+  "ukjent": {
+    "antall": 4,
+    "type_navn": "Ukjent"
+  },
+  "utstilling": {
+    "antall": 20,
+    "type_navn": "Utstilling"
+  },
+  "video": {
+    "antall": 10,
+    "type_navn": "Film"
+  },
+  "konferansier": {
+    "antall": 3,
+    "type_navn": "Konferansier"
+  },
+  "scene": {
+    "antall": 2,
+    "type_navn": "Noe annet på scene"
+  },
+  "musikk": {
+    "antall": 6,
+    "type_navn": "Musikk"
+  },
+  "dans": {
+    "antall": 5,
+    "type_navn": "Dans"
+  },
+  "nettredaksjon": {
+    "antall": 1,
+    "type_navn": "Media"
+  }
+}
+```
