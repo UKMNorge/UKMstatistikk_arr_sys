@@ -9,13 +9,33 @@ use UKMNorge\Statistikk\Objekter\StatistikkFylke;
 
 
 // Det brukes POST fordi WP tillater POST bare
-$handleCall = new HandleAPICall(['plId'], [], ['GET', 'POST'], false);
-$plId = $handleCall->getArgument('plId');
+$handleCall = new HandleAPICall(['fylkeId', 'season', 'unike'], [], ['GET', 'POST'], false);
+$fylkeId = $handleCall->getArgument('fylkeId');
+$season = $handleCall->getArgument('season');
+$erUnike = $handleCall->getArgument('unike') == 'true';
 
-$fylke = Fylker::getById(1);
+$fylke = null;
+try{
+    $fylke = Fylker::getById($fylkeId);
+} catch(Exception $e) {
+    $handleCall->sendErrorToClient('Kunne ikke hente fylke', 500);
+}
 
-$statArr = new StatistikkFylke($fylke, 2010);
+$statFylke = null;
+try{
+    $statFylke = new StatistikkFylke($fylke, $season);
+} catch(Exception $e) {
+    $handleCall->sendErrorToClient('Kunne ikke hente statistikk for fylke', 401);
+}
 
-var_dump('Fylke');
-var_dump('UNIKE antallDeltakere: ' . $statArr->getAntallUnikeDeltakere());
-var_dump('IKKE UNIKE antallDeltakere: ' . $statArr->getAntallDeltakere());
+$retArr = [];
+$retArr['erUnike'] = $erUnike;
+
+if($erUnike) {
+    $retArr['antall'] = $statFylke->getAntallUnikeDeltakere();
+}
+else {
+    $retArr['antall'] = $statFylke->getAntallDeltakere();
+}
+
+$handleCall->sendToClient($retArr);

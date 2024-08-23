@@ -135,6 +135,7 @@ OBS: Arrangement tilgang sjekkes gjennom StatistikkManager
 
 ## Fylke
 
+OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i fylke. Dette gjøres fordi innslag videresendes fra kommune til fylke, derfor arrangementer i kommuner representerer best statistikken i fylke 
 
 
 ### Aldersfordeling
@@ -199,3 +200,25 @@ OBS: Arrangement tilgang sjekkes gjennom StatistikkManager
 ]
 ```
 
+
+### Antall deltakere
+
+- **URL:** `fylke/antallDeltakere`
+- **Method:** `POST`
+- **Description:** Antall deltakere i kommuner som tilhører et fylke. Deltakere hentes kun fra gyldige (fullførte) innslag. 
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `fylkeId`   | `number` | Fylke ID |
+| `season`    | `number` | Sesong |
+| `unike`     | `boolean` | Unike eller ikke unike deltakere |
+
+
+#### Response Example
+```json
+{
+  "erUnike":true,
+  "antall":40
+}
+```
