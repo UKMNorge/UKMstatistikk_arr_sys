@@ -17,7 +17,7 @@ $fylke = null;
 try{
     $fylke = Fylker::getById($fylkeId);
 } catch(Exception $e) {
-    $handleCall->sendErrorToClient('Kunne ikke hente fylke', 401);
+    $handleCall->sendErrorToClient('Kunne ikke hente fylke', 500);
 }
 
 $statFylke = null;
