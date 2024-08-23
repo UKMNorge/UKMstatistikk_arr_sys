@@ -20,6 +20,12 @@ try{
     $handleCall->sendErrorToClient('Kunne ikke hente fylke', 401);
 }
 
-$statFylke = new StatistikkFylke($fylke, $season);
+$statFylke = null;
+try{
+    $statFylke = new StatistikkFylke($fylke, $season);
+}
+catch(Exception $e) {
+    $handleCall->sendErrorToClient('Kunne ikke hente statistikk for fylke', 401);
+}
 
 $handleCall->sendToClient($statFylke->getAldersfordeling());
