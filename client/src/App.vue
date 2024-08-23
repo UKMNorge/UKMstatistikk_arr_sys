@@ -96,10 +96,9 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'fylke/antallDeltakere',
-                fylkeId: 50,
-                season: 2024,
-                unike: true,
+                controller: 'fylke/gjennomsnittDeltakere',
+                fylkeId: 31,
+                season: 2024
             };
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
         }

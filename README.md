@@ -222,3 +222,25 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
   "antall":40
 }
 ```
+
+
+### Gjennomsnitt deltakere på arrangementer
+
+- **URL:** `fylke/antallDeltakere`
+- **Method:** `POST`
+- **Description:** Returnerer gjennomsnitt deltakere på arrangementer i alle kommuner i et fylke i en sesong. Det tas ikke i begregning arrangementer som har 0 deltakere. Arrangementer i fylke blir ikke begregnet
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `fylkeId`   | `number` | Fylke ID |
+| `season`    | `number` | Sesong |
+
+
+#### Response Example
+```json
+{
+  "gjennomsnittDeltakere":2,
+  "season":"2024"
+}
+```

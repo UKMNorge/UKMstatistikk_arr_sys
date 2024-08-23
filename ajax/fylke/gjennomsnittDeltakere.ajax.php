@@ -7,17 +7,26 @@ use UKMNorge\Geografi\Fylker;
 use UKMNorge\Statistikk\Objekter\StatistikkFylke;
 
 
+$handleCall = new HandleAPICall(['fylkeId', 'season'], [], ['GET', 'POST'], false);
+$fylkeId = $handleCall->getArgument('fylkeId');
+$season = $handleCall->getArgument('season');
 
-// Det brukes POST fordi WP tillater POST bare
-$handleCall = new HandleAPICall(['plId'], [], ['GET', 'POST'], false);
-$plId = $handleCall->getArgument('plId');
+$fylke = null;
+try{
+    $fylke = Fylker::getById($fylkeId);
+} catch(Exception $e) {
+    $handleCall->sendErrorToClient('Kunne ikke hente fylke', 500);
+}
 
-$fylke = Fylker::getById(1);
+$statFylke = null;
+try{
+    $statFylke = new StatistikkFylke($fylke, $season);
+} catch(Exception $e) {
+    $handleCall->sendErrorToClient('Kunne ikke hente statistikk for fylke', 401);
+}
 
-$statArr = new StatistikkFylke($fylke, 2010);
+$retArr['gjennomsnittDeltakere'] = $statFylke->getGjennomsnittDeltakere($season);
+$retArr['season'] = $season;
 
-
-echo('Gjennomsnitt 2011: ');
-echo($statArr->getGjennomsnittDeltakere(2011));
-
+$handleCall->sendToClient($retArr);
 
