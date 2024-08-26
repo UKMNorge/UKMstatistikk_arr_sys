@@ -3,32 +3,42 @@
 // Kommune deltakere
 
 use UKMNorge\OAuth2\HandleAPICall;
-use UKMNorge\Database\SQL\Query;
 use UKMNorge\Geografi\Kommune;
 use UKMNorge\Statistikk\Objekter\StatistikkKommune;
 
 
 
-// Det brukes POST fordi WP tillater POST bare
-$handleCall = new HandleAPICall(['plId'], [], ['GET', 'POST'], false);
-$plId = $handleCall->getArgument('plId');
+$handleCall = new HandleAPICall(['kommuneId', 'season', 'unike'], [], ['GET', 'POST'], false);
+$kommuneId = $handleCall->getArgument('kommuneId');
+$season = $handleCall->getArgument('season');
+$erUnike = $handleCall->getOptionalArgument('unike') == 'true';
 
 $kommune = null;
 try{
-    $kommune = new Kommune(5055);
+    $kommune = new Kommune($kommuneId);
 } catch(Exception $e) {
     if($e->getCode() == 401) {
         $handleCall->sendErrorToClient($e->getMessage(), 401);
     }
-    $handleCall->sendErrorToClient('Kunne ikke hente arrangementet', 401);
+    $handleCall->sendErrorToClient('Kunne ikke hente arrangementet', 500);
 }
 
 
-$season = 2020;
+$statKom = null;
+try{
+    $statKom = new StatistikkKommune($kommune, $season);
+} catch(Exception $e) {
+    $handleCall->sendErrorToClient('Kunne ikke hente statistikk for kommune', 401);
+}
 
+$retArr = [];
+$retArr['erUnike'] = $erUnike;
 
-$statKom = new StatistikkKommune($kommune, $season);
+if($erUnike) {
+    $retArr['antall'] = $statKom->getAntallUnikeDeltakere();
+}
+else {
+    $retArr['antall'] = $statKom->getAntallDeltakere();
+}
 
-
-var_dump('UNIKE antallDeltakere: ' . $statKom->getAntallUnikeDeltakere());
-var_dump('IKKE UNIKE antallDeltakere: ' . $statKom->getAntallDeltakere());
+$handleCall->sendToClient($retArr);

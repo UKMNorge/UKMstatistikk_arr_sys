@@ -133,6 +133,33 @@ OBS: Arrangement tilgang sjekkes gjennom StatistikkManager
 ```
 
 
+## Kommune
+
+Alle deltakere på kommune er kun hentet fra gyldige innslag (fullførte innslag)
+
+### Aldersfordeling
+
+- **URL:** `arrangement/aldersfordeling`
+- **Method:** `POST`
+- **Description:** Antall deltakere i gyldige innslag i en kommune. Det er mulig å hente unike og ikke unike deltakere ved å sende `unike` parameter
+
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `kommuneId` | `number` | Kommune ID |
+| `season`    | `number` | Sesong |
+| `unike`     | `boolean` | Unike eller ikke unike deltakere |
+
+#### Response Example
+```json
+{
+  "erUnike":false,
+  "antall":26
+}
+```
+
+
 ## Fylke
 
 OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i fylke. Dette gjøres fordi innslag videresendes fra kommune til fylke, derfor arrangementer i kommuner representerer best statistikken i fylke 

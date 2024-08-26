@@ -96,9 +96,10 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'fylke/sjangerfordeling',
-                fylkeId: 3,
-                season: 2009
+                controller: 'kommune/antallDeltakere',
+                kommuneId: 2025,
+                season: 2009,
+                unike: false,
             };
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
         }
