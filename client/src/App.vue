@@ -96,9 +96,9 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'fylke/kjonnsfordeling',
-                fylkeId: 50,
-                season: 2024
+                controller: 'fylke/sjangerfordeling',
+                fylkeId: 3,
+                season: 2009
             };
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
         }

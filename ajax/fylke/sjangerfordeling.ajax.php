@@ -15,9 +15,18 @@ $excludePlId = $handleCall->getOptionalArgument('excludePlId');
 $fylkeId = $handleCall->getArgument('fylkeId');
 $season = $handleCall->getArgument('season');
 
-$fylke = Fylker::getById($fylkeId);
+$fylke = null;
+try{
+    $fylke = Fylker::getById($fylkeId);
+} catch(Exception $e) {
+    $handleCall->sendErrorToClient('Kunne ikke hente fylke', 500);
+}
 
-$statFylke = new StatistikkFylke($fylke, $season);
-
+$statFylke = null;
+try{
+    $statFylke = new StatistikkFylke($fylke, $season);
+} catch(Exception $e) {
+    $handleCall->sendErrorToClient('Kunne ikke hente statistikk for fylke', 401);
+}
 
 $handleCall->sendToClient($statFylke->getSjangerFordeling($excludePlId ?? -1));

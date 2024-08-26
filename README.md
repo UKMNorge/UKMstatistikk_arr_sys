@@ -268,3 +268,64 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
 }
 ```
 
+
+### Sjangerfordeling på fylke
+
+- **URL:** `fylke/sjangerfordeling`
+- **Method:** `POST`
+- **Description:** Returnerer antall personer fordelt på sjanger eller innslag type i kommuner i et fylke. Typene som ikke kan genereres, blir representert som udefinert. Kan sendes arrangement som skal ekskluderes. Dette kan brukes når det kalles fra et arrangement i fylke som skal ikke bli med i begregning
+#### URL Parameters
+
+| Parameter | Type   | Description                | Info |
+|-----------|--------|----------------------------|------|
+| `fylkeId`      | `number` | Fylke ID | required |
+| `season`       | `number` | Sesong | required |
+| `excludePlId`  | `number` | Ekskluder et arrangement i begregning | optional | 
+
+
+
+#### Response Example
+```json
+{
+  "utstilling": {
+    "antall": 34,
+    "type_navn": "Utstilling"
+  },
+  "musikk": {
+    "antall": 226,
+    "type_navn": "Musikk"
+  },
+  "arrangor": {
+    "antall": 20,
+    "type_navn": "Arrangør"
+  },
+  "konferansier": {
+    "antall": 15,
+    "type_navn": "Konferansier"
+  },
+  "scene": {
+    "antall": 9,
+    "type_navn": "Noe annet på scene"
+  },
+  "video": {
+    "antall": 17,
+    "type_navn": "Film"
+  },
+  "dans": {
+    "antall": 35,
+    "type_navn": "Dans"
+  },
+  "nettredaksjon": {
+    "antall": 2,
+    "type_navn": "Media"
+  },
+  "matkultur": {
+    "antall": 2,
+    "type_navn": "Matkultur"
+  },
+  "ukjent": {
+    "antall": 2,
+    "type_navn": "Ukjent"
+  }
+}
+```
