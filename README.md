@@ -244,3 +244,27 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
   "season":"2024"
 }
 ```
+
+
+### Kjønnsfordeling på fylke
+
+- **URL:** `fylke/kjonnsfordeling`
+- **Method:** `POST`
+- **Description:** Returnerer antall deltakere fordelt på kjønn. Kjønn er identifisert basert på fornavn og noen ganger kan det bli udefinert
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `fylkeId`   | `number` | Fylke ID |
+| `season`    | `number` | Sesong |
+
+
+#### Response Example
+```json
+{
+  "unknown":2,
+  "male":14,
+  "female":12
+}
+```
+
