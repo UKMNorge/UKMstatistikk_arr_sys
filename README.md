@@ -362,7 +362,7 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
 
 - **URL:** `fylke/kommunerAktivitet`
 - **Method:** `POST`
-- **Description:** Returnerer kommuner som har arrangementer i en sesong.
+- **Description:** Returnerer kommuner som har aktivitet i et fylke i en seson. Hvis kommune har minst 1 arrangement i en sesong, regnes det som aktivitet.
 #### URL Parameters
 
 | Parameter | Type   | Description                |
@@ -374,17 +374,162 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
 #### Response Example
 ```json
 {
-  "season":2024,
-  "kommuner_aktivitet":
-    {
-      "5001":"Trondheim - Tr\u00e5ante",
-      "5007":"Namsos","5021":"Oppdal",
-      "5028":"Melhus",
-      "5035":"Stj\u00f8rdal",
-      "5052":"Leka",
-      "5055":"Heim",
-      "5037":"Levanger"
+  "season": 2024,
+  "kommuner": {
+    "5001": {
+      "navn": "Trondheim - Tråante",
+      "aktivitet": true
+    },
+    "5006": {
+      "navn": "Steinkjer",
+      "aktivitet": false
+    },
+    "5007": {
+      "navn": "Namsos",
+      "aktivitet": true
+    },
+    "5014": {
+      "navn": "Frøya",
+      "aktivitet": false
+    },
+    "5020": {
+      "navn": "Osen",
+      "aktivitet": false
+    },
+    "5021": {
+      "navn": "Oppdal",
+      "aktivitet": true
+    },
+    "5022": {
+      "navn": "Rennebu",
+      "aktivitet": false
+    },
+    "5025": {
+      "navn": "Røros - Rosse",
+      "aktivitet": false
+    },
+    "5026": {
+      "navn": "Holtålen",
+      "aktivitet": false
+    },
+    "5027": {
+      "navn": "Midtre Gauldal",
+      "aktivitet": false
+    },
+    "5028": {
+      "navn": "Melhus",
+      "aktivitet": true
+    },
+    "5029": {
+      "navn": "Skaun",
+      "aktivitet": false
+    },
+    "5031": {
+      "navn": "Malvik",
+      "aktivitet": false
+    },
+    "5032": {
+      "navn": "Selbu",
+      "aktivitet": false
+    },
+    "5033": {
+      "navn": "Tydal",
+      "aktivitet": false
+    },
+    "5034": {
+      "navn": "Meråker",
+      "aktivitet": false
+    },
+    "5035": {
+      "navn": "Stjørdal",
+      "aktivitet": true
+    },
+    "5036": {
+      "navn": "Frosta",
+      "aktivitet": false
+    },
+    "5037": {
+      "navn": "Levanger",
+      "aktivitet": true
+    },
+    "5038": {
+      "navn": "Verdal",
+      "aktivitet": false
+    },
+    "5041": {
+      "navn": "Snåase - Snåsa",
+      "aktivitet": false
+    },
+    "5042": {
+      "navn": "Lierne",
+      "aktivitet": false
+    },
+    "5043": {
+      "navn": "Raarvihke - Røyrvik",
+      "aktivitet": false
+    },
+    "5044": {
+      "navn": "Namsskogan",
+      "aktivitet": false
+    },
+    "5045": {
+      "navn": "Grong",
+      "aktivitet": false
+    },
+    "5046": {
+      "navn": "Høylandet",
+      "aktivitet": false
+    },
+    "5047": {
+      "navn": "Overhalla",
+      "aktivitet": false
+    },
+    "5049": {
+      "navn": "Flatanger",
+      "aktivitet": false
+    },
+    "5052": {
+      "navn": "Leka",
+      "aktivitet": true
+    },
+    "5053": {
+      "navn": "Inderøy",
+      "aktivitet": false
+    },
+    "5054": {
+      "navn": "Indre Fosen",
+      "aktivitet": false
+    },
+    "5055": {
+      "navn": "Heim",
+      "aktivitet": true
+    },
+    "5056": {
+      "navn": "Hitra",
+      "aktivitet": false
+    },
+    "5057": {
+      "navn": "Ørland",
+      "aktivitet": false
+    },
+    "5058": {
+      "navn": "Åfjord",
+      "aktivitet": false
+    },
+    "5059": {
+      "navn": "Orkland",
+      "aktivitet": false
+    },
+    "5060": {
+      "navn": "Nærøysund",
+      "aktivitet": false
+    },
+    "5061": {
+      "navn": "Rindal",
+      "aktivitet": false
     }
+  }
 }
+
 ```
 
