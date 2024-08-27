@@ -356,3 +356,35 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
   }
 }
 ```
+
+
+### Kommuner i fylket som har UKM-aktivtet
+
+- **URL:** `fylke/kommunerAktivitet`
+- **Method:** `POST`
+- **Description:** Returnerer kommuner som har arrangementer i en sesong.
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `fylkeId`   | `number` | Fylke ID |
+| `season`    | `number` | Sesong |
+
+
+#### Response Example
+```json
+{
+  "season":2024,
+  "kommuner_aktivitet":
+    {
+      "5001":"Trondheim - Tr\u00e5ante",
+      "5007":"Namsos","5021":"Oppdal",
+      "5028":"Melhus",
+      "5035":"Stj\u00f8rdal",
+      "5052":"Leka",
+      "5055":"Heim",
+      "5037":"Levanger"
+    }
+}
+```
+
