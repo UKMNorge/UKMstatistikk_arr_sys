@@ -538,7 +538,7 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
 
 - **URL:** `fylke/antallArrangementerIFylke`
 - **Method:** `POST`
-- **Description:** Returnerer alle arrangementer arrangert kun på kommuner i fylke
+- **Description:** Returnerer antall arrangementer arrangert kun på kommuner i 1 fylke
 #### URL Parameters
 
 | Parameter | Type   | Description                |
@@ -552,5 +552,49 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
 {
   "antall":11
 }
+
+```
+
+
+### Antall arrangementer fordelt på fylke
+
+- **URL:** `fylke/antallArrangementerPerFylke`
+- **Method:** `POST`
+- **Description:** Returnerer antall arrangementer på kommuner fordelt i fylke
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `season`    | `number` | Sesong |
+
+
+#### Response Example
+```json
+{
+  "01": {
+    "navn": "Østfold",
+    "antall": 7
+  },
+  "02": {
+    "navn": "Akershus",
+    "antall": 23
+  },
+  "03": {
+    "navn": "Oslo",
+    "antall": 17
+  },
+
+ ...
+
+  "20": {
+    "navn": "Finnmark - Finnmárku",
+    "antall": 20
+  },
+  "99": {
+    "navn": "Uoppgitt",
+    "antall": 0
+  }
+}
+
 
 ```
