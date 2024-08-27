@@ -533,3 +533,24 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
 
 ```
 
+
+### Antall arrangementer i eget fylke - Fylke arrangerte arrangementer
+
+- **URL:** `fylke/antallArrangementerIFylke`
+- **Method:** `POST`
+- **Description:** Returnerer alle arrangementer arrangert på fylke (ikke kommuner i fylke)
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `fylkeId`   | `number` | Fylke ID |
+| `season`    | `number` | Sesong |
+
+
+#### Response Example
+```json
+{
+  "antall":11
+}
+
+```
