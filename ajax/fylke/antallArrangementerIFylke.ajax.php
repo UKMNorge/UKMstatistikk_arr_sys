@@ -24,6 +24,8 @@ try{
 }
 
 $retArr = [];
-$retArr['antall'] = $statFylke->antallArrangementerIFylke();
+$retArr['antall'] = $statFylke->getAntallArrangementer();
 $handleCall->sendToClient($retArr);
+
+
 
