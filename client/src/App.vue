@@ -96,10 +96,9 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'kommune/antallDeltakere',
-                kommuneId: 2025,
-                season: 2009,
-                unike: false,
+                controller: 'fylke/kommunerAktivitet',
+                fylkeId: 50,
+                season: 2024,
             };
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
         }
