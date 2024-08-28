@@ -96,8 +96,8 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'fylke/antallArrangementerPerFylke',
-                season: 2009,
+                controller: 'land/antallDeltakere',
+                season: 2010,
             };
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
         }
