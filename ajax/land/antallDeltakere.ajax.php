@@ -1,5 +1,7 @@
 <?php
 
+use UKMNorge\DesignWordpress\Environment\Statistikk;
+use UKMNorge\Geografi\Fylke;
 use UKMNorge\OAuth2\HandleAPICall;
 use UKMNorge\Statistikk\Objekter\StatistikkFylke;
 
@@ -11,7 +13,11 @@ $alleFylkerISesong = StatistikkFylke::getAlleFylkeIdFraSSB($season);
 
 $antall = 0;
 foreach($alleFylkerISesong as $fylkeId => $fylkeNavn) {
-    $antall += StatistikkFylke::antallArrangementerIFylke($fylkeId, $season);
+    $fylke = new Fylke($fylkeId, '', (string)$fylkeNavn, true);
+    $statistikkFylke = new StatistikkFylke($fylke, $season);
+
+    $antallDeltakere = $statistikkFylke->getAntallDeltakere();
+    $antall += $antallDeltakere;
 }
 
 $handleCall->sendToClient(['antall' => $antall]);
