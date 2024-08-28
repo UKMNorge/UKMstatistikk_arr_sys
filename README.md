@@ -502,3 +502,42 @@ OBS: Lands statistikk henter data fra arrangementer, kommuner og fylker i hele l
 ```
 
 
+### Aldersfordeling i hele landet
+
+- **URL:** `land/aldersfordeling`
+- **Method:** `POST`
+- **Description:** Henter deltakere fra alle arrangementer i hele landet fordelt på alder.
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `season`   | `number` | Sesong |
+
+#### Response Example
+```json
+{
+  "": 105,
+  "7": 7,
+  "8": 15,
+  "9": 92,
+  "10": 817,
+  "11": 1270,
+  "12": 1939,
+  "13": 2562,
+  "14": 2520,
+  "15": 3082,
+  "16": 2608,
+  "17": 1927,
+  "18": 1271,
+  "19": 533,
+  "20": 168,
+  "21": 51,
+  "22": 22,
+  "23": 19,
+  "24": 18,
+  "25": 5,
+  "26": 1,
+  "27": 2,
+  ...
+}
+```
