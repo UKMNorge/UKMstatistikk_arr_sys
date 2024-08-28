@@ -96,8 +96,9 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'land/antallDeltakere',
-                season: 2010,
+                controller: 'land/aldersfordeling',
+                season: 2024,
+                unike: true,
             };
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
         }
