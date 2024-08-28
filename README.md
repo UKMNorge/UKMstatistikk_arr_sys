@@ -481,7 +481,7 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
 ## Land
 
 OBS: Lands statistikk henter data fra arrangementer, kommuner og fylker i hele landet. Videresending som standart tas ikke med. Sesong brukes for å hente data i en spesifikk sesong.
-
+OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til manuelt, noen har ikke gyldig navn eller gyldig fødselsdato osv.
 
 ### Antall deltakere i hele landet
 
@@ -539,5 +539,26 @@ OBS: Lands statistikk henter data fra arrangementer, kommuner og fylker i hele l
   "26": 1,
   "27": 2,
   ...
+}
+```
+
+
+### Kjønnsfordeling i hele landet
+
+- **URL:** `land/kjonnsfordeling`
+- **Method:** `POST`
+- **Description:** Henter deltakere fra alle arrangementer i hele landet fordelt på kjønn.
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `season`   | `number` | Sesong |
+
+#### Response Example
+```json
+{
+  "female":9795,
+  "male":7099,
+  "unknown":2464
 }
 ```
