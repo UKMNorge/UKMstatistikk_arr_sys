@@ -483,7 +483,7 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
 OBS: Lands statistikk henter data fra arrangementer, kommuner og fylker i hele landet. Videresending som standart tas ikke med. Sesong brukes for å hente data i en spesifikk sesong.
 
 
-### Aldersfordeling
+### Antall deltakere i hele landet
 
 - **URL:** `land/antallDeltakere`
 - **Method:** `POST`
@@ -497,7 +497,7 @@ OBS: Lands statistikk henter data fra arrangementer, kommuner og fylker i hele l
 #### Response Example
 ```json
 {
-  "antall":345
+  "antall":24053
 }
 ```
 
