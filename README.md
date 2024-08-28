@@ -562,3 +562,34 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
   "unknown":2464
 }
 ```
+
+
+### Sjangerfordeling i hele landet
+
+- **URL:** `land/sjangerfordeling`
+- **Method:** `POST`
+- **Description:** Sjanger på aktive innslag fra alle arrangementer i hele landet.
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `season`   | `number` | Sesong |
+
+#### Response Example
+```json
+{
+  "Utstilling":3868,
+  "Musikk":6311,
+  "Arrang\u00f8r":572,
+  "Konferansier":298,
+  "Dans":974,
+  "Film":396,
+  "Litteratur":83,
+  "Noe annet p\u00e5 scene":203,
+  "Media":135,
+  "Teater":112,
+  "Ressurs":1,
+  "Ukjent":35,
+  "Matkultur":8
+}
+```
