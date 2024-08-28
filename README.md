@@ -497,7 +497,7 @@ OBS: Lands statistikk henter data fra arrangementer, kommuner og fylker i hele l
 #### Response Example
 ```json
 {
-  "antall":345
+  "antall":24053
 }
 ```
 
