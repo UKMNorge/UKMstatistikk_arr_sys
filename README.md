@@ -392,130 +392,9 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
       "navn": "Frøya",
       "aktivitet": false
     },
-    "5020": {
-      "navn": "Osen",
-      "aktivitet": false
-    },
-    "5021": {
-      "navn": "Oppdal",
-      "aktivitet": true
-    },
-    "5022": {
-      "navn": "Rennebu",
-      "aktivitet": false
-    },
-    "5025": {
-      "navn": "Røros - Rosse",
-      "aktivitet": false
-    },
-    "5026": {
-      "navn": "Holtålen",
-      "aktivitet": false
-    },
-    "5027": {
-      "navn": "Midtre Gauldal",
-      "aktivitet": false
-    },
-    "5028": {
-      "navn": "Melhus",
-      "aktivitet": true
-    },
-    "5029": {
-      "navn": "Skaun",
-      "aktivitet": false
-    },
-    "5031": {
-      "navn": "Malvik",
-      "aktivitet": false
-    },
-    "5032": {
-      "navn": "Selbu",
-      "aktivitet": false
-    },
-    "5033": {
-      "navn": "Tydal",
-      "aktivitet": false
-    },
-    "5034": {
-      "navn": "Meråker",
-      "aktivitet": false
-    },
-    "5035": {
-      "navn": "Stjørdal",
-      "aktivitet": true
-    },
-    "5036": {
-      "navn": "Frosta",
-      "aktivitet": false
-    },
-    "5037": {
-      "navn": "Levanger",
-      "aktivitet": true
-    },
-    "5038": {
-      "navn": "Verdal",
-      "aktivitet": false
-    },
-    "5041": {
-      "navn": "Snåase - Snåsa",
-      "aktivitet": false
-    },
-    "5042": {
-      "navn": "Lierne",
-      "aktivitet": false
-    },
-    "5043": {
-      "navn": "Raarvihke - Røyrvik",
-      "aktivitet": false
-    },
-    "5044": {
-      "navn": "Namsskogan",
-      "aktivitet": false
-    },
-    "5045": {
-      "navn": "Grong",
-      "aktivitet": false
-    },
-    "5046": {
-      "navn": "Høylandet",
-      "aktivitet": false
-    },
-    "5047": {
-      "navn": "Overhalla",
-      "aktivitet": false
-    },
-    "5049": {
-      "navn": "Flatanger",
-      "aktivitet": false
-    },
-    "5052": {
-      "navn": "Leka",
-      "aktivitet": true
-    },
-    "5053": {
-      "navn": "Inderøy",
-      "aktivitet": false
-    },
-    "5054": {
-      "navn": "Indre Fosen",
-      "aktivitet": false
-    },
-    "5055": {
-      "navn": "Heim",
-      "aktivitet": true
-    },
-    "5056": {
-      "navn": "Hitra",
-      "aktivitet": false
-    },
-    "5057": {
-      "navn": "Ørland",
-      "aktivitet": false
-    },
-    "5058": {
-      "navn": "Åfjord",
-      "aktivitet": false
-    },
+
+    ...
+
     "5059": {
       "navn": "Orkland",
       "aktivitet": false
@@ -595,6 +474,31 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
     "antall": 0
   }
 }
-
-
 ```
+
+
+
+## Land
+
+OBS: Lands statistikk henter data fra arrangementer, kommuner og fylker i hele landet. Videresending som standart tas ikke med. Sesong brukes for å hente data i en spesifikk sesong.
+
+
+### Aldersfordeling
+
+- **URL:** `land/antallDeltakere`
+- **Method:** `POST`
+- **Description:** Henter alle deltakere i alle arrangementer i alle kommuner i alle fylker. Fylke arrangerte arrangementer blir ikke med i beregning.
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `season`   | `number` | Sesong |
+
+#### Response Example
+```json
+{
+  "antall":345
+}
+```
+
+
