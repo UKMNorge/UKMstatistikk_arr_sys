@@ -96,9 +96,8 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'land/aldersfordeling',
-                season: 2024,
-                unike: true,
+                controller: 'land/kjonnsfordeling',
+                season: 2012,
             };
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
         }
