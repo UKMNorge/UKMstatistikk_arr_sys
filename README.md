@@ -593,3 +593,21 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
   "Matkultur":8
 }
 ```
+
+### Gjennomsnitt deltakere på landsnivå
+
+- **URL:** `land/gjennomsnittDeltakere`
+- **Method:** `POST`
+- **Description:** Returnerer gjennomsnitt deltakere på arrangementer på landsnivå i en sesong
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `season`   | `number` | Sesong |
+
+#### Response Example
+```json
+{
+  "gjennomsnitt":58
+}
+```
