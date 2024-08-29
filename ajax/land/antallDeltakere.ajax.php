@@ -6,8 +6,9 @@ use UKMNorge\OAuth2\HandleAPICall;
 use UKMNorge\Statistikk\Objekter\StatistikkFylke;
 
 
-$handleCall = new HandleAPICall(['season'], [], ['GET', 'POST'], false);
+$handleCall = new HandleAPICall(['season', 'unike'], [], ['GET', 'POST'], false);
 $season = $handleCall->getArgument('season');
+$erUnike = $handleCall->getArgument('unike') == 'true';
 
 $alleFylkerISesong = StatistikkFylke::getAlleFylkeIdFraSSB($season);
 
@@ -16,7 +17,11 @@ foreach($alleFylkerISesong as $fylkeId => $fylkeNavn) {
     $fylke = new Fylke($fylkeId, '', (string)$fylkeNavn, true);
     $statistikkFylke = new StatistikkFylke($fylke, $season);
 
-    $antallDeltakere = $statistikkFylke->getAntallDeltakere();
+    if($erUnike) {
+        $antallDeltakere = $statistikkFylke->getAntallUnikeDeltakere();
+    } else {
+        $antallDeltakere = $statistikkFylke->getAntallDeltakere();
+    }
     $antall += $antallDeltakere;
 }
 
