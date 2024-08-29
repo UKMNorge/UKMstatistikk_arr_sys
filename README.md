@@ -611,3 +611,41 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
   "gjennomsnitt":58
 }
 ```
+
+
+### Antall innslag
+
+- **URL:** `land/getAllInnslag`
+- **Method:** `POST`
+- **Description:** Returnerer antall innslag på alle kommuner i alle fylker i en sesong. Det hentes ikke arrangementer arrangert i fylke
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `season`   | `number` | Sesong |
+
+#### Response Example
+```json
+{
+  "01": {
+    "fylke_navn": "Østfold",
+    "antall_innslag": 486
+  },
+  "02": {
+    "fylke_navn": "Akershus",
+    "antall_innslag": 1578
+  },
+  "03": {
+    "fylke_navn": "Oslo",
+    "antall_innslag": 443
+  },
+
+  ...
+
+  "99": {
+    "fylke_navn": "Uoppgitt",
+    "antall_innslag": 0
+  }
+}
+
+```
