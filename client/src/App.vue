@@ -147,9 +147,9 @@ export default {
 
             data.season = 2023;
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
-
-
-
+            
+            data.season = 2024;
+            var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
         }
     }
 }
