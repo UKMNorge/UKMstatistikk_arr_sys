@@ -649,3 +649,22 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 }
 
 ```
+
+
+### Gjennomsnitt deltakere på fylkesarrangementer
+
+- **URL:** `land/gjennomsnittDeltakereFylkesniva`
+- **Method:** `POST`
+- **Description:** Returnerer antatall (gjennomsnitt) deltaker på alle arrangementer på fylkesnivå på alle fylker i en sesong
+#### URL Parameters
+
+| Parameter | Type   | Description                | Info |
+|-----------|--------|----------------------------|------|
+| `season`   | `number` | Sesong | Required
+| `excludePlId`   | `number` | Arrangement ID som skal ekskluderes | Optional |
+
+#### Response Example
+```json
+{"antall":259}
+
+```
