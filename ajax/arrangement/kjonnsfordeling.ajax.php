@@ -19,6 +19,7 @@ try{
     $handleCall->sendErrorToClient('Kunne ikke hente arrangementet', 401);
 }
 
-$statArr = new StatistikkArrangement($arrangement);
+$statArr = new StatistikkArrangement($arrangement->getId(), $arrangement->getSesong());
+
 
 $handleCall->sendToClient($statArr->getKjonnsfordeling());
