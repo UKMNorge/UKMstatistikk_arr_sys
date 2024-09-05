@@ -96,8 +96,8 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'land/kjonnsfordelingGjennomsnittFylkesniva',
-                season: 2009,
+                controller: 'land/sjangerfordelingGjennomsnittFylkesniva',
+                season: 2013,
                 excludePlId: 21,
             };
             // 2009
