@@ -542,6 +542,40 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 }
 ```
 
+### Gjennomsnitt aldersfordeling på fylkesarrangementer (fylkesnivå)
+
+- **URL:** `land/aldersfordelingGjennomsnittFylkesniva`
+- **Method:** `POST`
+- **Description:** Returnerer gjennomsnitt aldersfordeling på arrangementer på fylkesnivå. Det tas kun arrangementer som er arrangert i fylke.
+#### URL Parameters
+
+| Parameter | Type   | Description                | Info |
+|-----------|--------|----------------------------|------|
+| `season`   | `number` | Sesong | Required
+| `excludePlId`   | `number` | Arrangement ID som skal ekskluderes | Optional |
+
+#### Response Example
+```json
+{
+  "11": 4.47,
+  "12": 11.88,
+  "13": 23.53,
+  "14": 27.71,
+  "15": 35.24,
+  "16": 44.53,
+  "17": 35.82,
+
+  ...
+
+  "25": 0.06,
+  "29": 0.06,
+  "2": 0.06,
+  "22": 0.24,
+  "6": 0.06
+}
+```
+
+
 
 ### Kjønnsfordeling i hele landet
 
