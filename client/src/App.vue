@@ -96,9 +96,9 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'land/gjennomsnittDeltakereFylkesniva',
+                controller: 'land/aldersfordelingGjennomsnittFylkesniva',
                 season: 2009,
-                excludePlId: 21,
+                // excludePlId: 21,
             };
             // 2009
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
