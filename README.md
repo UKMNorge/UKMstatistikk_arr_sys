@@ -620,35 +620,36 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 ```
 
 
-### Sjangerfordeling i hele landet
+### Sjangerfordeling gjennomsnitt på alle arrangementer på fylkesnivå
 
-- **URL:** `land/sjangerfordeling`
+- **URL:** `land/sjangerfordelingGjennomsnittFylkesniva`
 - **Method:** `POST`
-- **Description:** Sjanger på aktive innslag fra alle arrangementer i hele landet.
+- **Description:** Sjangerfordeling gjennomsnitt på alle arrangementer arrangert på fylkesnivå i en sesong
 #### URL Parameters
 
-| Parameter | Type   | Description                |
-|-----------|--------|----------------------------|
-| `season`   | `number` | Sesong |
+| Parameter | Type   | Description                | Info |
+|-----------|--------|----------------------------|------|
+| `season`   | `number` | Sesong | Required
+| `excludePlId`   | `number` | Arrangement ID som skal ekskluderes | Optional |
 
 #### Response Example
 ```json
 {
-  "Utstilling":3868,
-  "Musikk":6311,
-  "Arrang\u00f8r":572,
-  "Konferansier":298,
-  "Dans":974,
-  "Film":396,
-  "Litteratur":83,
-  "Noe annet p\u00e5 scene":203,
-  "Media":135,
-  "Teater":112,
-  "Ressurs":1,
-  "Ukjent":35,
-  "Matkultur":8
+  "Musikk": 63.89,
+  "Film": 3.84,
+  "Dans": 8.58,
+  "Utstilling": 51.47,
+  "Noe annet på scene": 5.84,
+  "Media": 7.37,
+  "Konferansier": 5.37,
+  "Arrangør": 11.05,
+  "Litteratur": 1.26,
+  "Teater": 1,
+  "Ukjent": 0.05,
+  "Matkultur": 0.05
 }
 ```
+
 
 ### Gjennomsnitt deltakere på landsnivå
 
