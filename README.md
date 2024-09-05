@@ -598,6 +598,28 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 ```
 
 
+### Gjennomsnitt kjønnsfordeling på alle arrangemeter på fylkesnivå
+
+- **URL:** `land/kjonnsfordelingGjennomsnittFylkesniva`
+- **Method:** `POST`
+- **Description:** Henter kjønnsfordeling gjennomsnitt på alle arrangemeter på fylkesnivå (arrangementer i fylke)
+#### URL Parameters
+
+| Parameter | Type   | Description                | Info |
+|-----------|--------|----------------------------|------|
+| `season`   | `number` | Sesong | Required
+| `excludePlId`   | `number` | Arrangement ID som skal ekskluderes | Optional |
+
+#### Response Example
+```json
+{
+  "male":106.94,
+  "female":108.35,
+  "unknown":32.47
+}
+```
+
+
 ### Sjangerfordeling i hele landet
 
 - **URL:** `land/sjangerfordeling`
