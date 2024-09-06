@@ -96,8 +96,8 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'land/sjangerfordelingGjennomsnittFylkesniva',
-                season: 2013,
+                controller: 'land/alleKommunerAktivitet',
+                season: 2020,
                 excludePlId: 21,
             };
             // 2009
