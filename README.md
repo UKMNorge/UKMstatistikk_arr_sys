@@ -725,3 +725,39 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 {"antall":259}
 
 ```
+
+
+### Aktivitet på alle kommuner
+
+- **URL:** `land/gjennomsnittDeltakereFylkesniva`
+- **Method:** `POST`
+- **Description:** Returnerer alle kommuner i en sesong og indikasjon om de har aktivitet i sesongen. Som aktivitet, regnes det minst 1 arrangement
+#### URL Parameters
+
+| Parameter | Type   | Description                | Info |
+|-----------|--------|----------------------------|------|
+| `season`   | `number` | Sesong | Required
+
+#### Response Example
+```json
+{
+   "season":"2020",
+   "kommuner":{
+      "0":{
+         "navn":"ukjent",
+         "aktivitet":false
+      },
+      "1101":{
+         "navn":"Eigersund",
+         "aktivitet":false
+      },
+      "1103":{
+         "navn":"Stavanger",
+         "aktivitet":false
+      },
+
+      ...
+  }
+}
+```
+land/alleKommunerAktivitet'
