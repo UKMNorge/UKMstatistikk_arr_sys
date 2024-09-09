@@ -96,7 +96,7 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'land/alleKommunerAktivitet',
+                controller: 'land/antallArrangementerLandsniva',
                 season: 2020,
                 excludePlId: 21,
             };
