@@ -96,9 +96,9 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'land/antallArrangementerLandsniva',
-                season: 2020,
-                excludePlId: 21,
+                controller: 'land/antallArrangemenTyperLandsniva',
+                // season: 2020,
+                // excludePlId: 21,
             };
             // 2009
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
