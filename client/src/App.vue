@@ -97,7 +97,7 @@ export default {
             var data = {
                 action: 'UKMstatistikk_ajax',
                 controller: 'land/landsfestivalen/aldersfordeling',
-                season: 2009,
+                season: 2020,
             };
             // 2009
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
