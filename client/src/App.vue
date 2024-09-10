@@ -96,9 +96,9 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'land/landsfestivalen/sjangerfordeling',
-                season: 2009,
-                // unike: true,
+                controller: 'kommune/aldersfordelingSSB',
+                kommuneId: 1101,
+                year: 2009,
             };
             // 2009
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
