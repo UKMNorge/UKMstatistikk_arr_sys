@@ -159,6 +159,41 @@ Alle deltakere på kommune er kun hentet fra gyldige innslag (fullførte innslag
 }
 ```
 
+### Aldersfordeling fra SSB
+
+- **URL:** `kommune/aldersfordelingSSB`
+- **Method:** `POST`
+- **Description:** Antall innbyggere i en kommune for et gitt år. Resultet inneholder antall innbyggere fra 10 til 25 år.
+
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `kommuneId` | `number` | Kommune ID |
+| `year`    | `number` | Sesong |
+
+#### Response Example
+```json
+{
+  "10": {"tekst": "10 år", "antall": 190},
+  "11": {"tekst": "11 år", "antall": 224},
+  "12": {"tekst": "12 år", "antall": 195},
+  "13": {"tekst": "13 år", "antall": 209},
+  "14": {"tekst": "14 år", "antall": 218},
+  "15": {"tekst": "15 år", "antall": 205},
+  "16": {"tekst": "16 år", "antall": 220},
+  "17": {"tekst": "17 år", "antall": 220},
+  "18": {"tekst": "18 år", "antall": 230},
+  "19": {"tekst": "19 år", "antall": 195},
+  "20": {"tekst": "20 år", "antall": 198},
+  "21": {"tekst": "21 år", "antall": 196},
+  "22": {"tekst": "22 år", "antall": 165},
+  "23": {"tekst": "23 år", "antall": 168},
+  "24": {"tekst": "24 år", "antall": 182},
+  "25": {"tekst": "25 år", "antall": 167}
+}
+```
+
 
 ## Fylke
 
