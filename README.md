@@ -861,5 +861,67 @@ Statistikk om landsfestivalen
 
 
 
+### Sjangerfordeling på landsfestivalen
 
+- **URL:** `land/landsfestivalen/sjangerfordeling`
+- **Method:** `POST`
+- **Description:** Antall deltakere fordelt på sjanger på landsfestivalen definert av sesong.
+#### URL Parameters
 
+| Parameter | Type   | Description                | Info |
+|-----------|--------|----------------------------|------|
+| `season`   | `number` | Sesong | Required |
+
+#### Response Example
+```json
+{
+  "video": {
+    "antall": 17,
+    "type_navn": "Film"
+  },
+  "musikk": {
+    "antall": 59,
+    "type_navn": "Musikk"
+  },
+  "matkultur": {
+    "antall": 6,
+    "type_navn": "Matkultur"
+  },
+  "dans": {
+    "antall": 19,
+    "type_navn": "Dans"
+  },
+  "nettredaksjon": {
+    "antall": 16,
+    "type_navn": "Media"
+  },
+  "utstilling": {
+    "antall": 54,
+    "type_navn": "Utstilling"
+  },
+  "konferansier": {
+    "antall": 10,
+    "type_navn": "Konferansier"
+  },
+  "teater": {
+    "antall": 2,
+    "type_navn": "Teater"
+  },
+  "scene": {
+    "antall": 7,
+    "type_navn": "Noe annet på scene"
+  },
+  "ressurs": {
+    "antall": 7,
+    "type_navn": "Ressurs"
+  },
+  "arrangor": {
+    "antall": 2,
+    "type_navn": "Arrangør"
+  },
+  "ukjent": {
+    "antall": 1,
+    "type_navn": "Ukjent"
+  }
+}
+```
