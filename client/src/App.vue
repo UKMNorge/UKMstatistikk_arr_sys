@@ -96,8 +96,8 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'land/landsfestivalen/antallDeltakere',
-                season: 2024,
+                controller: 'land/landsfestivalen/aldersfordeling',
+                season: 2009,
                 unike: true,
             };
             // 2009
