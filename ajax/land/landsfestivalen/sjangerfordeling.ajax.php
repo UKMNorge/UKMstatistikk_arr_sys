@@ -24,4 +24,4 @@ try{
 $statArr = new StatistikkArrangement($arrangement->getId(), $arrangement->getSesong());
 
 
-$handleCall->sendToClient($statArr->getKjonnsfordeling());
+$handleCall->sendToClient($statArr->getSjangerfordeling());

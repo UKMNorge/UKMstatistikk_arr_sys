@@ -96,7 +96,7 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'land/landsfestivalen/kjonnsfordeling',
+                controller: 'land/landsfestivalen/sjangerfordeling',
                 season: 2009,
                 // unike: true,
             };
