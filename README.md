@@ -838,3 +838,39 @@ Statistikk om landsfestivalen
 ]
 ```
 
+
+### Kjønnsfordeling på landsfestivalen
+
+- **URL:** `land/landsfestivalen/aldersfordeling`
+- **Method:** `POST`
+- **Description:** Antall deltakere fordelt på kjønn på landsfestivalen definert av sesong.
+#### URL Parameters
+
+| Parameter | Type   | Description                | Info |
+|-----------|--------|----------------------------|------|
+| `season`   | `number` | Sesong | Required |
+
+#### Response Example
+```json
+[
+  {"age": "-10", "antall": "1"},
+  {"age": "11", "antall": "4"},
+  {"age": "12", "antall": "6"},
+  {"age": "13", "antall": "25"},
+  {"age": "14", "antall": "28"},
+  {"age": "15", "antall": "46"},
+  {"age": "16", "antall": "76"},
+  {"age": "17", "antall": "93"},
+  {"age": "18", "antall": "103"},
+  {"age": "19", "antall": "58"},
+  {"age": "20", "antall": "21"},
+  {"age": "21", "antall": "8"},
+  {"age": "23", "antall": "1"},
+  {"age": "39", "antall": "1"}
+]
+```
+
+
+
+
+
