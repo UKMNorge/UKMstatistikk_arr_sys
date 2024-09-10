@@ -789,7 +789,7 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 Statistikk om landsfestivalen
 
 
-### Antall deltakere
+### Antall deltakere på landsfestivalen
 
 - **URL:** `land/landsfestivalen/antallDeltakere`
 - **Method:** `POST`
@@ -810,4 +810,31 @@ Statistikk om landsfestivalen
 ```
 
 
+### Aldersfordeling på landsfestivalen
+
+- **URL:** `land/landsfestivalen/aldersfordeling`
+- **Method:** `POST`
+- **Description:** Antall deltakere fordelt på alder på landsfestivalen definert av sesong.
+#### URL Parameters
+
+| Parameter | Type   | Description                | Info |
+|-----------|--------|----------------------------|------|
+| `season`   | `number` | Sesong | Required |
+
+#### Response Example
+```json
+[
+  {
+    "age":"11",
+    "antall":"4"
+  },
+  {
+    "age":"12",
+    "antall":"6"
+  },
+
+  ...
+
+]
+```
 
