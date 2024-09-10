@@ -782,3 +782,32 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 }
 ```
 
+
+
+
+## Landsfestivalen (UKMFestivalen)
+Statistikk om landsfestivalen
+
+
+### Antall deltakere
+
+- **URL:** `land/landsfestivalen/antallDeltakere`
+- **Method:** `POST`
+- **Description:** Returnerer antall deltakere med mulighet for å hente unike eller ikke unike
+#### URL Parameters
+
+| Parameter | Type   | Description                | Info |
+|-----------|--------|----------------------------|------|
+| `season`   | `number` | Sesong | Required |
+| `unike`   | `boolean` | Unike eller ikke unike deltakere | Required |
+
+#### Response Example
+```json
+{
+  "erUnike":true,
+  "antall":0
+}
+```
+
+
+
