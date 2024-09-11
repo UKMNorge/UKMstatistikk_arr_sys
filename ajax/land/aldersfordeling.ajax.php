@@ -1,11 +1,14 @@
 <?php
 
 use UKMNorge\Geografi\Fylke;
-use UKMNorge\OAuth2\HandleAPICall;
 use UKMNorge\Statistikk\Objekter\StatistikkFylke;
+use UKMNorge\Statistikk\StatistikkHandleAPICall;
 
 
-$handleCall = new HandleAPICall(['season'], [], ['GET', 'POST'], false);
+$tilgang = 'fylke';
+$tilgangAttribute = null; // Kreves kun tilgang til fylkenivå, ikke spesifikt fylke
+
+$handleCall = new StatistikkHandleAPICall(['season'], [], ['GET', 'POST'], false, false, $tilgang, $tilgangAttribute);
 $season = $handleCall->getArgument('season');
 
 $alleFylkerISesong = StatistikkFylke::getAlleFylkeIdFraSSB($season);
