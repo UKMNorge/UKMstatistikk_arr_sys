@@ -827,6 +827,7 @@ Statistikk om landsfestivalen
 ### Antall deltakere på landsfestivalen
 
 - **URL:** `land/landsfestivalen/antallDeltakere`
+- **Access:** Alle som har tigang til arrangementet
 - **Method:** `POST`
 - **Description:** Returnerer antall deltakere med mulighet for å hente unike eller ikke unike
 #### URL Parameters
@@ -848,6 +849,7 @@ Statistikk om landsfestivalen
 ### Aldersfordeling på landsfestivalen
 
 - **URL:** `land/landsfestivalen/aldersfordeling`
+- **Access:** Alle som har tigang til arrangementet
 - **Method:** `POST`
 - **Description:** Antall deltakere fordelt på alder på landsfestivalen definert av sesong.
 #### URL Parameters
@@ -876,7 +878,8 @@ Statistikk om landsfestivalen
 
 ### Kjønnsfordeling på landsfestivalen
 
-- **URL:** `land/landsfestivalen/aldersfordeling`
+- **URL:** `land/landsfestivalen/kjonnsfordeling`
+- **Access:** Alle som har tigang til arrangementet
 - **Method:** `POST`
 - **Description:** Antall deltakere fordelt på kjønn på landsfestivalen definert av sesong.
 #### URL Parameters
@@ -899,6 +902,7 @@ Statistikk om landsfestivalen
 ### Sjangerfordeling på landsfestivalen
 
 - **URL:** `land/landsfestivalen/sjangerfordeling`
+- **Access:** Alle som har tigang til arrangementet
 - **Method:** `POST`
 - **Description:** Antall deltakere fordelt på sjanger på landsfestivalen definert av sesong.
 #### URL Parameters
