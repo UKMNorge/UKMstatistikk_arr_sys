@@ -2,12 +2,16 @@
 
 use UKMNorge\Arrangement\UKMFestival;
 use UKMNorge\OAuth2\HandleAPICall;
+use UKMNorge\Statistikk\StatistikkHandleAPICall;
 use UKMNorge\Statistikk\Objekter\StatistikkArrangement;
-use UKMNorge\Statistikk\StatistikkManager;
 
-// Det brukes POST fordi WP tillater POST bare
-$handleCall = new HandleAPICall(['season'], [], ['POST'], false);
-$season = $handleCall->getArgument('season');
+
+$season = StatistikkHandleAPICall::getArgumentBeforeInit('season', 'POST');
+
+if($season == null) {
+    $handleCall->sendErrorToClient('Mangler sesong', 400);
+}
+
 
 $arrangement = null;
 try{
@@ -19,15 +23,13 @@ try{
     $handleCall->sendErrorToClient('Kunne ikke hente arrangementet', 401);
 }
 
-// IMPORTANT!!!
-// This is a security check to make sure the user has access to the arrangement
-if(StatistikkManager::hasAccessToArrangement($arrangement->getId()) != true) {
-    $handleCall->sendErrorToClient('Ingen tilgang til arrangementet', 401);
-}
+// Etter at arrangementet er hentet, sjekk om brukeren har tilgang til å se statistikk for arrangementet
+$tilgang = 'arrangement';
+$tilgangAttribute = $arrangement->getId();
 
-
+// The instance is created only if the user has access to the statistics
+$handleCall = new StatistikkHandleAPICall(['season', 'unike'], [], ['GET', 'POST'], false, false, $tilgang, $tilgangAttribute);
 
 $statArr = new StatistikkArrangement($arrangement->getId(), $arrangement->getSesong());
-
 
 $handleCall->sendToClient($statArr->getAldersfordeling());
