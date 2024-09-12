@@ -9,7 +9,7 @@ use UKMNorge\Statistikk\Objekter\StatistikkArrangement;
 $season = StatistikkHandleAPICall::getArgumentBeforeInit('season', 'POST');
 
 if($season == null) {
-    $handleCall->sendErrorToClient('Mangler sesong', 400);
+    StatistikkHandleAPICall::sendError('Mangler sesong', 400);
 }
 
 
@@ -18,9 +18,9 @@ try{
     $arrangement = UKMFestival::getBySeason($season);
 } catch(Exception $e) {
     if($e->getCode() == 401) {
-        $handleCall->sendErrorToClient($e->getMessage(), 401);
+        StatistikkHandleAPICall::sendError($e->getMessage(), 401);
     }
-    $handleCall->sendErrorToClient('Kunne ikke hente arrangementet', 401);
+    StatistikkHandleAPICall::sendError('Kunne ikke hente arrangementet', 401);
 }
 
 // Etter at arrangementet er hentet, sjekk om brukeren har tilgang til å se statistikk for arrangementet
