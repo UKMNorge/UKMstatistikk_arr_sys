@@ -96,9 +96,9 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'land/aldersfordeling',
-                season: 2014,
-                fylkeId: 32,
+                controller: 'land/landsfestivalen/kjonnsfordeling',
+                season: 2020,
+                unike: true,
             };
             // 2009
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);

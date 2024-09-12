@@ -1,7 +1,6 @@
 <?php
 
 use UKMNorge\Arrangement\UKMFestival;
-use UKMNorge\OAuth2\HandleAPICall;
 use UKMNorge\Statistikk\StatistikkHandleAPICall;
 use UKMNorge\Statistikk\Objekter\StatistikkArrangement;
 

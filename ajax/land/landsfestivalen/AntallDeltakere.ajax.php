@@ -3,28 +3,31 @@
 use UKMNorge\Arrangement\UKMFestival;
 use UKMNorge\OAuth2\HandleAPICall;
 use UKMNorge\Statistikk\Objekter\StatistikkArrangement;
-use UKMNorge\Statistikk\StatistikkManager;
+use UKMNorge\Statistikk\StatistikkHandleAPICall;
 
 
-$handleCall = new HandleAPICall(['season', 'unike'], [], ['GET', 'POST'], false);
-$season = $handleCall->getArgument('season');
-$erUnike = $handleCall->getArgument('unike');
+$season = StatistikkHandleAPICall::getArgumentBeforeInit('season', 'POST');
+
+if($season == null) {
+    StatistikkHandleAPICall::sendError('Mangler sesong', 400);
+}
 
 $arrangement = null;
 try{
     $arrangement = UKMFestival::getBySeason($season);
 } catch(Exception $e) {
     if($e->getCode() == 401) {
-        $handleCall->sendErrorToClient($e->getMessage(), 401);
+        StatistikkHandleAPICall::sendError($e->getMessage(), 401);
     }
-    $handleCall->sendErrorToClient('Kunne ikke hente arrangementet', 401);
+    StatistikkHandleAPICall::sendError('Kunne ikke hente arrangementet', 401);
 }
 
-// IMPORTANT!!!
-// This is a security check to make sure the user has access to the arrangement
-if(StatistikkManager::hasAccessToArrangement($arrangement->getId()) != true) {
-    $handleCall->sendErrorToClient('Ingen tilgang til arrangementet', 401);
-}
+// Etter at arrangementet er hentet, sjekk om brukeren har tilgang til å se statistikk for arrangementet
+$tilgang = 'arrangement';
+$tilgangAttribute = $arrangement->getId();
+
+$handleCall = new StatistikkHandleAPICall(['season', 'unike'], [], ['GET', 'POST'], false, false, $tilgang, $tilgangAttribute);
+$erUnike = $handleCall->getArgument('unike');
 
 
 $statArr = new StatistikkArrangement($arrangement->getId(), $arrangement->getSesong());
