@@ -767,6 +767,7 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 ### Aktivitet på alle kommuner
 
 - **URL:** `land/alleKommunerAktivitet`
+- **Access:** Superadmin tilgang
 - **Method:** `POST`
 - **Description:** Returnerer alle kommuner i en sesong og indikasjon om de har aktivitet i sesongen. Som aktivitet, regnes det minst 1 arrangement
 #### URL Parameters
