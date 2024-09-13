@@ -206,7 +206,7 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
 ### Aldersfordeling
 
 - **URL:** `fylke/aldersfordeling`
-- **Access:** Administrator i en kommune som tilhører fylke med fylkeId
+- **Access:** Administrator i en kommune som tilhører fylke med fylkeId eller administrator i fylke med fylkeId
 - **Method:** `POST`
 - **Description:** Aldersfordeling er henter ut alle aldersdataene for personer som er meldt på i aktive innslag i et fylke. Alder begregnes på tidspunktet arrangementet ble holdt
 #### URL Parameters
@@ -270,7 +270,7 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
 ### Antall deltakere
 
 - **URL:** `fylke/antallDeltakere`
-- **Access:** Administrator i en kommune som tilhører fylke med fylkeId
+- **Access:** Administrator i en kommune som tilhører fylke med fylkeId eller administrator i fylke med fylkeId
 - **Method:** `POST`
 - **Description:** Antall deltakere i kommuner som tilhører et fylke. Deltakere hentes kun fra gyldige (fullførte) innslag. 
 #### URL Parameters
@@ -294,7 +294,7 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
 ### Gjennomsnitt deltakere på fylke
 
 - **URL:** `fylke/gjennomsnittDeltakere`
-- **Access:** Administrator i en kommune som tilhører fylke med fylkeId
+- **Access:** Administrator i en kommune som tilhører fylke med fylkeId eller administrator i fylke med fylkeId
 - **Method:** `POST`
 - **Description:** Returnerer gjennomsnitt deltakere på arrangementer i alle kommuner i et fylke i en sesong. Det tas ikke i begregning arrangementer som har 0 deltakere. Arrangementer i fylke blir ikke begregnet
 #### URL Parameters
@@ -317,7 +317,7 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
 ### Kjønnsfordeling på fylke
 
 - **URL:** `fylke/kjonnsfordeling`
-- **Access:** Administrator i en kommune som tilhører fylke med fylkeId
+- **Access:** Administrator i en kommune som tilhører fylke med fylkeId eller administrator i fylke med fylkeId
 - **Method:** `POST`
 - **Description:** Returnerer antall deltakere fordelt på kjønn. Kjønn er identifisert basert på fornavn og noen ganger kan det bli udefinert
 #### URL Parameters
