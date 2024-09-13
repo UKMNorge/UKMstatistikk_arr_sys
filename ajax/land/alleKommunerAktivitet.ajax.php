@@ -2,14 +2,14 @@
 
 // Alle kommuner i hele landet som har UKM-aktivtet (relatert til antall kommuner totalt)
 
-use UKMNorge\OAuth2\HandleAPICall;
-use UKMNorge\Geografi\Fylker;
+use UKMNorge\Statistikk\StatistikkHandleAPICall;
 use UKMNorge\Statistikk\Objekter\StatistikkKommune;
 
+$tilgang = 'superadmin'; // Kreves tilgang som superadmin for å se statistikk for alle kommuner
+$tilgangAttribute = null; 
 
-$handleCall = new HandleAPICall(['season'], [], ['GET', 'POST'], false);
+$handleCall = new StatistikkHandleAPICall(['season'], [], ['GET', 'POST'], false, false, $tilgang, $tilgangAttribute);
 $season = $handleCall->getArgument('season');
-
 
 $$kommunerAktivitet = null;
 try{
