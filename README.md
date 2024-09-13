@@ -403,6 +403,7 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
 ### Kommuner i fylket som har UKM-aktivtet
 
 - **URL:** `fylke/kommunerAktivitet`
+- **Access:** Administrator i en kommune som tilhører fylke med fylkeId eller administrator i fylke med fylkeId
 - **Method:** `POST`
 - **Description:** Returnerer kommuner som har aktivitet i et fylke i en seson. Hvis kommune har minst 1 arrangement i en sesong, regnes det som aktivitet.
 #### URL Parameters
