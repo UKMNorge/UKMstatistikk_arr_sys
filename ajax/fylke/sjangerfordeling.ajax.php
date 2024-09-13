@@ -2,15 +2,23 @@
 
 // Sjangerfordeling på fylke
 
-use UKMNorge\OAuth2\HandleAPICall;
+use UKMNorge\Statistikk\StatistikkHandleAPICall;
 use UKMNorge\Database\SQL\Query;
 use UKMNorge\Geografi\Fylke;
 use UKMNorge\Geografi\Fylker;
 use UKMNorge\Statistikk\Objekter\StatistikkFylke;
 
+$fylkeId = StatistikkHandleAPICall::getArgumentBeforeInit('fylkeId', 'POST');
 
-// Det brukes POST fordi WP tillater POST bare
-$handleCall = new HandleAPICall(['fylkeId', 'season'], ['excludePlId'], ['GET', 'POST'], false);
+if($fylkeId == null) {
+    StatistikkHandleAPICall::sendError('Mangler fylkeId', 400);
+}
+
+$tilgang = 'fylke_fra_kommune';
+$tilgangAttribute = $fylkeId; // Er admin i kommune som tilhører fylke med id $fylkeId
+
+$handleCall = new StatistikkHandleAPICall(['fylkeId', 'season'], ['excludePlId'], ['GET', 'POST'], false, false, $tilgang, $tilgangAttribute);
+
 $excludePlId = $handleCall->getOptionalArgument('excludePlId');
 $fylkeId = $handleCall->getArgument('fylkeId');
 $season = $handleCall->getArgument('season');

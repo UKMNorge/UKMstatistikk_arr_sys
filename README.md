@@ -341,6 +341,7 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
 ### Sjangerfordeling på fylke
 
 - **URL:** `fylke/sjangerfordeling`
+- **Access:** Administrator i en kommune som tilhører fylke med fylkeId eller administrator i fylke med fylkeId
 - **Method:** `POST`
 - **Description:** Returnerer antall personer fordelt på sjanger eller innslag type i kommuner i et fylke. Typene som ikke kan genereres, blir representert som udefinert. Kan sendes arrangement som skal ekskluderes. Dette kan brukes når det kalles fra et arrangement i fylke som skal ikke bli med i begregning
 #### URL Parameters

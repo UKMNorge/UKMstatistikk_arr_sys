@@ -96,7 +96,7 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'fylke/kommunerAktivitet',
+                controller: 'fylke/sjangerfordeling',
                 fylkeId: 56,
                 season: 2024,
                 unike: true,
