@@ -659,6 +659,37 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 }
 ```
 
+### Sjangerfordeling gjennomsnitt på alle arrangementer på fylkesnivå
+
+- **URL:** `land/sjangerfordeling`
+- **Access:** Alle som er administrator i minst 1 fylke
+- **Method:** `POST`
+- **Description:** Sjangerfordeling på alle arrangementer fra alle kommuner. HUSK: at det ikke blir med fylkesarrangementer
+#### URL Parameters
+
+| Parameter | Type   | Description                | Info |
+|-----------|--------|----------------------------|------|
+| `season`   | `number` | Sesong | Required
+
+#### Response Example
+```json
+{
+  "Utstilling": 3868,
+  "Musikk": 6311,
+  "Arrangør": 572,
+  "Konferansier": 298,
+  "Dans": 974,
+  "Film": 396,
+  "Litteratur": 83,
+  "Noe annet på scene": 203,
+  "Media": 135,
+  "Teater": 112,
+  "Ressurs": 1,
+  "Ukjent": 35,
+  "Matkultur": 8
+}
+```
+
 
 ### Sjangerfordeling gjennomsnitt på alle arrangementer på fylkesnivå
 
