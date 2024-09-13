@@ -581,6 +581,7 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 ### Gjennomsnitt aldersfordeling på fylkesarrangementer (fylkesnivå)
 
 - **URL:** `land/aldersfordelingGjennomsnittFylkesniva`
+- **Access:** Alle som er admin i minst 1 fylke
 - **Method:** `POST`
 - **Description:** Returnerer gjennomsnitt aldersfordeling på arrangementer på fylkesnivå. Det tas kun arrangementer som er arrangert i fylke.
 #### URL Parameters
