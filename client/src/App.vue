@@ -96,7 +96,7 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'land/sjangerfordeling',
+                controller: 'land/sjangerfordelingGjennomsnittFylkesniva',
                 season: 2012,
                 unike: true,
             };

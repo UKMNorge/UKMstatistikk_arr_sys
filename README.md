@@ -694,6 +694,7 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 ### Sjangerfordeling gjennomsnitt på alle arrangementer på fylkesnivå
 
 - **URL:** `land/sjangerfordelingGjennomsnittFylkesniva`
+- **Access:** Alle som er administrator i minst 1 fylke
 - **Method:** `POST`
 - **Description:** Sjangerfordeling gjennomsnitt på alle arrangementer arrangert på fylkesnivå i en sesong
 #### URL Parameters
