@@ -96,8 +96,8 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'land/landsfestivalen/kjonnsfordeling',
-                season: 2020,
+                controller: 'land/aldersfordelingGjennomsnittFylkesniva',
+                season: 2012,
                 unike: true,
             };
             // 2009
