@@ -270,6 +270,7 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
 ### Antall deltakere
 
 - **URL:** `fylke/antallDeltakere`
+- **Access:** Administrator i en kommune som tilhører fylke med fylkeId
 - **Method:** `POST`
 - **Description:** Antall deltakere i kommuner som tilhører et fylke. Deltakere hentes kun fra gyldige (fullførte) innslag. 
 #### URL Parameters

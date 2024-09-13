@@ -96,9 +96,10 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'fylke/antallArrangementerPerFylke',
+                controller: 'fylke/antallDeltakere',
                 fylkeId: 56,
                 season: 2024,
+                unike: true,
             };
             // 2009
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
