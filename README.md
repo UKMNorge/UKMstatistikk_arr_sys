@@ -206,6 +206,7 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
 ### Aldersfordeling
 
 - **URL:** `fylke/aldersfordeling`
+- **Access:** Administrator i en kommune som tilhører fylke med fylkeId
 - **Method:** `POST`
 - **Description:** Aldersfordeling er henter ut alle aldersdataene for personer som er meldt på i aktive innslag i et fylke. Alder begregnes på tidspunktet arrangementet ble holdt
 #### URL Parameters
