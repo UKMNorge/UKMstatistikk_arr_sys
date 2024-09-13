@@ -821,6 +821,25 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 ```
 
 
+### Antall arrangementer
+
+- **URL:** `land/antallArrangementerLandsniva`
+- **Access:** Superadmin tilgang
+- **Method:** `POST`
+- **Description:** Returnerer antall arrangementer i hele landet
+#### URL Parameters
+
+| Parameter | Type   | Description                | Info |
+|-----------|--------|----------------------------|------|
+
+
+#### Response Example
+```json
+{
+  "antall":2476
+}
+```
+
 
 
 ## Landsfestivalen (UKMFestivalen)
