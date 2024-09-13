@@ -751,6 +751,7 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 ### Gjennomsnitt deltakere på fylkesarrangementer
 
 - **URL:** `land/gjennomsnittDeltakereFylkesniva`
+- **Access:** Alle som er administrator i minst 1 fylke
 - **Method:** `POST`
 - **Description:** Returnerer antatall (gjennomsnitt) deltaker på alle arrangementer på fylkesnivå på alle fylker i en sesong
 #### URL Parameters

@@ -96,7 +96,7 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'land/gjennomsnittDeltakere',
+                controller: 'land/gjennomsnittDeltakereFylkesniva',
                 season: 2012,
                 unike: true,
             };
