@@ -137,9 +137,11 @@ OBS: Arrangement tilgang sjekkes gjennom StatistikkManager
 
 Alle deltakere på kommune er kun hentet fra gyldige innslag (fullførte innslag)
 
-### Aldersfordeling
 
-- **URL:** `arrangement/aldersfordeling`
+### Antall Deltakere i kommune
+
+- **URL:** `kommune/antallDeltakere`
+- **Access:** Tilgang til kommune (kommuneId)
 - **Method:** `POST`
 - **Description:** Antall deltakere i gyldige innslag i en kommune. Det er mulig å hente unike og ikke unike deltakere ved å sende `unike` parameter
 

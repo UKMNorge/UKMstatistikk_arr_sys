@@ -96,9 +96,10 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'land/sjangerfordelingGjennomsnittFylkesniva',
-                season: 2012,
-                unike: true,
+                controller: 'kommune/antallDeltakere',
+                season: 2021,
+                kommuneId: 5628,
+                unike: true
             };
             // 2009
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
