@@ -640,6 +640,7 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 ### Gjennomsnitt kjønnsfordeling på alle arrangemeter på fylkesnivå
 
 - **URL:** `land/kjonnsfordelingGjennomsnittFylkesniva`
+- **Access:** Alle som er administrator i minst 1 fylke
 - **Method:** `POST`
 - **Description:** Henter kjønnsfordeling gjennomsnitt på alle arrangemeter på fylkesnivå (arrangementer i fylke)
 #### URL Parameters

@@ -1,14 +1,15 @@
 <?php
 
-use UKMNorge\DesignWordpress\Environment\Statistikk;
 use UKMNorge\Geografi\Fylke;
-use UKMNorge\OAuth2\HandleAPICall;
+use UKMNorge\Statistikk\StatistikkHandleAPICall;
 use UKMNorge\Statistikk\Objekter\StatistikkFylke;
 use UKMNorge\Statistikk\Objekter\StatistikkArrangement;
-use UKMNorge\Database\SQL\Query;
 
+$tilgang = 'fylke'; // Kreves tilgang som superadmin for å se statistikk for alle kommuner
+$tilgangAttribute = null; // Er admin i minst 1 fylke
 
-$handleCall = new HandleAPICall(['season'], ['excludePlId'], ['GET', 'POST'], false);
+$handleCall = new StatistikkHandleAPICall(['season'], ['excludePlId'], ['GET', 'POST'], false, false, $tilgang, $tilgangAttribute);
+
 $season = $handleCall->getArgument('season');
 $excludePlId = $handleCall->getOptionalArgument('excludePlId') ?? -1;
 
