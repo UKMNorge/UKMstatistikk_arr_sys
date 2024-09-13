@@ -1,11 +1,15 @@
 <?php
 
-use UKMNorge\OAuth2\HandleAPICall;
+use UKMNorge\Statistikk\StatistikkHandleAPICall;
 use UKMNorge\Geografi\Fylker;
 use UKMNorge\Statistikk\Objekter\StatistikkFylke;
 
 
-$handleCall = new HandleAPICall(['fylkeId', 'season'], [], ['GET', 'POST'], false);
+$tilgang = 'fylke'; // Er admin i minst 1 fylke
+$tilgangAttribute = $fylkeId;
+
+$handleCall = new StatistikkHandleAPICall(['fylkeId', 'season'], [], ['GET', 'POST'], false, false, $tilgang, $tilgangAttribute);
+
 $fylkeId = $handleCall->getArgument('fylkeId');
 $season = $handleCall->getArgument('season');
 
@@ -26,6 +30,3 @@ try{
 $retArr = [];
 $retArr['antall'] = $statFylke->getAntallArrangementer();
 $handleCall->sendToClient($retArr);
-
-
-

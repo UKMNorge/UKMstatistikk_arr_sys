@@ -455,6 +455,7 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
 ### Antall arrangementer i alle kommuner i fylke
 
 - **URL:** `fylke/antallArrangementerIFylke`
+- **Access:** Alle som er administrator i minst 1 fylke
 - **Method:** `POST`
 - **Description:** Returnerer antall arrangementer arrangert kun på kommuner i 1 fylke
 #### URL Parameters
