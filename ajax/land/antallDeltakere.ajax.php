@@ -6,7 +6,7 @@ use UKMNorge\Statistikk\StatistikkHandleAPICall;
 use UKMNorge\Statistikk\Objekter\StatistikkFylke;
 
 
-$tilgang = 'fylke'; // Kreves tilgang som superadmin for å se statistikk for alle kommuner
+$tilgang = 'fylke';
 $tilgangAttribute = null; // Er admin i minst 1 fylke
 
 $handleCall = new StatistikkHandleAPICall(['season', 'unike'], [], ['GET', 'POST'], false, false, $tilgang, $tilgangAttribute);
