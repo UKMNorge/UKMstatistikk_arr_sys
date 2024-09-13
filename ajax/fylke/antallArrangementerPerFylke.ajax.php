@@ -1,10 +1,13 @@
 <?php
 
-use UKMNorge\OAuth2\HandleAPICall;
+use UKMNorge\Statistikk\StatistikkHandleAPICall;
 use UKMNorge\Statistikk\Objekter\StatistikkFylke;
 
 
-$handleCall = new HandleAPICall(['season'], [], ['GET', 'POST'], false);
+$tilgang = 'fylke'; // Er admin i minst 1 fylke
+$tilgangAttribute = null;
+
+$handleCall = new StatistikkHandleAPICall(['season'], [], ['GET', 'POST'], false, false, $tilgang, $tilgangAttribute);
 $season = $handleCall->getArgument('season');
 
 $alleFylkerISesong = StatistikkFylke::getAlleFylkeIdFraSSB($season);
