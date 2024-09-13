@@ -711,6 +711,7 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 ### Antall innslag
 
 - **URL:** `land/getAllInnslag`
+- **Access:** Superadmin tilgang
 - **Method:** `POST`
 - **Description:** Returnerer antall innslag på alle kommuner i alle fylker i en sesong. Det hentes ikke arrangementer arrangert i fylke
 #### URL Parameters
