@@ -317,6 +317,7 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
 ### Kjønnsfordeling på fylke
 
 - **URL:** `fylke/kjonnsfordeling`
+- **Access:** Administrator i en kommune som tilhører fylke med fylkeId
 - **Method:** `POST`
 - **Description:** Returnerer antall deltakere fordelt på kjønn. Kjønn er identifisert basert på fornavn og noen ganger kan det bli udefinert
 #### URL Parameters
