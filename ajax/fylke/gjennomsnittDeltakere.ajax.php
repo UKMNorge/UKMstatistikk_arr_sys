@@ -1,13 +1,23 @@
 <?php
 
-use UKMNorge\OAuth2\HandleAPICall;
+use UKMNorge\Statistikk\StatistikkHandleAPICall;
 use UKMNorge\Database\SQL\Query;
 use UKMNorge\Geografi\Fylke;
 use UKMNorge\Geografi\Fylker;
 use UKMNorge\Statistikk\Objekter\StatistikkFylke;
 
 
-$handleCall = new HandleAPICall(['fylkeId', 'season'], [], ['GET', 'POST'], false);
+$fylkeId = StatistikkHandleAPICall::getArgumentBeforeInit('fylkeId', 'POST');
+
+if($fylkeId == null) {
+    StatistikkHandleAPICall::sendError('Mangler fylkeId', 400);
+}
+
+$tilgang = 'fylke_fra_kommune';
+$tilgangAttribute = $fylkeId; // Er admin i kommune som tilhører fylke med id $fylkeId
+
+$handleCall = new StatistikkHandleAPICall(['fylkeId', 'season'], [], ['GET', 'POST'], false, false, $tilgang, $tilgangAttribute);
+
 $fylkeId = $handleCall->getArgument('fylkeId');
 $season = $handleCall->getArgument('season');
 
