@@ -162,6 +162,7 @@ Alle deltakere på kommune er kun hentet fra gyldige innslag (fullførte innslag
 ### Aldersfordeling fra SSB
 
 - **URL:** `kommune/aldersfordelingSSB`
+- **Access:** Alle
 - **Method:** `POST`
 - **Description:** Antall innbyggere i en kommune for et gitt år. Resultet inneholder antall innbyggere fra 10 til 25 år.
 
