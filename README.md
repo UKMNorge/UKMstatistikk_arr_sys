@@ -618,6 +618,7 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 ### Kjønnsfordeling i hele landet
 
 - **URL:** `land/kjonnsfordeling`
+- **Access:** Alle som er administrator i minst 1 fylke
 - **Method:** `POST`
 - **Description:** Henter deltakere fra alle arrangementer i hele landet fordelt på kjønn.
 #### URL Parameters
