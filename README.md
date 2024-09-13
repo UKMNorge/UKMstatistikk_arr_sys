@@ -804,6 +804,7 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 ### Antall arrangementer fordelt på type
 
 - **URL:** `land/antallArrangemenTyperLandsniva`
+- **Access:** Superadmin tilgang
 - **Method:** `POST`
 - **Description:** Returnerer antall arrangementtyper på landsnivå lokalt (uten fylkesarrangementer)
 #### URL Parameters
