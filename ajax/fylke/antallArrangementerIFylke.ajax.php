@@ -5,7 +5,13 @@ use UKMNorge\Geografi\Fylker;
 use UKMNorge\Statistikk\Objekter\StatistikkFylke;
 
 
-$tilgang = 'fylke'; // Er admin i minst 1 fylke
+$fylkeId = StatistikkHandleAPICall::getArgumentBeforeInit('fylkeId', 'POST');
+
+if($fylkeId == null) {
+    StatistikkHandleAPICall::sendError('Mangler fylkeId', 400);
+}
+
+$tilgang = 'fylke'; // Er admin i minst i fylke med id $fylkeId
 $tilgangAttribute = $fylkeId;
 
 $handleCall = new StatistikkHandleAPICall(['fylkeId', 'season'], [], ['GET', 'POST'], false, false, $tilgang, $tilgangAttribute);
