@@ -44,6 +44,7 @@ OBS: Arrangement tilgang sjekkes gjennom StatistikkManager
 ### Antall Deltakere
 
 - **URL:** `arrangement/antallDeltakere`
+- **Access:** Administrator i arrangementet eller administrator i fylket/kommunen som arrangementet tilhører
 - **Method:** `POST`
 - **Description:** Returnerer antall deltakere i et arrangement fra aktive (fullførte) innslag. Det er mulig å hente unike og ikke unike deltakere ved å sende `unike` parameter
 #### URL Parameters
