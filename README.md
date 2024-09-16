@@ -67,6 +67,7 @@ OBS: Arrangement tilgang sjekkes gjennom StatistikkManager
 ### Kjønnsfordeling
 
 - **URL:** `arrangement/kjonnsfordeling`
+- **Access:** Administrator i arrangementet eller administrator i fylket/kommunen som arrangementet tilhører
 - **Method:** `POST`
 - **Description:** Returnerer antall personer fordelt på kjønn. Kjønn er identifisert basert på fornavn og noen ganger kan det bli udefinert
 #### URL Parameters
