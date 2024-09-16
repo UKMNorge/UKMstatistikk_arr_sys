@@ -12,6 +12,7 @@ OBS: Arrangement tilgang sjekkes gjennom StatistikkManager
 ### Aldersfordeling
 
 - **URL:** `arrangement/aldersfordeling`
+- **Access:** Administrator i arrangementet eller administrator i fylket/kommunen som arrangementet tilhører
 - **Method:** `POST`
 - **Description:** Aldersfordeling er designet for å hente ut alle aldersdataene for personer som er meldt på i aktive innslag i et arrangement. Den opererer typisk på en samling av participant hvor hver person har en spesifisert alder predefinert. Alder begregnes på tidspunktet arrangementet ble holdt.
 
