@@ -3,13 +3,13 @@
 use UKMNorge\Geografi\Fylke;
 use UKMNorge\Statistikk\Objekter\StatistikkFylke;
 use UKMNorge\Statistikk\Objekter\StatistikkArrangement;
-use UKMNorge\Statistikk\StatistikkHandleAPICall;
+use UKMNorge\OAuth2\ArrSys\HandleAPICallWithAuthorization;
 
 
 $tilgang = 'fylke';
 $tilgangAttribute = null; // Kreves kun tilgang til fylkenivå, ikke spesifikt fylke
 
-$handleCall = new StatistikkHandleAPICall(['season'], ['excludePlId'], ['GET', 'POST'], false, false, $tilgang, $tilgangAttribute);
+$handleCall = new HandleAPICallWithAuthorization(['season'], ['excludePlId'], ['GET', 'POST'], false, false, $tilgang, $tilgangAttribute);
 $season = $handleCall->getArgument('season');
 $excludePlId = $handleCall->getOptionalArgument('excludePlId') ?? -1;
 

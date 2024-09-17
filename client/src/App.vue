@@ -96,9 +96,9 @@ export default {
             console.log('testAjax2');
             var data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'arrangement/kjonnsfordeling',
-                plId: 3777,
-                // unike: true,
+                controller: 'fylke/gjennomsnittDeltakere',
+                fylkeId: 55,
+                season: 2009,
             };
             // 2009
             var results = this.spaInteraction.runAjaxCall('/', 'POST', data);

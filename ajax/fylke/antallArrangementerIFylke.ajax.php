@@ -1,20 +1,20 @@
 <?php
 
-use UKMNorge\Statistikk\StatistikkHandleAPICall;
+use UKMNorge\OAuth2\ArrSys\HandleAPICallWithAuthorization;
 use UKMNorge\Geografi\Fylker;
 use UKMNorge\Statistikk\Objekter\StatistikkFylke;
 
 
-$fylkeId = StatistikkHandleAPICall::getArgumentBeforeInit('fylkeId', 'POST');
+$fylkeId = HandleAPICallWithAuthorization::getArgumentBeforeInit('fylkeId', 'POST');
 
 if($fylkeId == null) {
-    StatistikkHandleAPICall::sendError('Mangler fylkeId', 400);
+    HandleAPICallWithAuthorization::sendError('Mangler fylkeId', 400);
 }
 
 $tilgang = 'fylke'; // Er admin i minst i fylke med id $fylkeId
 $tilgangAttribute = $fylkeId;
 
-$handleCall = new StatistikkHandleAPICall(['fylkeId', 'season'], [], ['GET', 'POST'], false, false, $tilgang, $tilgangAttribute);
+$handleCall = new HandleAPICallWithAuthorization(['fylkeId', 'season'], [], ['GET', 'POST'], false, false, $tilgang, $tilgangAttribute);
 
 $fylkeId = $handleCall->getArgument('fylkeId');
 $season = $handleCall->getArgument('season');

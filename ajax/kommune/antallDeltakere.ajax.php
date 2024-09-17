@@ -1,19 +1,19 @@
 <?php
 
-use UKMNorge\Statistikk\StatistikkHandleAPICall;
+use UKMNorge\OAuth2\ArrSys\HandleAPICallWithAuthorization;
 use UKMNorge\Geografi\Kommune;
 use UKMNorge\Statistikk\Objekter\StatistikkKommune;
 
-$kommuneId = StatistikkHandleAPICall::getArgumentBeforeInit('kommuneId', 'POST');
+$kommuneId = HandleAPICallWithAuthorization::getArgumentBeforeInit('kommuneId', 'POST');
 
 if($kommuneId == null) {
-    StatistikkHandleAPICall::sendError('Mangler kommuneId', 400);
+    HandleAPICallWithAuthorization::sendError('Mangler kommuneId', 400);
 }
 
 $tilgang = 'kommune'; // Er admin i kommune
 $tilgangAttribute = $kommuneId; // Er admin i kommune med id $kommuneId
 
-$handleCall = new StatistikkHandleAPICall(['kommuneId', 'season', 'unike'], [], ['GET', 'POST'], false, false, $tilgang, $tilgangAttribute);
+$handleCall = new HandleAPICallWithAuthorization(['kommuneId', 'season', 'unike'], [], ['GET', 'POST'], false, false, $tilgang, $tilgangAttribute);
 
 $kommuneId = $handleCall->getArgument('kommuneId');
 $season = $handleCall->getArgument('season');

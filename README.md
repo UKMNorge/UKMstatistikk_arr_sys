@@ -89,6 +89,7 @@ OBS: Arrangement tilgang sjekkes gjennom StatistikkManager
 ### Sjangerfordeling
 
 - **URL:** `arrangement/sjangerfordeling`
+- **Access:** Administrator i arrangementet eller administrator i fylket/kommunen som arrangementet tilhører
 - **Method:** `POST`
 - **Description:** Returnerer antall personer fordelt på sjanger eller innslag type. Typene som ikke kan genereres, blir representert som udefinert
 #### URL Parameters
