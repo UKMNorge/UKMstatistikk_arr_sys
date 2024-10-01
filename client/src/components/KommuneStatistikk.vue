@@ -26,6 +26,23 @@
                 </v-autocomplete>
             </div>
 
+            <!-- Årstall -->
+            <div class="as-margin-top-space-1">
+                <div class="as-padding-top-space-2 as-padding-bottom-space-4">
+                    <h5>Velg tidsperioden</h5> 
+                </div>
+                <v-range-slider
+                    v-model="selectedYears"
+                    :items="availableYears" 
+                    :min="2009"
+                    :max="2024"
+                    :step="1"
+                    thumb-label="always"
+                    class="align-center"
+                >
+                </v-range-slider>
+            </div>
+
             <div>
                 <v-btn
                     class="v-btn-as v-btn-success"
@@ -74,10 +91,19 @@ export default {
             selectedType: '' as any,
             selectedKommuner: [] as Kommune[],  // Hold the ids of selected municipalities
             availableTypes: ['Antall deltakere', 'Aldersfordeling', 'Kjønnsfordeling', 'Sjangerfordeling'],
-            availableKommuner: [] as Kommune[]  // Corrected typo here
+            availableKommuner: [] as Kommune[],  // Corrected typo here
+            availableYears: [] as number[],
+            selectedYears: [] as number[]
         };
     },
     methods: {
+        fetchAvailableYears() {
+            // From 2009 to current year
+            const currentYear = new Date().getFullYear();
+            for (let i = 2009; i <= currentYear; i++) {
+                this.availableYears.push(i);
+            }
+        },
         fetchAvailableKommuner() {
             var kommuner = [];
             for (let i = 0; i < 10; i++) {
@@ -96,7 +122,7 @@ export default {
             console.log('Selected Kommuner Names:', selectedNames);
         },
         isGeneratingPossible(): boolean {
-            return this.selectedType !== '' && this.selectedKommuner.length > 0;
+            return this.selectedType !== '' && this.selectedKommuner.length > 0 && this.selectedYears.length > 0;
         }
     }
 }
