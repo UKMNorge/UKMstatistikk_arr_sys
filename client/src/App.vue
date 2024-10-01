@@ -12,17 +12,17 @@
                     fixed-tabs
                     bg-color="#fff"
                     v-model="tab">
-                    <v-tab text="Arrangørsystemet"></v-tab>
+                    <v-tab text="Kommunestatistikk"></v-tab>
                     <v-tab text="Påmeldingssystem"></v-tab>
                     <v-tab text="Generell statistikk"></v-tab>
                 </v-tabs>
                 
                 <div class="as-margin-top-space-4">
                     <v-tabs-window v-model="tab">
-                        <!-- Arrangørsystemet -->
+                        <!-- Kommunestatistikk -->
                         <v-tabs-window-item>
                         <div class="as-containercontainer">
-                                <ArrangorsystemStatistikk />
+                                <KommuneStatistikk />
                             </div>
                         </v-tabs-window-item>
                         
@@ -51,7 +51,7 @@ import { defineComponent, ref, watch, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 // Components
-import ArrangorsystemStatistikk from './components/ArrangorsystemStatistikk.vue';
+import KommuneStatistikk from './components/KommuneStatistikk.vue';
 import PaameldingsystemStatistikk from './components/PaameldingsystemStatistikk.vue';
 import GenerellStatistikk from './components/GenerellStatistikk.vue';
 
@@ -65,7 +65,7 @@ export default {
     },
 
     components : {
-        ArrangorsystemStatistikk : ArrangorsystemStatistikk,
+        KommuneStatistikk : KommuneStatistikk,
         PaameldingsystemStatistikk : PaameldingsystemStatistikk,
         GenerellStatistikk : GenerellStatistikk,
     },
