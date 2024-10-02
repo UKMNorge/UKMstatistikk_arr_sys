@@ -34,10 +34,6 @@
         type: Array as PropType<{ label: string; data: number[]; backgroundColor: string[] }[]>, // Dataset for the chart
         required: true
       },
-      chartData: {
-        type: Array as PropType<number[][]>, // 2D array: One array for each kommuner, each containing 3 values (2020, 2021, 2022)
-        required: true
-      },
       loading: {
         type: Boolean,
         required: false,
