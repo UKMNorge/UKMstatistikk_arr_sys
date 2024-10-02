@@ -30,6 +30,10 @@
         type: Array as PropType<string[]>, // Labels for the kommuner
         required: true
       },
+      dataset: {
+        type: Array as PropType<{ label: string; data: number[]; backgroundColor: string[] }[]>, // Dataset for the chart
+        required: true
+      },
       chartData: {
         type: Array as PropType<number[][]>, // 2D array: One array for each kommuner, each containing 3 values (2020, 2021, 2022)
         required: true
@@ -58,28 +62,13 @@
         const ctx = (document.getElementById(this.chartId) as HTMLCanvasElement).getContext('2d');
         const labels = this.labels;
         const barColors = this.barColors;
+        const dataset = this.dataset;
   
         this.chart = new Chart(ctx!, {
           type: 'bar',
           data: {
             labels: labels, // Labels for x-axis (e.g., Bergen, Melhus, etc.)
-            datasets: [
-              {
-                label: '2020',
-                data: this.chartData.map(d => d[0]), // Extract 2020 data for each kommuner
-                backgroundColor: barColors[0]
-              },
-              {
-                label: '2021',
-                data: this.chartData.map(d => d[1]), // Extract 2021 data for each kommuner
-                backgroundColor: barColors[1]
-              },
-              {
-                label: '2022',
-                data: this.chartData.map(d => d[2]), // Extract 2022 data for each kommuner
-                backgroundColor: barColors[2]
-              }
-            ]
+            datasets: dataset
           },
           options: {
             responsive: true,
