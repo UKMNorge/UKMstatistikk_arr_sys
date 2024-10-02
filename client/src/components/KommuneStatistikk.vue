@@ -56,8 +56,12 @@
             </div>
         </div>
 
-        <div class="as-card-1 as-padding-space-3 as-margin-top-space-7"> 
-            <Arrangement />
+        <div>
+            <h1>Antall Deltakere</h1>
+            <AntallDeltakere ref="antallDeltakerComponent"
+                :selectedKommuner="selectedKommuner"
+                :selectedYears="getAllSelectedYears()"
+            ></AntallDeltakere>
         </div>
         
         
@@ -67,6 +71,8 @@
 <script lang="ts">
 import Arrangement from './ArrSys/Arrangement.vue';
 import Kommune from '../objects/Kommune';
+import AntallDeltakere from './Kommune/AntallDeltakere.vue';
+
 
 export default {
     props: {
@@ -80,7 +86,8 @@ export default {
         }
     },
     components: {
-        Arrangement : Arrangement
+        Arrangement : Arrangement,
+        AntallDeltakere : AntallDeltakere
     },
     mounted() {
         console.log('mounted on ArrangorsystemStatistikk.vue');
@@ -106,23 +113,35 @@ export default {
         },
         fetchAvailableKommuner() {
             var kommuner = [];
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 2; i++) {
                 kommuner.push(new Kommune(i, 'Kommune ' + i));
             }
             if(kommuner.length > 0) {
                 this.availableKommuner = kommuner;  // Corrected typo here
             }
+
+            this.availableKommuner.push(new Kommune(5028, 'Melhus'));
+            this.availableKommuner.push(new Kommune(5628, 'Deatnu - Tana'));
+            
         },
         generateRapport() {
+            (<any>this.$refs).antallDeltakerComponent.init();
+
             console.log('Selected Kommuner IDs:', this.selectedKommuner);
             // Map the selected ids to their corresponding names
-            const selectedNames = this.selectedKommuner.map(id =>
-                this.availableKommuner.find(kommune => kommune.id === id)?.navn
-            );
-            console.log('Selected Kommuner Names:', selectedNames);
         },
         isGeneratingPossible(): boolean {
             return this.selectedType !== '' && this.selectedKommuner.length > 0 && this.selectedYears.length > 0;
+        },
+        getAllSelectedYears(): number[] {
+            var firstYear = this.selectedYears[0];
+            var lastYear = this.selectedYears[this.selectedYears.length - 1];
+            var years = [];
+            for (let i = firstYear; i <= lastYear; i++) {
+                years.push(i);
+            }
+
+            return years;
         }
     }
 }
