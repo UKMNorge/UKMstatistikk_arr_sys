@@ -64,6 +64,14 @@
                     :selectedYears="getAllSelectedYears()"
                 ></AntallDeltakere>
             </div>
+
+            <!-- Deltakelse Sammenligning -->
+            <div v-show="selectedType == 'Deltakelse Sammenligning'">
+                <DeltakelseSammenligning ref="deltakelseSammenligning"
+                    :selectedKommuner="selectedKommuner"
+                    :selectedYears="getAllSelectedYears()"
+                ></DeltakelseSammenligning>
+            </div>
         </div>
         
     </div>
@@ -73,6 +81,7 @@
 import Arrangement from './ArrSys/Arrangement.vue';
 import Kommune from '../objects/Kommune';
 import AntallDeltakere from './Kommune/AntallDeltakere.vue';
+import DeltakelseSammenligning from './Kommune/DeltakelseSammenligning.vue';
 
 
 export default {
@@ -88,7 +97,8 @@ export default {
     },
     components: {
         Arrangement : Arrangement,
-        AntallDeltakere : AntallDeltakere
+        AntallDeltakere : AntallDeltakere,
+        DeltakelseSammenligning : DeltakelseSammenligning
     },
     mounted() {
         console.log('mounted on ArrangorsystemStatistikk.vue');
@@ -98,7 +108,7 @@ export default {
         return {
             selectedType: '' as any,
             selectedKommuner: [] as Kommune[],  // Hold the ids of selected municipalities
-            availableTypes: ['Antall deltakere', 'Aldersfordeling', 'Kjønnsfordeling', 'Sjangerfordeling'],
+            availableTypes: ['Antall deltakere', 'Deltakelse Sammenligning', 'Aldersfordeling', 'Kjønnsfordeling', 'Sjangerfordeling'],
             availableKommuner: [] as Kommune[],  // Corrected typo here
             availableYears: [] as number[],
             selectedYears: [] as number[]
@@ -126,7 +136,11 @@ export default {
             
         },
         generateRapport() {
-            (<any>this.$refs).antallDeltakerComponent.init();
+            if(this.selectedType == 'Antall deltakere') {
+                (<any>this.$refs).antallDeltakerComponent.init();
+            } else if(this.selectedType == 'Deltakelse Sammenligning') {
+                (<any>this.$refs).deltakelseSammenligning.init();
+            }
 
             console.log('Selected Kommuner IDs:', this.selectedKommuner);
             // Map the selected ids to their corresponding names
