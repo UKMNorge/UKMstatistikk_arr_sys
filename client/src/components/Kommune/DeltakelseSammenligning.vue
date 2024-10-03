@@ -12,6 +12,7 @@
 
 <script lang="ts">
 import LineChart from '../charts/LineChart.vue';
+import KommuneObj from '../../objects/Kommune'; // Ensure Kommune is imported correctly
 import type Kommune from '../../objects/Kommune'; // Ensure Kommune is imported correctly
 
 
@@ -48,7 +49,6 @@ export default {
 
           for(let kommune of this.selectedKommuner) {
               for(let year of this.selectedYears) {
-                  console.warn("AJAX...from deltakelseSammenligning.vue");
                   var data = {
                       action: 'UKMstatistikk_ajax',
                       controller: 'kommune/antallDeltakere',
@@ -71,6 +71,28 @@ export default {
 
                   this.kommunerData[year].push(arr);
               }
+          }
+
+          // Get gjennomsnitt deltakere i hele landet
+          for(let year of this.selectedYears) {
+            // Simulate statistikk for hele landet som kommune
+            var landKommune = new KommuneObj(0, 'Hele landet');
+
+            let data = {
+                action: 'UKMstatistikk_ajax',
+                controller: 'land/gjennomsnittDeltakere',
+                season: year,
+            };
+
+            var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+
+            let arr = {
+                kommune: landKommune,
+                year: year,
+                antall: results.gjennomsnitt
+            }
+
+            this.kommunerData[year].push(arr);
           }
 
           console.log(this.kommunerData);
@@ -98,7 +120,8 @@ export default {
           for(let key in kommunerArr) {
             let kData = kommunerArr[key];
             
-            let color = this.getRandomColor(.4);
+            let opacityColor = kData.kommune.id == 0 ? 1 : .4;
+            let color = this.getRandomColor(opacityColor);
             retArr.push(
               {
                 label: kData.kommune.title,
