@@ -56,14 +56,15 @@
             </div>
         </div>
 
-        <div>
-            <h1>Antall Deltakere</h1>
-            <AntallDeltakere ref="antallDeltakerComponent"
-                :selectedKommuner="selectedKommuner"
-                :selectedYears="getAllSelectedYears()"
-            ></AntallDeltakere>
+        <div class="as-card-1 as-padding-space-3 as-margin-top-space-4">
+            <!-- Antall deltakere -->
+            <div v-show="selectedType == 'Antall deltakere'">
+                <AntallDeltakere ref="antallDeltakerComponent"
+                    :selectedKommuner="selectedKommuner"
+                    :selectedYears="getAllSelectedYears()"
+                ></AntallDeltakere>
+            </div>
         </div>
-        
         
     </div>
 </template>

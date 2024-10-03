@@ -1,6 +1,5 @@
 <template>
     <div>
-        <h1>{{ dataFetched }}</h1>
         <!-- Bare hvis data er fetched, kan chart opprettes -->
         <div v-if="dataFetched == true">
             <MultiBarChart ref="chart"

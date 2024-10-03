@@ -3,10 +3,6 @@
       <div v-show="!loading" class="chart-container">
         <canvas :id="chartId"></canvas>
       </div>
-      <!-- Placeholder for loading -->
-      <div v-show="loading" class="loading-placeholder">
-        Loading...
-      </div>
     </div>
   </template>
   
@@ -95,15 +91,9 @@
   <style scoped>
   .chart-container {
     position: relative;
-    width: 100%;
-    height: 400px;
+    max-width: 100%;
+    height: auto;
     display: flex;
-  }
-  
-  .loading-placeholder {
-    text-align: center;
-    font-size: 1.5rem;
-    color: #999;
   }
   </style>
   

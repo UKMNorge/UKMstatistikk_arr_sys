@@ -1,6 +1,5 @@
 <template>
     <div>
-       <h1>paa.sys</h1>
 
     </div>
 </template>
