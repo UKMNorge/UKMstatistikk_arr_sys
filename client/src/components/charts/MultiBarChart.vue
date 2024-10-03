@@ -21,11 +21,6 @@
   
   export default defineComponent({
     props: {
-      barColors: {
-        type: Array as PropType<string[]>,
-        required: false,
-        default: () => ['#FF6384', '#36A2EB', '#FFCE56'] // Default colors for each dataset (year)
-      },
       labels: {
         type: Array as PropType<string[]>, // Labels for the kommuner
         required: true
@@ -51,13 +46,10 @@
     },
     methods: {
       generateChart() {
-        if (this.chart) {
-          this.chart.destroy(); // Destroy any existing chart before creating a new one
-        }
+        this.destroyChart();
   
         const ctx = (document.getElementById(this.chartId) as HTMLCanvasElement).getContext('2d');
         const labels = this.labels;
-        const barColors = this.barColors;
         const dataset = this.dataset;
   
         this.chart = new Chart(ctx!, {
@@ -86,13 +78,16 @@
             }
           }
         });
+      },
+      destroyChart() {
+        if (this.chart) {
+          this.chart.destroy();
+        }
       }
     },
     beforeUnmount() {
       // Destroy the chart instance before the component is destroyed
-      if (this.chart) {
-        this.chart.destroy();
-      }
+      this.destroyChart();
     }
   });
   </script>
@@ -100,8 +95,9 @@
   <style scoped>
   .chart-container {
     position: relative;
-    width: 600px;
+    width: 100%;
     height: 400px;
+    display: flex;
   }
   
   .loading-placeholder {

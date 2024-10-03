@@ -1,12 +1,11 @@
 <template>
     <div>
         <h1>{{ dataFetched }}</h1>
+        <!-- Bare hvis data er fetched, kan chart opprettes -->
         <div v-if="dataFetched == true">
-            <h1>INSIDE MultiBarChart YoYo!</h1>
             <MultiBarChart ref="chart"
                 :labels="getLabels()" 
                 :dataset="getDataset()"
-                :barColors="[]" 
             />
         </div>
     </div>
@@ -75,9 +74,6 @@ export default {
                 }
             }
 
-            // setTimeout(() => {
-            //     this.dataFetched = true;
-            // }, 10000);
             this.dataFetched = true;
 
         },
@@ -102,12 +98,24 @@ export default {
                 retArr.push({
                     label: year.toString(),
                     data: dataKomm, 
-                    backgroundColor: this.colors[count] ? this.colors[count] : '#FF6384',
+                    backgroundColor: this.getRandomColor(),
                 });
                 count++;
             }
 
             return retArr;
+        },
+        getRandomColor(): string {
+            // Random hue value between 0 and 360 (full spectrum of colors)
+            const hue = Math.floor(Math.random() * 360);
+            
+            // Medium saturation for balanced colors (between 40% and 70%)
+            const saturation = Math.floor(Math.random() * 10) + 40; // Range: [40, 70]
+            
+            // Medium lightness for slightly vibrant colors (between 50% and 70%)
+            const lightness = Math.floor(Math.random() * 21) + 50; // Range: [50, 70]
+
+            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
     }
 }
