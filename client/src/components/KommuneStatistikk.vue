@@ -72,6 +72,17 @@
                     :selectedYears="getAllSelectedYears()"
                 ></DeltakelseSammenligning>
             </div>
+
+            <!-- Aldersfordeling for hver kommuner -->
+            <template v-for="kommune in selectedKommuner" v-bind:key="kommune.id">
+                <div v-show="selectedType == 'Aldersfordeling'">
+                    <Alderfordeling 
+                        :ref="'aldersfordeling-' + kommune.id"
+                        :selectedKommune="kommune"
+                        :selectedYears="getAllSelectedYears()"
+                    ></Alderfordeling>
+                </div>
+            </template>
         </div>
         
     </div>
@@ -82,6 +93,7 @@ import Arrangement from './ArrSys/Arrangement.vue';
 import Kommune from '../objects/Kommune';
 import AntallDeltakere from './Kommune/AntallDeltakere.vue';
 import DeltakelseSammenligning from './Kommune/DeltakelseSammenligning.vue';
+import Alderfordeling from './Kommune/Alderfordeling.vue';
 
 
 export default {
@@ -98,7 +110,8 @@ export default {
     components: {
         Arrangement : Arrangement,
         AntallDeltakere : AntallDeltakere,
-        DeltakelseSammenligning : DeltakelseSammenligning
+        DeltakelseSammenligning : DeltakelseSammenligning,
+        Alderfordeling : Alderfordeling
     },
     mounted() {
         console.log('mounted on ArrangorsystemStatistikk.vue');
@@ -140,6 +153,12 @@ export default {
                 (<any>this.$refs).antallDeltakerComponent.init();
             } else if(this.selectedType == 'Deltakelse Sammenligning') {
                 (<any>this.$refs).deltakelseSammenligning.init();
+            } else if(this.selectedType == 'Aldersfordeling') {
+                // Loop through all selected kommuner and call init() on each
+                for(let kommune of this.selectedKommuner) {
+                    console.log(this.$refs['aldersfordeling-' + kommune.id]);
+                    (<any>this.$refs)['aldersfordeling-' + kommune.id][0].init();
+                }
             }
 
             console.log('Selected Kommuner IDs:', this.selectedKommuner);
