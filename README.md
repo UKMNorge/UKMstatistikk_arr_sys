@@ -216,22 +216,22 @@ Alle deltakere på kommune er kun hentet fra gyldige innslag (fullførte innslag
 #### Response Example
 ```json
 {
-  "10": {"tekst": "10 år", "antall": 190},
-  "11": {"tekst": "11 år", "antall": 224},
-  "12": {"tekst": "12 år", "antall": 195},
-  "13": {"tekst": "13 år", "antall": 209},
-  "14": {"tekst": "14 år", "antall": 218},
-  "15": {"tekst": "15 år", "antall": 205},
-  "16": {"tekst": "16 år", "antall": 220},
-  "17": {"tekst": "17 år", "antall": 220},
-  "18": {"tekst": "18 år", "antall": 230},
-  "19": {"tekst": "19 år", "antall": 195},
-  "20": {"tekst": "20 år", "antall": 198},
-  "21": {"tekst": "21 år", "antall": 196},
-  "22": {"tekst": "22 år", "antall": 165},
-  "23": {"tekst": "23 år", "antall": 168},
-  "24": {"tekst": "24 år", "antall": 182},
-  "25": {"tekst": "25 år", "antall": 167}
+  "10": {"age": 10, "antall": 190},
+  "11": {"age": 11, "antall": 224},
+  "12": {"age": 12, "antall": 195},
+  "13": {"age": 13, "antall": 209},
+  "14": {"age": 14, "antall": 218},
+  "15": {"age": 15, "antall": 205},
+  "16": {"age": 16, "antall": 220},
+  "17": {"age": 17, "antall": 220},
+  "18": {"age": 18, "antall": 230},
+  "19": {"age": 19, "antall": 195},
+  "20": {"age": 20, "antall": 198},
+  "21": {"age": 21, "antall": 196},
+  "22": {"age": 22, "antall": 165},
+  "23": {"age": 23, "antall": 168},
+  "24": {"age": 24, "antall": 182},
+  "25": {"age": 25, "antall": 167}
 }
 ```
 

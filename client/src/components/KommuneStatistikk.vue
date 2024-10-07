@@ -83,6 +83,17 @@
                     ></Alderfordeling>
                 </div>
             </template>
+
+            <!-- Aldersfordeling fra SSB -->
+            <template v-for="kommune in selectedKommuner" v-bind:key="kommune.id">
+                <div v-show="selectedType == 'Aldersfordeling fra SSB'">
+                    <AldersfordelingSSB
+                        :ref="'aldersfordeling-ssb-' + kommune.id"
+                        :selectedKommune="kommune"
+                        :selectedYears="getAllSelectedYears()"
+                    ></AldersfordelingSSB>
+                </div>
+            </template>
         </div>
         
     </div>
@@ -94,6 +105,7 @@ import Kommune from '../objects/Kommune';
 import AntallDeltakere from './Kommune/AntallDeltakere.vue';
 import DeltakelseSammenligning from './Kommune/DeltakelseSammenligning.vue';
 import Alderfordeling from './Kommune/Alderfordeling.vue';
+import AldersfordelingSSB from './Kommune/AldersfordelingSSB.vue';
 
 
 export default {
@@ -111,7 +123,8 @@ export default {
         Arrangement : Arrangement,
         AntallDeltakere : AntallDeltakere,
         DeltakelseSammenligning : DeltakelseSammenligning,
-        Alderfordeling : Alderfordeling
+        Alderfordeling : Alderfordeling,
+        AldersfordelingSSB : AldersfordelingSSB
     },
     mounted() {
         console.log('mounted on ArrangorsystemStatistikk.vue');
@@ -121,7 +134,14 @@ export default {
         return {
             selectedType: '' as any,
             selectedKommuner: [] as Kommune[],  // Hold the ids of selected municipalities
-            availableTypes: ['Antall deltakere', 'Deltakelse Sammenligning', 'Aldersfordeling', 'Kjønnsfordeling', 'Sjangerfordeling'],
+            availableTypes: [
+                'Antall deltakere', 
+                'Deltakelse Sammenligning', 
+                'Aldersfordeling', 
+                'Aldersfordeling fra SSB', 
+                'Kjønnsfordeling', 
+                'Sjangerfordeling'
+            ],
             availableKommuner: [] as Kommune[],  // Corrected typo here
             availableYears: [] as number[],
             selectedYears: [] as number[]
@@ -158,6 +178,10 @@ export default {
                 for(let kommune of this.selectedKommuner) {
                     console.log(this.$refs['aldersfordeling-' + kommune.id]);
                     (<any>this.$refs)['aldersfordeling-' + kommune.id][0].init();
+                }
+            } else if(this.selectedType == 'Aldersfordeling fra SSB') {
+                for(let kommune of this.selectedKommuner) {
+                    (<any>this.$refs)['aldersfordeling-ssb-' + kommune.id][0].init();
                 }
             }
 
