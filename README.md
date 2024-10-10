@@ -199,6 +199,7 @@ Alle deltakere på kommune er kun hentet fra gyldige innslag (fullførte innslag
 
 ```
 
+
 ### Aldersfordeling fra SSB
 
 - **URL:** `kommune/aldersfordelingSSB`
@@ -235,6 +236,28 @@ Alle deltakere på kommune er kun hentet fra gyldige innslag (fullførte innslag
 }
 ```
 
+### Kjønnsfordeling i kommune
+
+- **URL:** `kommune/kjonnsfordeling`
+- **Access:** Tilgang til kommune (kommuneId)
+- **Method:** `POST`
+- **Description:** Kjønnsfordeling i kommune. Kjønn defineres av fornavn fra en database og det kan returnere unknown noen ganger
+
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `kommuneId` | `number` | Kommune ID |
+| `season`    | `number` | Sesong |
+
+#### Response Example
+```json
+{
+  "unknown":13,
+  "male":11,
+  "female":2
+}
+```
 
 ## Fylke
 
