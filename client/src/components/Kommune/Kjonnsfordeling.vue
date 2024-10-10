@@ -1,7 +1,6 @@
 <template>
     <div>
-        <!-- Bare hvis data er fetched, kan chart opprettes -->
-        <div v-if="dataFetched == true">
+        <div v-if="dataFetched == true && startYear == selectedYears[0] && endYear == selectedYears[selectedYears.length-1]">
             <div class="as-margin-bottom-space-2 as-margin-top-space-2">
                 <h4>
                     <template v-if="selectedYears.length > 1">
@@ -48,10 +47,15 @@ export default {
             spaInteraction : (<any>window).spaInteraction, // Definert i main.ts
             kommuneData: {} as any, //{kommune : Kommune, year : number, antall : number}[]
             dataFetched: false,
+            startYear: 0,
+            endYear: 0,
         }
     },
     methods: {
         async init() {
+            this.startYear = this.selectedYears[0];
+            this.endYear = this.selectedYears[this.selectedYears.length-1];
+
             // Empty old data
             this.dataFetched = false;
             this.kommuneData = [];
@@ -90,58 +94,6 @@ export default {
                     '#ededed'
                 ]
             }];
-
-            // var dataArr = [] as any;
-
-            // for(let kData in this.kommuneData) {
-            //     for(let d of this.kommuneData[kData]) {
-            //         let year = d.year;
-
-            //         dataArr['' + year] = [];
-            //         dataArr['' + year]['< 10'] = 0;
-            //         dataArr['' + year]['10-11'] = 0;
-            //         dataArr['' + year]['12-13'] = 0;
-            //         dataArr['' + year]['14-15'] = 0;
-            //         dataArr['' + year]['16-17'] = 0;
-            //         dataArr['' + year]['18-19'] = 0;
-            //         dataArr['' + year]['20+'] = 0;
-                    
-
-            //         for(let alder of d.data) {
-            //             var idAlder = '';
-
-            //             if(alder.age < 10) {
-            //                 idAlder = '< 10'
-            //             } else if(alder.age > 19) {
-            //                 idAlder = '20+'
-            //             } else {
-            //                 idAlder = alder.age % 2 !== 0 ? (parseInt(alder.age) - 1) + '-' + alder.age : alder.age + '-' + (parseInt(alder.age) + 1);
-            //             }
-
-            //             dataArr['' + year][idAlder] = dataArr['' + year][idAlder] ? dataArr['' + year][idAlder] + parseInt(alder.antall) : parseInt(alder.antall);;
-            //         }
-            //     }
-            // }
-
-            // var retArr = [] as any;
-
-            // for(let key in dataArr) {
-            //     let kData = dataArr[key];
-                
-            //     let opacityColor = 1; //kData.kommune.id == 0 ? 1 : .4;
-            //     let color = this.getRandomColor(opacityColor);
-            //     retArr.push(
-            //         {
-            //             label: key,
-            //             borderColor: color,
-            //             backgroundColor: color,
-            //             data: (<any>Object).values(kData),
-            //             fill: true,
-            //         }
-            //     )
-            // }
-
-            // return retArr;
             
         },
         getRandomColor(opacity = 1): string {
