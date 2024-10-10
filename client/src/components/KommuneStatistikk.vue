@@ -113,6 +113,17 @@
                     ></Kjonnsfordeling>
                 </div>
             </template>
+
+            <!-- Sjangerfordeling for hver kommuner -->
+            <template v-for="kommune in selectedKommuner" v-bind:key="kommune.id">
+                <div v-show="selectedType == 'Sjangerfordeling'">
+                    <Sjangerfordeling 
+                        :ref="'sjangerfordeling-' + kommune.id"
+                        :selectedKommune="kommune"
+                        :selectedYears="getAllSelectedYears()"
+                    ></Sjangerfordeling>
+                </div>
+            </template>
         </div>
         
     </div>
@@ -127,6 +138,7 @@ import Alderfordeling from './Kommune/Alderfordeling.vue';
 import AldersfordelingSSB from './Kommune/AldersfordelingSSB.vue';
 import Gjennomsnittsalder from './Kommune/Gjennomsnittsalder.vue';
 import Kjonnsfordeling from './Kommune/Kjonnsfordeling.vue';
+import Sjangerfordeling from './Kommune/Sjangerfordeling.vue';
 
 export default {
     props: {
@@ -146,7 +158,8 @@ export default {
         Alderfordeling : Alderfordeling,
         AldersfordelingSSB : AldersfordelingSSB,
         Gjennomsnittsalder : Gjennomsnittsalder,
-        Kjonnsfordeling : Kjonnsfordeling
+        Kjonnsfordeling : Kjonnsfordeling,
+        Sjangerfordeling : Sjangerfordeling
     },
     mounted() {
         console.log('mounted on ArrangorsystemStatistikk.vue');
@@ -211,6 +224,10 @@ export default {
             } else if(this.selectedType == 'Kjønnsfordeling') {
                 for(let kommune of this.selectedKommuner) {
                     (<any>this.$refs)['kjonnsfordeling-' + kommune.id][0].init();
+                }
+            } else if(this.selectedType == 'Sjangerfordeling') {
+                for(let kommune of this.selectedKommuner) {
+                    (<any>this.$refs)['sjangerfordeling-' + kommune.id][0].init();
                 }
             }
 
