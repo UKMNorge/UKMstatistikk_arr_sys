@@ -259,6 +259,48 @@ Alle deltakere på kommune er kun hentet fra gyldige innslag (fullførte innslag
 }
 ```
 
+
+### Sjangerfordeling i kommune
+
+- **URL:** `kommune/sjangerfordeling`
+- **Access:** Tilgang til kommune (kommuneId)
+- **Method:** `POST`
+- **Description:** Returnerer antall personer fordelt på sjanger eller innslag type i kommune. Typene som ikke kan genereres, blir representert som udefinert.
+
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `kommuneId` | `number` | Kommune ID |
+| `season`    | `number` | Sesong |
+
+#### Response Example
+```json
+{
+  "musikk":
+    {
+      "antall":3,
+      "type_navn":"Musikk"
+    },
+  "enkeltperson":
+    {
+      "antall":4,
+      "type_navn":"Person"
+    },
+  "utstilling":
+    {
+      "antall":2,
+      "type_navn":"Utstilling"
+    },
+  "video":
+    {
+      "antall":3,
+      "type_navn":"Film"
+    }
+}
+```
+
+
 ## Fylke
 
 OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i fylke. Dette gjøres fordi innslag videresendes fra kommune til fylke, derfor arrangementer i kommuner representerer best statistikken i fylke 
