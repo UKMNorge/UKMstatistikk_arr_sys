@@ -13,7 +13,7 @@
                     bg-color="#fff"
                     v-model="tab">
                     <v-tab text="Kommunestatistikk"></v-tab>
-                    <v-tab text="Påmeldingssystem"></v-tab>
+                    <v-tab text="Fylkestatistikk"></v-tab>
                     <v-tab text="Generell statistikk"></v-tab>
                 </v-tabs>
                 

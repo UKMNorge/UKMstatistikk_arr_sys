@@ -102,6 +102,14 @@
                     :selectedYears="getAllSelectedYears()"
                 ></Gjennomsnittsalder>
             </div>
+
+            <!-- Kjønnsfordeling -->
+            <div v-show="selectedType == 'Kjønnsfordeling'">
+                <Kjonnsfordeling ref="kjonnsfordeling"
+                    :selectedKommune="selectedKommuner[0]"
+                    :selectedYears="getAllSelectedYears()"
+                ></Kjonnsfordeling>
+            </div>
         </div>
         
     </div>
@@ -115,6 +123,7 @@ import DeltakelseSammenligning from './Kommune/DeltakelseSammenligning.vue';
 import Alderfordeling from './Kommune/Alderfordeling.vue';
 import AldersfordelingSSB from './Kommune/AldersfordelingSSB.vue';
 import Gjennomsnittsalder from './Kommune/Gjennomsnittsalder.vue';
+import Kjonnsfordeling from './Kommune/Kjonnsfordeling.vue';
 
 export default {
     props: {
@@ -134,6 +143,7 @@ export default {
         Alderfordeling : Alderfordeling,
         AldersfordelingSSB : AldersfordelingSSB,
         Gjennomsnittsalder : Gjennomsnittsalder,
+        Kjonnsfordeling : Kjonnsfordeling
     },
     mounted() {
         console.log('mounted on ArrangorsystemStatistikk.vue');
@@ -150,7 +160,8 @@ export default {
                 'Gjennomsnittsalder', 
                 'Aldersfordeling fra SSB', 
                 'Kjønnsfordeling', 
-                'Sjangerfordeling'
+                'Sjangerfordeling',
+                'Kjønnsfordeling',
             ],
             availableKommuner: [] as Kommune[],  // Corrected typo here
             availableYears: [] as number[],
@@ -195,6 +206,8 @@ export default {
                 }
             } else if(this.selectedType == 'Gjennomsnittsalder') {
                 (<any>this.$refs).gjennomsnittsalder.init();
+            } else if(this.selectedType == 'Kjønnsfordeling') {
+                (<any>this.$refs).kjonnsfordeling.init();
             }
 
             console.log('Selected Kommuner IDs:', this.selectedKommuner);
