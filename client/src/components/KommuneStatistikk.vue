@@ -104,12 +104,15 @@
             </div>
 
             <!-- Kjønnsfordeling -->
-            <div v-show="selectedType == 'Kjønnsfordeling'">
-                <Kjonnsfordeling ref="kjonnsfordeling"
-                    :selectedKommune="selectedKommuner[0]"
-                    :selectedYears="getAllSelectedYears()"
-                ></Kjonnsfordeling>
-            </div>
+            <template v-for="kommune in selectedKommuner" v-bind:key="kommune.id">
+                <div v-show="selectedType == 'Kjønnsfordeling'">
+                    <Kjonnsfordeling 
+                        :ref="'kjonnsfordeling-' + kommune.id"
+                        :selectedKommune="kommune"
+                        :selectedYears="getAllSelectedYears()"
+                    ></Kjonnsfordeling>
+                </div>
+            </template>
         </div>
         
     </div>
@@ -161,7 +164,6 @@ export default {
                 'Aldersfordeling fra SSB', 
                 'Kjønnsfordeling', 
                 'Sjangerfordeling',
-                'Kjønnsfordeling',
             ],
             availableKommuner: [] as Kommune[],  // Corrected typo here
             availableYears: [] as number[],
@@ -207,7 +209,9 @@ export default {
             } else if(this.selectedType == 'Gjennomsnittsalder') {
                 (<any>this.$refs).gjennomsnittsalder.init();
             } else if(this.selectedType == 'Kjønnsfordeling') {
-                (<any>this.$refs).kjonnsfordeling.init();
+                for(let kommune of this.selectedKommuner) {
+                    (<any>this.$refs)['kjonnsfordeling-' + kommune.id][0].init();
+                }
             }
 
             console.log('Selected Kommuner IDs:', this.selectedKommuner);
