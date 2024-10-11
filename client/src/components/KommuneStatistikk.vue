@@ -162,7 +162,6 @@ export default {
         Sjangerfordeling : Sjangerfordeling
     },
     mounted() {
-        console.log('mounted on ArrangorsystemStatistikk.vue');
         this.fetchAvailableKommuner();
     },
     data() {
