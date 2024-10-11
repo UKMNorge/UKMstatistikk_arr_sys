@@ -1,11 +1,13 @@
 <template>
-    <div class="main-loading-div as-margin-bottom-space-2 as-margin-top-space-2">
-        <div v-if="timeUnits % 2 === 0" class="chart-placholder doughnut phantom-loading">
-            <div class="background-placeholder"></div>
-        </div>
-
-        <div v-else class="line-phantoms">
-            <div class="chart-placholder lines as-border- phantom-loading">
+    <div class="as-card-1 as-padding-space-3 as-margin-top-space-4">
+        <div class="main-loading-div">
+            <div v-if="timeUnits % 2 === 0" class="chart-placholder doughnut phantom-loading">
+                <div class="background-placeholder"></div>
+            </div>
+    
+            <div v-else class="line-phantoms">
+                <div class="chart-placholder lines as-border- phantom-loading">
+                </div>
             </div>
         </div>
     </div>

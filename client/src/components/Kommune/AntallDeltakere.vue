@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Bare hvis data er fetched, kan chart opprettes -->
-        <div v-if="dataFetched == true">
+        <div v-if="dataFetched == true" class="as-card-1 as-padding-space-3 as-margin-top-space-4">
             <MultiBarChart ref="chart"
                 :labels="getLabels()" 
                 :dataset="getDataset()"

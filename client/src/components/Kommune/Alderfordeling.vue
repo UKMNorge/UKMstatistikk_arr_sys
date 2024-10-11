@@ -1,8 +1,8 @@
 <template>
     <div>
         <!-- Bare hvis data er fetched, kan chart opprettes -->
-        <div v-if="dataFetched == true">
-            <div class="as-margin-bottom-space-2 as-margin-top-space-2">
+        <div v-if="dataFetched == true" class="as-card-1 as-padding-space-3 as-margin-top-space-4">
+            <div class="as-margin-bottom-space-2">
                 <h4>{{ selectedKommune.title }}</h4>
             </div>
             <MultiBarChart ref="chart"
@@ -11,9 +11,6 @@
             />
         </div>
         <div v-else-if="fetchingStarted">
-            <div class="as-margin-bottom-space-4">
-                <h4>{{ selectedKommune.title }}</h4>
-            </div>
             <LoadingComponent />
         </div>
     </div>

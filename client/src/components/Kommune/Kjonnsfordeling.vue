@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div v-if="dataFetched == true && startYear == selectedYears[0] && endYear == selectedYears[selectedYears.length-1]">
-            <div class="as-margin-bottom-space-4 as-margin-top-space-2">
+        <div class="as-card-1 as-padding-space-3 as-margin-top-space-4" v-if="dataFetched == true && startYear == selectedYears[0] && endYear == selectedYears[selectedYears.length-1]">
+            <div class="as-margin-bottom-space-4">
                 <h4>
                     <template v-if="selectedYears.length > 1">
                         {{ selectedKommune.title }} kjønnsfordeling fra {{ selectedYears[0] }} til {{ selectedYears[selectedYears.length-1] }}
@@ -17,16 +17,6 @@
             />
         </div>
         <div v-else-if="fetchingStarted">
-            <div class="as-margin-bottom-space-4 as-margin-top-space-2">
-                <h4>
-                    <template v-if="selectedYears.length > 1">
-                        {{ selectedKommune.title }} kjønnsfordeling fra {{ selectedYears[0] }} til {{ selectedYears[selectedYears.length-1] }}
-                    </template>
-                    <template v-else>
-                        {{ selectedKommune.title }} kjønnsfordeling for {{ selectedYears[0] }}
-                    </template>
-                </h4>
-            </div>
             <LoadingComponent />
         </div>
     </div>

@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <div class="as-card-1 as-padding-space-3 as-margin-top-space-4">
+        <div>
             <!-- Antall deltakere -->
             <div v-show="selectedType == 'Antall deltakere'">
                 <AntallDeltakere ref="antallDeltakerComponent"
