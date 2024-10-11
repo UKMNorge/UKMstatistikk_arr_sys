@@ -7,12 +7,17 @@
                 :dataset="getDataset()"
             />
         </div>
+
+        <div v-else-if="fetchingStarted">
+            <LoadingComponent />
+        </div>
     </div>
 </template>
 
 <script lang="ts">
 import MultiBarChart from '../charts/MultiBarChart.vue';
 import type Kommune from '../../objects/Kommune'; // Ensure Kommune is imported correctly
+import LoadingComponent from '../Other/LoadingComponent.vue';
 
 
 export default {
@@ -31,18 +36,22 @@ export default {
     },
     components: {
         MultiBarChart : MultiBarChart,
+        LoadingComponent : LoadingComponent,
+
     },
     data() {
         return {
             spaInteraction : (<any>window).spaInteraction, // Definert i main.ts
             kommunerData: {} as any, //{kommune : Kommune, year : number, antall : number}[]
             dataFetched: false,
-            colors : ['#FF6384', '#36A2EB', '#FFCE56']
+            colors : ['#FF6384', '#36A2EB', '#FFCE56'],
+            fetchingStarted: false,
         }
     },
     methods: {
         async init() {
             // Empty old data
+            this.fetchingStarted = true;
             this.dataFetched = false;
             this.kommunerData = [];
 
@@ -73,6 +82,7 @@ export default {
                 }
             }
 
+            this.fetchingStarted = false;
             this.dataFetched = true;
 
         },
