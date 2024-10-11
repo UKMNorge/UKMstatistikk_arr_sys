@@ -1,5 +1,5 @@
 <template>
-    <div class="main-loading-div as-margin-bottom-space-2">
+    <div class="main-loading-div as-margin-bottom-space-2 as-margin-top-space-2">
         <div v-if="timeUnits % 2 === 0" class="chart-placholder doughnut phantom-loading">
             <div class="background-placeholder"></div>
         </div>
