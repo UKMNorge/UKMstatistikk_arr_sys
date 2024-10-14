@@ -72,7 +72,7 @@ export default {
     
 
     mounted: function () {
-        this.testAjax();
+
     },
     created() {
         const router = useRouter();
@@ -92,65 +92,7 @@ export default {
     },
     
     methods: {
-        testAjax() {
-            console.log('testAjax2');
-            var data = {
-                action: 'UKMstatistikk_ajax',
-                controller: 'fylke/gjennomsnittDeltakere',
-                fylkeId: 55,
-                season: 2009,
-            };
-            // 2009
-            var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
-
-            // data.season = 2010;
-            // var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
-
-            // data.season = 2010;
-            // var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
-
-            // data.season = 2011;
-            // var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
-
-            // data.season = 2012;
-            // var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
-
-            // data.season = 2013;
-            // var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
-
-            // data.season = 2014;
-            // var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
-
-            // data.season = 2015;
-            // var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
-
-            // data.season = 2016;
-            // var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
-
-            // data.season = 2017;
-            // var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
-
-            // data.season = 2018;
-            // var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
-            
-            // data.season = 2019;
-            // var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
-
-            // data.season = 2020;
-            // var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
-
-            // data.season = 2021;
-            // var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
-
-            // data.season = 2022;
-            // var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
-
-            // data.season = 2023;
-            // var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
-            
-            // data.season = 2024;
-            // var results = this.spaInteraction.runAjaxCall('/', 'POST', data);
-        }
+        
     }
 }
 </script>

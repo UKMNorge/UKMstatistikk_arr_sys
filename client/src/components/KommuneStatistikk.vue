@@ -221,7 +221,10 @@ export default {
                 var resultFylker = await this.spaInteraction.runAjaxCall('/', 'POST', data);
 
                 for(let kommune of resultFylker) {
-                    this.availableKommuner.push(new Kommune(kommune.id, kommune.navn + ' (' + fylke.title + ')'));
+                    // Add if it deosn't already exist
+                    if(!this.availableKommuner.find(k => k.id == kommune.id)) {
+                        this.availableKommuner.push(new Kommune(kommune.id, kommune.navn + ' (' + fylke.title + ')'));
+                    }
                 }
             }
 
