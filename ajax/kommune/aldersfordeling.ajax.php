@@ -11,7 +11,7 @@ if($kommuneId == null) {
     HandleAPICallWithAuthorization::sendError('Mangler kommuneId', 400);
 }
 
-$tilgang = 'kommune'; // Er admin i kommune
+$tilgang = 'kommune_eller_fylke'; // Er admin i kommune eller fylke kommunen er del av
 $tilgangAttribute = $kommuneId; // Er admin i kommune med id $kommuneId
 
 $handleCall = new HandleAPICallWithAuthorization(['kommuneId', 'season'], [], ['GET', 'POST'], false, false, $tilgang, $tilgangAttribute);
