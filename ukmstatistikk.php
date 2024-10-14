@@ -8,9 +8,9 @@ Version: 1.0
 Author URI: http://www.ukm.no
 */
 
+use UKMNorge\Nettverk\Administrator;
 
 require_once('UKM/Autoloader.php');
-
 
 class UKMstatistikk extends UKMNorge\Wordpress\Modul
 {
@@ -99,6 +99,32 @@ class UKMstatistikk extends UKMNorge\Wordpress\Modul
             'admin_print_styles-' . $page, 
             ['UKMstatistikk', 'scripts_and_styles']
         );
+        add_action( 
+            'admin_print_styles-' . $page, 
+            ['UKMstatistikk', 'add_klient_data']
+        );
+    }
+
+    /**
+     * Leg til data som brukes på klient on init
+     *
+     * @return void
+     */
+    public static function add_klient_data() {
+        $type = str_replace(
+            'UKMnettverket_',
+            '',
+            $_GET['page']
+        );
+
+        $current_admin = new Administrator(get_current_user_id());
+        $omrader = $current_admin->getOmrader();
+
+        // Legg til kommuner og fylker som brukeren har tilgang til og som skal brukes på klient side
+        echo '<script>var ukm_statistikk_klient = []</script>';
+        foreach($omrader as $omrade) {
+            echo '<script>console.log("bcb"); ukm_statistikk_klient.push({"type": "'. $omrade->getType() .'", "id" : "'. $omrade->getForeignId() .'", "name": "' . $omrade->getNavn() .'"});</script>';
+        }
     }
 }
 

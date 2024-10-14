@@ -132,6 +132,7 @@
 <script lang="ts">
 import Arrangement from './ArrSys/Arrangement.vue';
 import Kommune from '../objects/Kommune';
+import Fylke from '../objects/Fylke';
 import AntallDeltakere from './Kommune/AntallDeltakere.vue';
 import DeltakelseSammenligning from './Kommune/DeltakelseSammenligning.vue';
 import Alderfordeling from './Kommune/Alderfordeling.vue';
@@ -166,6 +167,7 @@ export default {
     },
     data() {
         return {
+            spaInteraction : (<any>window).spaInteraction, // Definert i main.ts
             selectedType: '' as any,
             selectedKommuner: [] as Kommune[],  // Hold the ids of selected municipalities
             availableTypes: [
@@ -179,7 +181,7 @@ export default {
             ],
             availableKommuner: [] as Kommune[],  // Corrected typo here
             availableYears: [] as number[],
-            selectedYears: [] as number[]
+            selectedYears: [] as number[],
         };
     },
     methods: {
@@ -190,18 +192,41 @@ export default {
                 this.availableYears.push(i);
             }
         },
-        fetchAvailableKommuner() {
+        async fetchAvailableKommuner() {
             var kommuner = [];
-            for (let i = 0; i < 2; i++) {
-                kommuner.push(new Kommune(i, 'Kommune ' + i));
+            var fylker = [];
+
+            for(let omradeItem of (<any>window).ukm_statistikk_klient) {
+                if(omradeItem.type == 'kommune') {
+                    kommuner.push(new Kommune(omradeItem.id, omradeItem.name));
+                } else if(omradeItem.type == 'fylke') {
+                    fylker.push(new Fylke(omradeItem.id, omradeItem.name));
+                }
             }
+
+            // Add available kommuner
             if(kommuner.length > 0) {
                 this.availableKommuner = kommuner;  // Corrected typo here
             }
 
-            this.availableKommuner.push(new Kommune(5028, 'Melhus'));
-            this.availableKommuner.push(new Kommune(5628, 'Deatnu - Tana'));
-            
+            // Get alle kommuner if brukeren er admin i fylke
+            for(let fylke of fylker) {
+             
+                var data = {
+                    action: 'UKMstatistikk_ajax',
+                    controller: 'kommune/getAlleKommunerIFylke',
+                    fylkeId: fylke.id,
+                };
+
+                var resultFylker = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+
+                for(let kommune of resultFylker) {
+                    this.availableKommuner.push(new Kommune(kommune.id, kommune.navn + ' (' + fylke.title + ')'));
+                }
+            }
+
+
+
         },
         generateRapport() {
             if(this.selectedType == 'Antall deltakere') {
