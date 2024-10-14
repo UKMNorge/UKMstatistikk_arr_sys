@@ -142,6 +142,38 @@ OBS: Arrangement tilgang sjekkes gjennom StatistikkManager
 Alle deltakere på kommune er kun hentet fra gyldige innslag (fullførte innslag)
 
 
+### Alle kommuner i fylke
+
+- **URL:** `kommune/getAlleKommunerIFylke`
+- **Access:** Tilgang til kommune (kommuneId)
+- **Method:** `POST`
+- **Description:** Alle kommuner i et fylke
+
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `fylkeId` | `number` | Kommune ID |
+
+#### Response Example
+```json
+[
+  {
+    "id":4203,
+    "navn":"Arendal"
+  },
+  {
+    "id":4216,
+    "navn":"Birkenes"
+  },
+  {
+    "id":4220,
+    "navn":"Bygland"
+  }
+]
+```
+
+
 ### Antall Deltakere i kommune
 
 - **URL:** `kommune/antallDeltakere`
