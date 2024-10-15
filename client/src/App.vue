@@ -13,8 +13,8 @@
                     bg-color="#fff"
                     v-model="tab">
                     <v-tab text="Kommunestatistikk"></v-tab>
-                    <v-tab text="Fylkestatistikk"></v-tab>
-                    <v-tab text="Generell statistikk"></v-tab>
+                    <v-tab v-if="isFylkeAdmin" text="Fylkestatistikk"></v-tab>
+                    <v-tab v-if="isSuperadmin" text="Generell statistikk"></v-tab>
                 </v-tabs>
                 
                 <div class="as-margin-top-space-4">
@@ -27,14 +27,14 @@
                         </v-tabs-window-item>
                         
                         <!-- Påmeldingssystem -->
-                        <v-tabs-window-item>
+                        <v-tabs-window-item v-if="isFylkeAdmin">
                             <div class="as-containercontainer">
-                                <PaameldingsystemStatistikk />
+                                <FylkeStatistikk />
                             </div>
                         </v-tabs-window-item>
                         
                         <!-- Generell statistikk -->
-                        <v-tabs-window-item>
+                        <v-tabs-window-item v-if="isSuperadmin">
                             <div class="as-containercontainer">
                                 <GenerellStatistikk />
                             </div>
@@ -52,7 +52,7 @@ import { useRouter, useRoute } from "vue-router";
 
 // Components
 import KommuneStatistikk from './components/KommuneStatistikk.vue';
-import PaameldingsystemStatistikk from './components/PaameldingsystemStatistikk.vue';
+import FylkeStatistikk from './components/FylkeStatistikk.vue';
 import GenerellStatistikk from './components/GenerellStatistikk.vue';
 
 export default {
@@ -61,18 +61,20 @@ export default {
         return {
             tab : null as any,
             spaInteraction : (<any>window).spaInteraction,
+            isFylkeAdmin : false as boolean,
+            isSuperadmin : false as boolean,
         }
     },
 
     components : {
         KommuneStatistikk : KommuneStatistikk,
-        PaameldingsystemStatistikk : PaameldingsystemStatistikk,
+        FylkeStatistikk : FylkeStatistikk,
         GenerellStatistikk : GenerellStatistikk,
     },
     
 
     mounted: function () {
-
+        this.initAuthorizations();
     },
     created() {
         const router = useRouter();
@@ -92,7 +94,24 @@ export default {
     },
     
     methods: {
-        
+        initAuthorizations() {
+            this.isFylkeAdmin = this.erFylkeAdmin();
+            this.isSuperadmin = this.erSuperAdmin();
+        },
+        erFylkeAdmin() : boolean {
+            for(let omradeItem of (<any>window).ukm_statistikk_klient.omrade) {
+                if(omradeItem.type == 'fylke') {
+                    return true;
+                }
+            }
+            return false;
+        },
+        erSuperAdmin() : boolean {
+            if((<any>window).ukm_statistikk_klient.is_superadmin) {
+                return true;
+            }
+            return false;
+        }
     }
 }
 </script>

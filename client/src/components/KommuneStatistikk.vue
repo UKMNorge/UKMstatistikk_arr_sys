@@ -35,7 +35,7 @@
                     v-model="selectedYears"
                     :items="availableYears" 
                     :min="2009"
-                    :max="2024"
+                    :max="new Date().getFullYear() + 1"
                     :step="1"
                     thumb-label="always"
                     class="align-center"
@@ -187,7 +187,7 @@ export default {
     methods: {
         fetchAvailableYears() {
             // From 2009 to current year
-            const currentYear = new Date().getFullYear();
+            const currentYear = new Date().getFullYear() + 1;
             for (let i = 2009; i <= currentYear; i++) {
                 this.availableYears.push(i);
             }
@@ -196,7 +196,7 @@ export default {
             var kommuner = [];
             var fylker = [];
 
-            for(let omradeItem of (<any>window).ukm_statistikk_klient) {
+            for(let omradeItem of (<any>window).ukm_statistikk_klient.omrade) {
                 if(omradeItem.type == 'kommune') {
                     kommuner.push(new Kommune(omradeItem.id, omradeItem.name));
                 } else if(omradeItem.type == 'fylke') {
