@@ -15,6 +15,27 @@
                 </v-autocomplete>
             </div>
 
+            <div class="as-margin-top-space-1 as-display-flex">
+                <div>
+                    <v-btn-toggle
+                        v-model="toggle"
+                        color="primary"
+                        mandatory
+                    >
+                        <v-btn class="v-btn-as v-btn-grey as-margin-right-space-2" value="0">Data fra kommuner</v-btn>
+                        <v-btn class="v-btn-as v-btn-grey" value="1">Data fra fylkesfestivaler</v-btn>
+                    </v-btn-toggle>
+                </div>
+                <div class="as-margin-auto as-margin-right-none">
+                    <v-btn @click="dataType = !dataType" class="vuetify-icon-button as-margin-auto as-margin-right-none" density="compact" icon variant="tonal">
+                        <v-icon>mdi-information-slab-symbol</v-icon>
+                    </v-btn>
+                </div>
+            </div>
+            <div v-if="dataType" class="as-margin-top-space-2">
+                <PermanentNotification :typeNotification="'info'" :tittel="toggle == 0 ? 'Data fra kommuner i ditt fylke' : 'Data kun fra fylkesfestivaler'" :description="toggle == 0 ? 'Viser statistikk fra data samlet fra alle kommuner i ditt fylket ekskludering fylkesfestivaler.' : 'Viser kun statistikk fra data relatert til fylkesfestivaler i ditt fylke, filtrert fra andre kommunale aktiviteter.'" />
+            </div>
+
             <div class="as-margin-top-space-4">
                 <v-autocomplete 
                     variant="outlined" 
@@ -59,7 +80,7 @@
 
 <script lang="ts">
 import Fylke from '../objects/Fylke';
-
+import { PermanentNotification } from 'ukm-components-vue3';
 
 
 export default {
@@ -76,6 +97,9 @@ export default {
     mounted() {
         this.fetchFylker();
     },
+    components : {
+        PermanentNotification : PermanentNotification
+    },
     data() {
         return {
             availableFylker: [] as Fylke[],
@@ -88,7 +112,9 @@ export default {
                 {title: 'Sjangerfordeling', value: 'sjangerfordeling'},
                 {title: 'Aldersfordeling SSB', value: 'aldersfordeling_ssb'}
             ],
-            selectedType: null as {title: string, value: string} | null
+            selectedType: null as {title: string, value: string} | null,
+            toggle: undefined,
+            dataType : false,
         }
     },
     methods: {
