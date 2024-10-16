@@ -38,6 +38,7 @@ try{
 
 $retArr = [];
 $retArr['erUnike'] = $erUnike;
+$retArr['fylkeNavn'] = $fylke->getNavn();
 
 if($erUnike) {
     $retArr['antall'] = $statFylke->getAntallUnikeDeltakere();

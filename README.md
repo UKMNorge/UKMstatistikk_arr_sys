@@ -421,7 +421,8 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
 ```json
 {
   "erUnike":true,
-  "antall":40
+  "antall":40,
+  "fylkeNavn":"Akershus"
 }
 ```
 
