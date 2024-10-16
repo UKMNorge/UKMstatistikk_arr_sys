@@ -24,8 +24,8 @@
                         color="primary"
                         mandatory
                     >
-                        <v-btn class="v-btn-as v-btn-grey as-margin-right-space-2" value="0">Data fra kommuner</v-btn>
-                        <v-btn class="v-btn-as v-btn-grey" value="1">Data fra fylkesfestivaler</v-btn>
+                        <v-btn @click="setAvailableTyper()" class="v-btn-as v-btn-grey as-margin-right-space-2" value="0">Data fra kommuner</v-btn>
+                        <v-btn @click="setAvailableTyper()" class="v-btn-as v-btn-grey" value="1">Data fra fylkesfestivaler</v-btn>
                     </v-btn-toggle>
                 </div>
                 <div class="as-margin-auto as-margin-right-none">
@@ -109,6 +109,7 @@ export default {
     },
     mounted() {
         this.fetchFylker();
+        this.setAvailableTyper();
     },
     components : {
         PermanentNotification : PermanentNotification,
@@ -120,18 +121,36 @@ export default {
             selectedFylke : null as Fylke | null,
             availableYears: [] as number[],
             selectedYears: [] as number[],
-            availableTyper: [
-                {title: 'Alle deltakere', value: 'alleDeltakere'},
-                {title: 'Kjønnsfordeling', value: 'kjønnsfordeling'},
-                {title: 'Sjangerfordeling', value: 'sjangerfordeling'},
-                {title: 'Aldersfordeling SSB', value: 'aldersfordeling_ssb'}
-            ],
+            availableTyper: [] as any,
             selectedType: null as any,
-            dataTypeToggle: undefined,
+            dataTypeToggle: 0,
             dataType : false,
         }
     },
     methods: {
+        setAvailableTyper() {
+            this.selectedType = null;
+            if(this.dataTypeToggle == 0) {
+                this.availableTyper = [
+                    {title: 'Alle deltakere', value: 'alleDeltakere'},
+                    {title: 'Kjønnsfordeling', value: 'kjønnsfordeling'},
+                    {title: 'Sjangerfordeling', value: 'sjangerfordeling'},
+                    {title: 'Aldersfordeling SSB', value: 'aldersfordeling_ssb'}
+                ];
+            } else if(this.dataTypeToggle == 1) {
+                this.availableTyper = [
+                    {title: 'Alle deltakere', value: 'alleDeltakereFylke'},
+                    // {title: 'Kjønnsfordeling', value: 'kjønnsfordeling'},
+                    // {title: 'Sjangerfordeling', value: 'sjangerfordeling'},
+                    // {title: 'Aldersfordeling SSB', value: 'aldersfordeling_ssb'}
+                ];
+            }
+            else {
+                this.availableTyper = [];
+            }
+
+            
+        },
         fetchFylker() {
             let fylker = [] as Fylke[];
             for(let omradeItem of (<any>window).ukm_statistikk_klient.omrade) {
