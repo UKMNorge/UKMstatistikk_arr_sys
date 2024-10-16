@@ -18,7 +18,7 @@
             <div class="as-margin-top-space-1 as-display-flex">
                 <div>
                     <v-btn-toggle
-                        v-model="toggle"
+                        v-model="dataTypeToggle"
                         color="primary"
                         mandatory
                     >
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div v-if="dataType" class="as-margin-top-space-2">
-                <PermanentNotification :typeNotification="'info'" :tittel="toggle == 0 ? 'Data fra kommuner i ditt fylke' : 'Data kun fra fylkesfestivaler'" :description="toggle == 0 ? 'Viser statistikk fra data samlet fra alle kommuner i ditt fylket ekskludering fylkesfestivaler.' : 'Viser kun statistikk fra data relatert til fylkesfestivaler i ditt fylke, filtrert fra andre kommunale aktiviteter.'" />
+                <PermanentNotification :typeNotification="'info'" :tittel="dataTypeToggle == 0 ? 'Data fra kommuner i ditt fylke' : 'Data kun fra fylkesfestivaler'" :description="dataTypeToggle == 0 ? 'Viser statistikk fra data samlet fra alle kommuner i ditt fylket ekskludering fylkesfestivaler.' : 'Viser kun statistikk fra data relatert til fylkesfestivaler i ditt fylke, filtrert fra andre kommunale aktiviteter.'" />
             </div>
 
             <div class="as-margin-top-space-4">
@@ -113,7 +113,7 @@ export default {
                 {title: 'Aldersfordeling SSB', value: 'aldersfordeling_ssb'}
             ],
             selectedType: null as {title: string, value: string} | null,
-            toggle: undefined,
+            dataTypeToggle: undefined,
             dataType : false,
         }
     },
