@@ -21,7 +21,7 @@
                 <div>
                     <v-btn-toggle
                         v-model="dataTypeToggle"
-                        color="primary"
+                        color="blue-accent-2"
                         mandatory
                     >
                         <v-btn @click="setAvailableTyper()" class="v-btn-as v-btn-grey as-margin-right-space-2" value="0">Data fra kommuner</v-btn>
@@ -87,6 +87,14 @@
                     :selectedYears="getAllSelectedYears()"
                 ></AlleDeltakere>
             </div>
+
+            <!-- Alle deltakere fylke -->
+            <div v-show="selectedType == 'alleDeltakereFylke'">
+                <AlleDeltakereFylke ref="alleDeltakerFylkeComponent"
+                    :selectedFylkeId="selectedFylke"
+                    :selectedYears="getAllSelectedYears()"
+                ></AlleDeltakereFylke>
+            </div>
         </div>
     </div>
 </template>
@@ -95,6 +103,7 @@
 import Fylke from '../objects/Fylke';
 import { PermanentNotification } from 'ukm-components-vue3';
 import AlleDeltakere from './Fylke/AlleDeltakere.vue';
+import AlleDeltakereFylke from './Fylke/AlleDeltakereFylke.vue';
 
 export default {
     props: {
@@ -113,7 +122,8 @@ export default {
     },
     components : {
         PermanentNotification : PermanentNotification,
-        AlleDeltakere : AlleDeltakere
+        AlleDeltakere : AlleDeltakere,
+        AlleDeltakereFylke : AlleDeltakereFylke
     },
     data() {
         return {
@@ -170,6 +180,8 @@ export default {
         generateRapport() {
             if(this.selectedType == 'alleDeltakere') {
                 (<any>this.$refs).alleDeltakerComponent.init();
+            } else if(this.selectedType == 'alleDeltakereFylke') {
+                (<any>this.$refs).alleDeltakerFylkeComponent.init();
             }
         },
         isGeneratingPossible() {
