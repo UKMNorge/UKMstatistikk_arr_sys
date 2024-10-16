@@ -11,7 +11,9 @@
                     label="Velg fylke" 
                     class="v-autocomplete-arr-sys" 
                     :items="availableFylker" 
-                    v-model="selectedFylke">
+                    v-model="selectedFylke"
+                    item-text="name" 
+                    item-value="id">
                 </v-autocomplete>
             </div>
 
@@ -75,13 +77,24 @@
             </div>
 
         </div>
+
+        <!-- Statistikk -->
+        <div>
+            <!-- Alle deltakere -->
+            <div v-show="selectedType == 'alleDeltakere'">
+                <AlleDeltakere ref="alleDeltakerComponent"
+                    :selectedFylkeId="selectedFylke"
+                    :selectedYears="getAllSelectedYears()"
+                ></AlleDeltakere>
+            </div>
+        </div>
     </div>
 </template>
 
 <script lang="ts">
 import Fylke from '../objects/Fylke';
 import { PermanentNotification } from 'ukm-components-vue3';
-
+import AlleDeltakere from './Fylke/AlleDeltakere.vue';
 
 export default {
     props: {
@@ -98,7 +111,8 @@ export default {
         this.fetchFylker();
     },
     components : {
-        PermanentNotification : PermanentNotification
+        PermanentNotification : PermanentNotification,
+        AlleDeltakere : AlleDeltakere
     },
     data() {
         return {
@@ -107,12 +121,12 @@ export default {
             availableYears: [] as number[],
             selectedYears: [] as number[],
             availableTyper: [
-                {title: 'Alderfordeling', value: 'aldersfordeling'},
+                {title: 'Alle deltakere', value: 'alleDeltakere'},
                 {title: 'Kjønnsfordeling', value: 'kjønnsfordeling'},
                 {title: 'Sjangerfordeling', value: 'sjangerfordeling'},
                 {title: 'Aldersfordeling SSB', value: 'aldersfordeling_ssb'}
             ],
-            selectedType: null as {title: string, value: string} | null,
+            selectedType: null as any,
             dataTypeToggle: undefined,
             dataType : false,
         }
@@ -135,10 +149,22 @@ export default {
             }
         },
         generateRapport() {
-
+            if(this.selectedType == 'alleDeltakere') {
+                (<any>this.$refs).alleDeltakerComponent.init();
+            }
         },
         isGeneratingPossible() {
-            return this.selectedFylke != null && this.selectedType != null && this.selectedYears.length > 0;
+            return this.selectedFylke != null && this.selectedType != null && this.selectedYears.length > 0 && this.dataTypeToggle != undefined;
+        },
+        getAllSelectedYears(): number[] {
+            var firstYear = this.selectedYears[0];
+            var lastYear = this.selectedYears[this.selectedYears.length - 1];
+            var years = [];
+            for (let i = firstYear; i <= lastYear; i++) {
+                years.push(i);
+            }
+
+            return years;
         }
     }
 }
