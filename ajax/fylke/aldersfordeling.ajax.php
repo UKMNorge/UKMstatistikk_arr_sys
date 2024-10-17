@@ -35,4 +35,8 @@ catch(Exception $e) {
     $handleCall->sendErrorToClient('Kunne ikke hente statistikk for fylke', 401);
 }
 
-$handleCall->sendToClient($statFylke->getAldersfordeling());
+$retArr = [];
+$retArr['data'] = $statFylke->getAldersfordeling();
+$retArr['fylke'] = $fylke->getNavn();
+
+$handleCall->sendToClient($retArr);
