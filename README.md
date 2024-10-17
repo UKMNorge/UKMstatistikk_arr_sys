@@ -427,12 +427,12 @@ OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i f
 ```
 
 
-### Gjennomsnitt deltakere på fylke
+### Gjennomsnitt deltakere på arrangement i et fylke
 
 - **URL:** `fylke/gjennomsnittDeltakere`
 - **Access:** Administrator i en kommune som tilhører fylke med fylkeId eller administrator i fylke med fylkeId
 - **Method:** `POST`
-- **Description:** Returnerer gjennomsnitt deltakere på arrangementer i alle kommuner i et fylke i en sesong. Det tas ikke i begregning arrangementer som har 0 deltakere. Arrangementer i fylke blir ikke begregnet
+- **Description:** Returnerer gjennomsnitt deltakere på arrangementer i alle kommuner i et fylke i en sesong. Det tas ikke i begregning arrangementer som har 0 deltakere. Arrangementer i fylke blir ikke med
 #### URL Parameters
 
 | Parameter | Type   | Description                |
@@ -684,6 +684,28 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 }
 ```
 
+### Gjennomsnitt deltakere i alle fylker
+
+- **URL:** `land/gjennomsnittDeltakereIAlleFylker`
+- **Access:** Har tilgang til fylke med fylkeId
+- **Method:** `POST`
+- **Description:** Returnerer gjennomsnitt deltakere i fylke sesong. Arrangementer i fylke blir ikke med
+- **Example:** Agder har 120 deltakere, Vestland har 200 deltakere. Da blir det gjennomsnitt i fylke 160
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `fylkeId`   | `number` | Fylke ID |
+| `season`    | `number` | Sesong |
+
+
+#### Response Example
+```json
+{
+  "gjennomsnitt":947
+}
+```
+
 
 ### Aldersfordeling i hele landet
 
@@ -870,12 +892,12 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 ```
 
 
-### Gjennomsnitt deltakere på landsnivå
+### Gjennomsnitt deltakere på arrangementer i hele lande
 
 - **URL:** `land/gjennomsnittDeltakere`
 - **Access:** Alle som er administrator i minst 1 fylke
 - **Method:** `POST`
-- **Description:** Returnerer gjennomsnitt deltakere på arrangementer på landsnivå i en sesong
+- **Description:** Returnerer gjennomsnitt deltakere på arrangementer på landsnivå i en sesong. Det blir ikke med fylkesarrangementer
 #### URL Parameters
 
 | Parameter | Type   | Description                |
