@@ -335,7 +335,7 @@ Alle deltakere på kommune er kun hentet fra gyldige innslag (fullførte innslag
 
 ## Fylke
 
-OBS: Fylke statistikk henter data fra kommuner i fylke og ikke arrangementer i fylke. Dette gjøres fordi innslag videresendes fra kommune til fylke, derfor arrangementer i kommuner representerer best statistikken i fylke 
+OBS: Fylke statistikk generelt henter data fra kommuner i fylke og ikke arrangementer i fylke. Dette gjøres fordi innslag videresendes fra kommune til fylke, derfor arrangementer i kommuner representerer best statistikken i fylke. Det er spesifisert implisitt når fylkesarrangementer brukes. 
 
 
 ### Aldersfordeling
