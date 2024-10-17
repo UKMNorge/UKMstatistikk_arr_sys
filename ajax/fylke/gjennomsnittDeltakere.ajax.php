@@ -33,7 +33,7 @@ try{
     $handleCall->sendErrorToClient('Kunne ikke hente statistikk for fylke', 401);
 }
 
-$retArr['gjennomsnittDeltakere'] = $statFylke->getGjennomsnittDeltakere($season);
+$retArr['gjennomsnittDeltakere'] = $statFylke->getGjennomsnittDeltakereIArrangementer($season);
 $retArr['season'] = $season;
 
 $handleCall->sendToClient($retArr);
