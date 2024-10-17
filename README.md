@@ -353,52 +353,55 @@ OBS: Fylke statistikk generelt henter data fra kommuner i fylke og ikke arrangem
 
 #### Response Example
 ```json
-[
-  {
-    "age": "16",
-    "antall": "1"
-  },
-  {
-    "age": "17",
-    "antall": "4"
-  },
-  {
-    "age": "18",
-    "antall": "2"
-  },
-  {
-    "age": "19",
-    "antall": "4"
-  },
-  {
-    "age": "20",
-    "antall": "1"
-  },
-  {
-    "age": "21",
-    "antall": "4"
-  },
-  {
-    "age": "22",
-    "antall": "6"
-  },
-  {
-    "age": "23",
-    "antall": "9"
-  },
-  {
-    "age": "24",
-    "antall": "3"
-  },
-  {
-    "age": "25",
-    "antall": "1"
-  },
-  {
-    "age": "54",
-    "antall": "3"
-  }
-]
+{
+  "fylke":"Akershus",
+  "data":[
+    {
+      "age": "16",
+      "antall": "1"
+    },
+    {
+      "age": "17",
+      "antall": "4"
+    },
+    {
+      "age": "18",
+      "antall": "2"
+    },
+    {
+      "age": "19",
+      "antall": "4"
+    },
+    {
+      "age": "20",
+      "antall": "1"
+    },
+    {
+      "age": "21",
+      "antall": "4"
+    },
+    {
+      "age": "22",
+      "antall": "6"
+    },
+    {
+      "age": "23",
+      "antall": "9"
+    },
+    {
+      "age": "24",
+      "antall": "3"
+    },
+    {
+      "age": "25",
+      "antall": "1"
+    },
+    {
+      "age": "54",
+      "antall": "3"
+    }
+  ]
+}
 ```
 
 
