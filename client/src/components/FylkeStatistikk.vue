@@ -103,6 +103,14 @@
                     :selectedYears="getAllSelectedYears()"
                 ></DeltakelseSammenligning>
             </div>
+
+            <!-- Aldersfordeling -->
+            <div v-show="selectedType == 'aldersfordeling'">
+                <Alderfordeling ref="aldersfordelingComponent"
+                    :selectedFylke="selectedFylke"
+                    :selectedYears="getAllSelectedYears()"
+                ></Alderfordeling>
+            </div>
         </div>
     </div>
 </template>
@@ -113,6 +121,7 @@ import { PermanentNotification } from 'ukm-components-vue3';
 import AlleDeltakere from './Fylke/AlleDeltakere.vue';
 import AlleDeltakereFylke from './Fylke/AlleDeltakereFylke.vue';
 import DeltakelseSammenligning from './Fylke/DeltakelseSammenligning.vue';
+import Alderfordeling from './Fylke/Alderfordeling.vue';
 
 export default {
     props: {
@@ -133,7 +142,8 @@ export default {
         PermanentNotification : PermanentNotification,
         AlleDeltakere : AlleDeltakere,
         AlleDeltakereFylke : AlleDeltakereFylke,
-        DeltakelseSammenligning : DeltakelseSammenligning
+        DeltakelseSammenligning : DeltakelseSammenligning,
+        Alderfordeling : Alderfordeling,
     },
     data() {
         return {
@@ -154,16 +164,13 @@ export default {
                 this.availableTyper = [
                     {title: 'Alle deltakere', value: 'alleDeltakere'},
                     {title: 'Deltakelse Sammenligning', value: 'deltakelseSammenligning'},
+                    {title: 'Aldersfordeling', value: 'aldersfordeling'},
                     {title: 'Kjønnsfordeling', value: 'kjønnsfordeling'},
                     {title: 'Sjangerfordeling', value: 'sjangerfordeling'},
-                    {title: 'Aldersfordeling SSB', value: 'aldersfordeling_ssb'}
                 ];
             } else if(this.dataTypeToggle == 1) {
                 this.availableTyper = [
                     {title: 'Alle deltakere', value: 'alleDeltakereFylke'},
-                    // {title: 'Kjønnsfordeling', value: 'kjønnsfordeling'},
-                    // {title: 'Sjangerfordeling', value: 'sjangerfordeling'},
-                    // {title: 'Aldersfordeling SSB', value: 'aldersfordeling_ssb'}
                 ];
             }
             else {
@@ -195,6 +202,8 @@ export default {
                 (<any>this.$refs).alleDeltakerFylkeComponent.init();
             } else if(this.selectedType == 'deltakelseSammenligning') {
                 (<any>this.$refs).deltakelseSammenligningComponent.init();
+            } else if(this.selectedType == 'aldersfordeling') {
+                (<any>this.$refs).aldersfordelingComponent.init();
             }
         },
         isGeneratingPossible() {
