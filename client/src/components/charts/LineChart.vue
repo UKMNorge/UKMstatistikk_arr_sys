@@ -45,10 +45,6 @@
       renderChart() {
         const labels = this.labels;
 
-        console.log(1757);
-        console.log(this.labels);
-        console.log(1757);
-
         if (this.$refs.lineChart) {
           this.chartInstance = new Chart(this.$refs.lineChart as HTMLCanvasElement, {
             type: 'line',

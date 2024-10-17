@@ -95,6 +95,14 @@
                     :selectedYears="getAllSelectedYears()"
                 ></AlleDeltakereFylke>
             </div>
+
+            <!-- Deltakelse sammenligning -->
+            <div v-show="selectedType == 'deltakelseSammenligning'">
+                <DeltakelseSammenligning ref="deltakelseSammenligningComponent"
+                    :selectedFylke="selectedFylke"
+                    :selectedYears="getAllSelectedYears()"
+                ></DeltakelseSammenligning>
+            </div>
         </div>
     </div>
 </template>
@@ -104,6 +112,7 @@ import Fylke from '../objects/Fylke';
 import { PermanentNotification } from 'ukm-components-vue3';
 import AlleDeltakere from './Fylke/AlleDeltakere.vue';
 import AlleDeltakereFylke from './Fylke/AlleDeltakereFylke.vue';
+import DeltakelseSammenligning from './Fylke/DeltakelseSammenligning.vue';
 
 export default {
     props: {
@@ -123,7 +132,8 @@ export default {
     components : {
         PermanentNotification : PermanentNotification,
         AlleDeltakere : AlleDeltakere,
-        AlleDeltakereFylke : AlleDeltakereFylke
+        AlleDeltakereFylke : AlleDeltakereFylke,
+        DeltakelseSammenligning : DeltakelseSammenligning
     },
     data() {
         return {
@@ -143,6 +153,7 @@ export default {
             if(this.dataTypeToggle == 0) {
                 this.availableTyper = [
                     {title: 'Alle deltakere', value: 'alleDeltakere'},
+                    {title: 'Deltakelse Sammenligning', value: 'deltakelseSammenligning'},
                     {title: 'Kjønnsfordeling', value: 'kjønnsfordeling'},
                     {title: 'Sjangerfordeling', value: 'sjangerfordeling'},
                     {title: 'Aldersfordeling SSB', value: 'aldersfordeling_ssb'}
@@ -182,6 +193,8 @@ export default {
                 (<any>this.$refs).alleDeltakerComponent.init();
             } else if(this.selectedType == 'alleDeltakereFylke') {
                 (<any>this.$refs).alleDeltakerFylkeComponent.init();
+            } else if(this.selectedType == 'deltakelseSammenligning') {
+                (<any>this.$refs).deltakelseSammenligningComponent.init();
             }
         },
         isGeneratingPossible() {
