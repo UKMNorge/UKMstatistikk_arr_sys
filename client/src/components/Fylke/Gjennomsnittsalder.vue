@@ -22,7 +22,7 @@
     export default {
         props: {
             selectedFylke: {
-                type: Array as any,
+                type: Object as any,
                 required: true
             },
             selectedYears: {

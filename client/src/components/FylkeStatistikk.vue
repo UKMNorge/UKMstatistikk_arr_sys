@@ -119,6 +119,15 @@
                     :selectedYears="getAllSelectedYears()"
                 ></Gjennomsnittsalder>
             </div>
+
+            <!-- Kjønnsfordeling -->
+            <div v-show="selectedType == 'kjonnsfordeling'">
+                <Kjonnsfordeling ref="kjonnsfordelingComponent"
+                    :selectedFylke="selectedFylke"
+                    :selectedYears="getAllSelectedYears()"
+                ></Kjonnsfordeling>
+            </div>
+
         </div>
     </div>
 </template>
@@ -131,6 +140,7 @@ import AlleDeltakereFylke from './Fylke/AlleDeltakereFylke.vue';
 import DeltakelseSammenligning from './Fylke/DeltakelseSammenligning.vue';
 import Alderfordeling from './Fylke/Alderfordeling.vue';
 import Gjennomsnittsalder from './Fylke/Gjennomsnittsalder.vue';
+import Kjonnsfordeling from './Fylke/Kjonnsfordeling.vue';
 
 export default {
     props: {
@@ -154,6 +164,7 @@ export default {
         DeltakelseSammenligning : DeltakelseSammenligning,
         Alderfordeling : Alderfordeling,
         Gjennomsnittsalder : Gjennomsnittsalder,
+        Kjonnsfordeling : Kjonnsfordeling,
     },
     data() {
         return {
@@ -176,9 +187,9 @@ export default {
                     {title: 'Deltakelse Sammenligning', value: 'deltakelseSammenligning'},
                     {title: 'Aldersfordeling', value: 'aldersfordeling'},
                     {title: 'Gjennomsnittsalder', value: 'gjennomsnittsalder'},
+                    {title: 'Kjønnsfordeling', value: 'kjonnsfordeling'},
 
 
-                    {title: 'Kjønnsfordeling', value: 'kjønnsfordeling'},
                     {title: 'Sjangerfordeling', value: 'sjangerfordeling'},
                 ];
             } else if(this.dataTypeToggle == 1) {
@@ -219,6 +230,8 @@ export default {
                 (<any>this.$refs).aldersfordelingComponent.init();
             } else if(this.selectedType == 'gjennomsnittsalder') {
                 (<any>this.$refs).gjennomsnittsalderComponent.init();
+            } else if(this.selectedType == 'kjonnsfordeling') {
+                (<any>this.$refs).kjonnsfordelingComponent.init();
             }
         },
         isGeneratingPossible() {
