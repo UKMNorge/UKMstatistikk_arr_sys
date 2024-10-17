@@ -82,7 +82,7 @@ import Fylke from '../../objects/Fylke';
             for(let year of this.selectedYears) {  
               let data = {
                   action: 'UKMstatistikk_ajax',
-                  controller: 'fylke/gjennomsnittDeltakereIAlleFylker',
+                  controller: 'land/gjennomsnittDeltakereIAlleFylker',
                   season: year,
               };
   
