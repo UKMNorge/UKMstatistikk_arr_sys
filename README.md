@@ -690,7 +690,7 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 - **Access:** Har tilgang til fylke med fylkeId
 - **Method:** `POST`
 - **Description:** Returnerer gjennomsnitt deltakere i fylke sesong. Arrangementer i fylke blir ikke med
-- **Example:** Agder har 120 deltakere, Vestland har 200 deltakere. Da blir det gjennomsnitt i fylke 160
+- **Example:** Agder har 120 deltakere, Vestland har 200 deltakere. Da blir det gjennomsnitt 160
 #### URL Parameters
 
 | Parameter | Type   | Description                |
