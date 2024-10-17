@@ -111,6 +111,14 @@
                     :selectedYears="getAllSelectedYears()"
                 ></Alderfordeling>
             </div>
+
+             <!-- Deltakelse Sammenligning -->
+             <div v-show="selectedType == 'gjennomsnittsalder'">
+                <Gjennomsnittsalder ref="gjennomsnittsalderComponent"
+                    :selectedFylke="selectedFylke"
+                    :selectedYears="getAllSelectedYears()"
+                ></Gjennomsnittsalder>
+            </div>
         </div>
     </div>
 </template>
@@ -122,6 +130,7 @@ import AlleDeltakere from './Fylke/AlleDeltakere.vue';
 import AlleDeltakereFylke from './Fylke/AlleDeltakereFylke.vue';
 import DeltakelseSammenligning from './Fylke/DeltakelseSammenligning.vue';
 import Alderfordeling from './Fylke/Alderfordeling.vue';
+import Gjennomsnittsalder from './Fylke/Gjennomsnittsalder.vue';
 
 export default {
     props: {
@@ -144,6 +153,7 @@ export default {
         AlleDeltakereFylke : AlleDeltakereFylke,
         DeltakelseSammenligning : DeltakelseSammenligning,
         Alderfordeling : Alderfordeling,
+        Gjennomsnittsalder : Gjennomsnittsalder,
     },
     data() {
         return {
@@ -165,6 +175,9 @@ export default {
                     {title: 'Alle deltakere', value: 'alleDeltakere'},
                     {title: 'Deltakelse Sammenligning', value: 'deltakelseSammenligning'},
                     {title: 'Aldersfordeling', value: 'aldersfordeling'},
+                    {title: 'Gjennomsnittsalder', value: 'gjennomsnittsalder'},
+
+
                     {title: 'Kjønnsfordeling', value: 'kjønnsfordeling'},
                     {title: 'Sjangerfordeling', value: 'sjangerfordeling'},
                 ];
@@ -204,6 +217,8 @@ export default {
                 (<any>this.$refs).deltakelseSammenligningComponent.init();
             } else if(this.selectedType == 'aldersfordeling') {
                 (<any>this.$refs).aldersfordelingComponent.init();
+            } else if(this.selectedType == 'gjennomsnittsalder') {
+                (<any>this.$refs).gjennomsnittsalderComponent.init();
             }
         },
         isGeneratingPossible() {

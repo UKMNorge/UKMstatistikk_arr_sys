@@ -64,7 +64,7 @@ export default {
                 var arr = {
                     fylke: this.selectedFylke,
                     year: year,
-                    data: results
+                    data: results.data
                 }
 
                 if(this.fylkeData[year] == undefined) {
