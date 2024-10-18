@@ -19,6 +19,7 @@ import MultiBarChart from '../charts/MultiBarChart.vue';
 import LoadingComponent from '../Other/LoadingComponent.vue';
 import type { PropType } from 'vue';  // Use type-only import for PropType
 import type Fylke from '../../objects/Fylke';
+import { getRandomColor } from '../../utils/Colors';
 
 
 export default {
@@ -104,22 +105,10 @@ export default {
             retArr.push({
                 label: fylkeNavn,
                 data: fylkeAntallData, 
-                backgroundColor: this.getRandomColor(),
+                backgroundColor: getRandomColor(1, 0),
             });
 
             return retArr;
-        },
-        getRandomColor(): string {
-            // Random hue value between 0 and 360 (full spectrum of colors)
-            const hue = Math.floor(Math.random() * 360);
-            
-            // Medium saturation for balanced colors (between 40% and 70%)
-            const saturation = Math.floor(Math.random() * 10) + 40; // Range: [40, 70]
-            
-            // Medium lightness for slightly vibrant colors (between 50% and 70%)
-            const lightness = Math.floor(Math.random() * 21) + 50; // Range: [50, 70]
-
-            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         }
     }
 }

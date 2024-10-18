@@ -16,6 +16,7 @@
 <script lang="ts">
 import MultiBarChart from '../charts/MultiBarChart.vue';
 import LoadingComponent from '../Other/LoadingComponent.vue';
+import { getRandomColor } from '../../utils/Colors';
 
 export default {
     props: {
@@ -118,11 +119,12 @@ export default {
 
             var retArr = [] as any;
 
+            let colorId = 0;
             for(let key in dataArr) {
                 let kData = dataArr[key];
                 
                 let opacityColor = 1;
-                let color = this.getRandomColor(opacityColor);
+                let color = getRandomColor(opacityColor, colorId);
                 retArr.push(
                     {
                         label: key,
@@ -132,22 +134,11 @@ export default {
                         fill: true,
                     }
                 )
+                colorId++;
             }
 
             return retArr;
             
-        },
-        getRandomColor(opacity = 1): string {
-            // Random hue value between 0 and 360 (full spectrum of colors)
-            const hue = Math.floor(Math.random() * 360);
-            
-            // Medium saturation for balanced colors (between 40% and 70%)
-            const saturation = Math.floor(Math.random() * 10) + 40; // Range: [40, 70]
-            
-            // Medium lightness for slightly vibrant colors (between 50% and 70%)
-            const lightness = Math.floor(Math.random() * 21) + 50; // Range: [50, 70]
-
-            return `hsla(${hue}, ${saturation}%, ${lightness}%, ${opacity})`;
         }
     }
 }

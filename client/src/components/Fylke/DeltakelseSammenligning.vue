@@ -18,6 +18,7 @@ import LineChart from '../charts/LineChart.vue';
 import KommuneObj from '../../objects/Kommune'; // Ensure Kommune is imported correctly
 import LoadingComponent from '../Other/LoadingComponent.vue';
 import Fylke from '../../objects/Fylke';
+import { getRandomColor } from '../../utils/Colors';
   
   
   export default {
@@ -121,10 +122,11 @@ import Fylke from '../../objects/Fylke';
             
 
             var retArr = [];
+            let colorId = 0;
             for(let key in fylkeArr) {
                 let kData = fylkeArr[key];
               
-                let color = this.getRandomColor(1);
+                let color = getRandomColor(1, colorId);
                 retArr.push(
                     {
                     label: kData.fylkeNavn,
@@ -134,23 +136,13 @@ import Fylke from '../../objects/Fylke';
                     fill: true,
                     }
                 )
+                
+                colorId++;
             }
           
             
             return retArr;
           
-        },
-        getRandomColor(transparency = 1): string {
-            // Random hue value between 0 and 360 (full spectrum of colors)
-            const hue = Math.floor(Math.random() * 360);
-            
-            // Medium saturation for balanced colors (between 40% and 70%)
-            const saturation = Math.floor(Math.random() * 10) + 40; // Range: [40, 70]
-            
-            // Medium lightness for slightly vibrant colors (between 50% and 70%)
-            const lightness = Math.floor(Math.random() * 21) + 50; // Range: [50, 70]
-  
-            return `hsla(${hue}, ${saturation}%, ${lightness}%, ${transparency})`;
         }
     }
   }
