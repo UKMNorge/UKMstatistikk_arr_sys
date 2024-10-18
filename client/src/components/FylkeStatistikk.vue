@@ -127,6 +127,14 @@
                     :selectedYears="getAllSelectedYears()"
                 ></Kjonnsfordeling>
             </div>
+            
+            <!-- Kjønnsfordeling -->
+            <div v-show="selectedType == 'sjangerfordeling'">
+                <Sjangerfordeling ref="sjangerfordelingComponent"
+                    :selectedFylke="selectedFylke"
+                    :selectedYears="getAllSelectedYears()"
+                ></Sjangerfordeling>
+            </div>
 
         </div>
     </div>
@@ -141,6 +149,7 @@ import DeltakelseSammenligning from './Fylke/DeltakelseSammenligning.vue';
 import Alderfordeling from './Fylke/Alderfordeling.vue';
 import Gjennomsnittsalder from './Fylke/Gjennomsnittsalder.vue';
 import Kjonnsfordeling from './Fylke/Kjonnsfordeling.vue';
+import Sjangerfordeling from './Fylke/Sjangerfordeling.vue';
 
 export default {
     props: {
@@ -165,6 +174,7 @@ export default {
         Alderfordeling : Alderfordeling,
         Gjennomsnittsalder : Gjennomsnittsalder,
         Kjonnsfordeling : Kjonnsfordeling,
+        Sjangerfordeling : Sjangerfordeling,
     },
     data() {
         return {
@@ -188,8 +198,6 @@ export default {
                     {title: 'Aldersfordeling', value: 'aldersfordeling'},
                     {title: 'Gjennomsnittsalder', value: 'gjennomsnittsalder'},
                     {title: 'Kjønnsfordeling', value: 'kjonnsfordeling'},
-
-
                     {title: 'Sjangerfordeling', value: 'sjangerfordeling'},
                 ];
             } else if(this.dataTypeToggle == 1) {
@@ -232,6 +240,8 @@ export default {
                 (<any>this.$refs).gjennomsnittsalderComponent.init();
             } else if(this.selectedType == 'kjonnsfordeling') {
                 (<any>this.$refs).kjonnsfordelingComponent.init();
+            } else if(this.selectedType == 'sjangerfordeling') {
+                (<any>this.$refs).sjangerfordelingComponent.init();
             }
         },
         isGeneratingPossible() {
