@@ -97,7 +97,7 @@ export default {
             var retArr = [] as any;
             
             let fylkeAntallData = [];
-            let fylkeNavn = 'Unike deltakere fra arrangementer på ' + this.fylkeData[this.selectedYears[0]][0].fylkeNavn;
+            let fylkeNavn = 'Unike deltakere fra fylkesarrangementer i ' + this.fylkeData[this.selectedYears[0]][0].fylkeNavn;
             for(let year of this.selectedYears) {
                 fylkeAntallData.push(this.fylkeData[year][0].antall);
             }
