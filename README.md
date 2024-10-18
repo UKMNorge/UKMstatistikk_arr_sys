@@ -692,13 +692,34 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 - **URL:** `land/gjennomsnittDeltakereIAlleFylker`
 - **Access:** Har tilgang til fylke med fylkeId
 - **Method:** `POST`
-- **Description:** Returnerer gjennomsnitt deltakere i fylke sesong. Arrangementer i fylke blir ikke med
-- **Example:** Agder har 120 deltakere, Vestland har 200 deltakere. Da blir det gjennomsnitt 160
+- **Description:** Returnerer gjennomsnitt deltakere per fylke i en sesong. Arrangementer i fylke blir ikke med
+- **Example:** Agder har 120 deltakere, Vestland har 200 deltakere... Da blir det gjennomsnitt 160
 #### URL Parameters
 
 | Parameter | Type   | Description                |
 |-----------|--------|----------------------------|
 | `fylkeId`   | `number` | Fylke ID |
+| `season`    | `number` | Sesong |
+
+
+#### Response Example
+```json
+{
+  "gjennomsnitt":947
+}
+```
+
+### Gjennomsnitt deltakere i alle kommuner
+
+- **URL:** `land/gjennomsnittDeltakereAlleKommuner`
+- **Access:** Har tilgang til minst 1 kommune eller 1 fylke
+- **Method:** `POST`
+- **Description:** Returnerer gjennomsnitt deltakere per kommune i en sesong. OBS: Kommuner uten aktivitet (uten deltakere) i en sesong blir ikke med i beregning
+- **Example:** Kristiansand har 55 deltakere, Bergen har 64 deltakere... Da blir det gjennomsnitt 119
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
 | `season`    | `number` | Sesong |
 
 
