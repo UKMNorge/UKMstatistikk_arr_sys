@@ -49,8 +49,11 @@
           this.chartInstance = new Chart(this.$refs.lineChart as HTMLCanvasElement, {
             type: 'line',
             data: {
-                labels: this.labels, // ['2015', '2016', '2017', '2018', '2019', '2020', '2021'],
-                datasets: this.datasets,
+                labels: this.labels,
+                datasets: this.datasets.map(dataset => ({
+                  ...dataset,
+                  tension: 0.2, 
+                })),
             },
             options: {
             responsive: true,

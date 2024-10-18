@@ -6,6 +6,9 @@
             :labels="selectedYears"
             :datasets="getDataset()"
         />
+        <div class="as-margin-top-space-4">
+            <PermanentNotification :typeNotification="'info'" tittel="Info om statistikken" description="Vær oppmerksom på at ikke alle kommuner er inkludert i det nasjonale gjennomsnittet. Enkelte kommuner kan mangle deltakere i noen sesonger, og derfor er de utelatt fra beregningen. Dette gjøres for å sikre at statistikken gir en mest mulig nøyaktig representasjon av kommuner med aktiv deltakelse." />
+        </div>
         </div>
         <div v-else-if="fetchingStarted">
             <LoadingComponent />
@@ -15,6 +18,7 @@
 
 <script lang="ts">
 import LineChart from '../charts/LineChart.vue';
+import { PermanentNotification } from 'ukm-components-vue3';
 import KommuneObj from '../../objects/Kommune'; // Ensure Kommune is imported correctly
 import type Kommune from '../../objects/Kommune'; // Ensure Kommune is imported correctly
 import LoadingComponent from '../Other/LoadingComponent.vue';
@@ -35,6 +39,7 @@ export default {
 
   },
   components: {
+    PermanentNotification : PermanentNotification,
     LineChart : LineChart,
     LoadingComponent : LoadingComponent,
   },
@@ -87,7 +92,7 @@ export default {
 
             let data = {
                 action: 'UKMstatistikk_ajax',
-                controller: 'land/gjennomsnittDeltakere',
+                controller: 'land/gjennomsnittDeltakereAlleKommuner',
                 season: year,
             };
 
