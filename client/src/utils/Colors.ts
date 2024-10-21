@@ -2,26 +2,26 @@
 export function getRandomColor(transparency = 1, position: number): string {
     // Colors array
     const Colours = [
-        '#FF5733', // Vivid Red-Orange
-        '#33A1FF', // Bright Sky Blue
-        '#28A745', // Medium Green
-        '#FFC107', // Amber Yellow
-        '#6F42C1', // Medium Purple
-        '#E83E8C', // Vivid Pink
-        '#20C997', // Bright Mint Green
-        '#FD7E14', // Orange
-        '#6610F2', // Indigo
-        '#17A2B8', // Cyan
-        '#FF6347', // Tomato Red
-        '#8B4513', // Saddle Brown
-        '#00CED1', // Dark Turquoise
-        '#C9FF43', // 
-        '#4682B4', // Steel Blue
-        '#DC143C', // Crimson
-        '#B0E57C', // Light Green
-        '#FF69B4', // Hot Pink
-        '#87CEEB', // Sky Blue
-        '#7FFF00', // Chartreuse
+        `rgba(255, 87, 51, ${transparency})`, // Vivid Red-Orange
+        `rgba(51, 161, 255, ${transparency})`, // Bright Sky Blue
+        `rgba(40, 167, 69, ${transparency})`, // Medium Green
+        `rgba(255, 193, 7, ${transparency})`, // Amber Yellow
+        `rgba(111, 66, 193, ${transparency})`, // Medium Purple
+        `rgba(232, 62, 140, ${transparency})`, // Vivid Pink
+        `rgba(32, 201, 151, ${transparency})`, // Bright Mint Green
+        `rgba(253, 126, 20, ${transparency})`, // Orange
+        `rgba(102, 16, 242, ${transparency})`, // Indigo
+        `rgba(23, 162, 184, ${transparency})`, // Cyan
+        `rgba(255, 99, 71, ${transparency})`, // Tomato Red
+        `rgba(139, 69, 19, ${transparency})`, // Saddle Brown
+        `rgba(0, 206, 209, ${transparency})`, // Dark Turquoise
+        `rgba(201, 255, 67, ${transparency})`, // Lime Green
+        `rgba(70, 130, 180, ${transparency})`, // Steel Blue
+        `rgba(220, 20, 60, ${transparency})`, // Crimson
+        `rgba(176, 229, 124, ${transparency})`, // Light Green
+        `rgba(255, 105, 180, ${transparency})`, // Hot Pink
+        `rgba(135, 206, 235, ${transparency})`, // Sky Blue
+        `rgba(127, 255, 0, ${transparency})`, // Chartreuse
     ];
 
     // Return the color directly if the position is within bounds
