@@ -155,7 +155,7 @@ export default {
             for(let year of this.selectedYears) {
                 let data = [];
                 for(let key in retArr[year]) {
-                    data.push(retArr[year][key] / totalPopulationYear[year] * 100);
+                    data.push((retArr[year][key] / totalPopulationYear[year] * 100).toFixed(1));
                 }
                 let color = getRandomColor(.5, colorId);
                 lineDataset.push({
@@ -211,7 +211,7 @@ export default {
 
                 // Calculate percentage. Divide by the ages by 2 because we have two years in each age group 
                 for(let kDataKey in dataArr[year]) {
-                    kData[kDataKey] = (kData[kDataKey] / totalPopulation) * 100;
+                    kData[kDataKey] = ((kData[kDataKey] / totalPopulation) * 100).toFixed(1);
 
                 }
                 
