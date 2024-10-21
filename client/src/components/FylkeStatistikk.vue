@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div v-if="dataType" class="as-margin-top-space-2">
-                <PermanentNotification :typeNotification="'info'" :tittel="dataTypeToggle == 0 ? 'Data fra kommuner i ditt fylke' : 'Data kun fra fylkesfestivaler'" :description="dataTypeToggle == 0 ? 'Viser statistikk fra data samlet fra alle kommuner i ditt fylket ekskludering fylkesfestivaler.' : 'Viser kun statistikk fra data relatert til fylkesfestivaler i ditt fylke, filtrert fra andre kommunale aktiviteter.'" />
+                <PermanentNotification :typeNotification="'info'" :tittel="dataTypeToggle == 0 ? 'Data fra kommuner i ditt fylke' : 'Data kun fra fylkesfestivaler'" :description="dataTypeToggle == 0 ? 'Viser statistikk fra data samlet fra alle kommuner i ditt fylket unntatt fylkesfestivaler.' : 'Viser kun statistikk fra data relatert til fylkesfestivaler i ditt fylke, filtrert fra andre kommunale aktiviteter.'" />
             </div>
 
             <div class="as-margin-top-space-4">
@@ -165,6 +165,9 @@ export default {
     mounted() {
         this.fetchFylker();
         this.setAvailableTyper();
+        // Set selected years
+        let currentYear = new Date().getFullYear();
+        this.selectedYears = [currentYear-2, currentYear];
     },
     components : {
         PermanentNotification : PermanentNotification,

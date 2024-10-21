@@ -164,6 +164,10 @@ export default {
     },
     mounted() {
         this.fetchAvailableKommuner();
+
+        // Set selected years
+        let currentYear = new Date().getFullYear();
+        this.selectedYears = [currentYear-2, currentYear];
     },
     data() {
         return {
