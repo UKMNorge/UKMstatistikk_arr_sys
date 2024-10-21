@@ -238,7 +238,7 @@ Alle deltakere på kommune er kun hentet fra gyldige innslag (fullførte innslag
 - **Access:** Alle
 - **Method:** `POST`
 - **Description:** Antall innbyggere i en kommune for et gitt år. Resultet inneholder antall innbyggere fra 10 til 25 år.
-
+- **Important:** total_population is not implemented
 #### URL Parameters
 
 | Parameter | Type   | Description                |
@@ -249,22 +249,25 @@ Alle deltakere på kommune er kun hentet fra gyldige innslag (fullførte innslag
 #### Response Example
 ```json
 {
-  "10": {"age": 10, "antall": 190},
-  "11": {"age": 11, "antall": 224},
-  "12": {"age": 12, "antall": 195},
-  "13": {"age": 13, "antall": 209},
-  "14": {"age": 14, "antall": 218},
-  "15": {"age": 15, "antall": 205},
-  "16": {"age": 16, "antall": 220},
-  "17": {"age": 17, "antall": 220},
-  "18": {"age": 18, "antall": 230},
-  "19": {"age": 19, "antall": 195},
-  "20": {"age": 20, "antall": 198},
-  "21": {"age": 21, "antall": 196},
-  "22": {"age": 22, "antall": 165},
-  "23": {"age": 23, "antall": 168},
-  "24": {"age": 24, "antall": 182},
-  "25": {"age": 25, "antall": 167}
+  "age_distribution" : {
+    "10": {"age": 10, "antall": 190},
+    "11": {"age": 11, "antall": 224},
+    "12": {"age": 12, "antall": 195},
+    "13": {"age": 13, "antall": 209},
+    "14": {"age": 14, "antall": 218},
+    "15": {"age": 15, "antall": 205},
+    "16": {"age": 16, "antall": 220},
+    "17": {"age": 17, "antall": 220},
+    "18": {"age": 18, "antall": 230},
+    "19": {"age": 19, "antall": 195},
+    "20": {"age": 20, "antall": 198},
+    "21": {"age": 21, "antall": 196},
+    "22": {"age": 22, "antall": 165},
+    "23": {"age": 23, "antall": 168},
+    "24": {"age": 24, "antall": 182},
+    "25": {"age": 25, "antall": 167}
+  },
+  "total_population" : 0 // Not implemented
 }
 ```
 
