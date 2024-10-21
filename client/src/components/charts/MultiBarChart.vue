@@ -29,7 +29,12 @@
         type: Boolean,
         required: false,
         default: false
-      }
+      },
+      lineDataset: {
+        type: Object as PropType<any>,
+        required: false,
+        default: false
+      },
     },
     data() {
       return {
@@ -43,38 +48,38 @@
     methods: {
       generateChart() {
         this.destroyChart();
-  
+
         const ctx = (document.getElementById(this.chartId) as HTMLCanvasElement).getContext('2d');
         const labels = this.labels;
         const dataset = this.dataset;
-  
+
         this.chart = new Chart(ctx!, {
-          type: 'bar',
-          data: {
-            labels: labels, // Labels for x-axis (e.g., Bergen, Melhus, etc.)
-            datasets: dataset
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: {
-                display: true
-              },
-              tooltip: {
-                enabled: true
-              }
+            type: 'bar',
+            data: {
+                labels: labels, // Labels for x-axis (e.g., age groups)
+                datasets: this.lineDataset != false ? [...this.dataset, ...this.lineDataset] : this.dataset // Combine existing bar datasets with the new line dataset
             },
-            scales: {
-              x: {
-                beginAtZero: true
-              },
-              y: {
-                beginAtZero: true
-              }
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true
+                    },
+                    tooltip: {
+                        enabled: true
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
             }
-          }
         });
-      },
+    },
       destroyChart() {
         if (this.chart) {
           this.chart.destroy();
