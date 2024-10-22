@@ -8,7 +8,7 @@
             <MultiBarChart ref="chart"
                 :labels="getYearsRange()" 
                 :dataset="getDataset()"
-                :lineDataset="getLineDataset()"
+                :labelCallbackFunction="(tooltipItem) => `${tooltipItem.raw}%`"
             />
             <div class="as-margin-top-space-4">
                 <PermanentNotification :typeNotification="'primary'" tittel="Info om statistikken" :isHTML="true" description="
@@ -18,14 +18,11 @@
                 </p>
                 <br>
                 <p>
-                    - Horisontale linjene viser prosentandelen av befolkningen i kommunen i hver aldersgruppe, som er hentet fra SSB. <strong>Merk at summen av prosentandelene for alle aldersgruppene utgjør 100% av befolkningen i kommunen.</strong>. For eksempel kan vi se hvor stor andel av befolkningen som er 10-11 år, 12-13 år, osv.
-                </p>
-                <p>
-                    - Vertikale stolpene representerer prosentandelen av deltakere i arrangørsystemet innenfor hver aldersgruppe. Hvis en stolpe for aldersgruppen 18-19 år viser 40 %, betyr det at 40 % av deltakere i din kommune er mellom 18 og 19 år i en sesong.
+                    - Stolpene representerer prosentandelen av befolkningen i kommunen som deltar i arrangørsystemet innenfor hver aldersgruppe. Hvis en stolpe for aldersgruppen 18-19 år viser 20 %, betyr det at 20 % av befolkningen i denne aldersgruppen deltar i arrangementene i en sesong.
                 </p>
                 <br>
                 <p>
-                    Ved å sammenligne disse to datasettene kan du få innsikt i hvilke aldersgrupper som er mest og minst representert i arrangementene i forhold til aldersfordelingen i befolkningen. Dette kan hjelpe med å identifisere hvilke grupper er mer engasjert og hvilke grupper kan eventuelt engasjeres.
+                    Ved å sammenligne disse prosentandelene kan du få innsikt i hvilke aldersgrupper som er mest og minst representert i arrangementene i forhold til befolkningsandelen i hver gruppe. Dette kan hjelpe med å identifisere hvilke grupper som er mer engasjert, og hvilke som kan engasjeres mer.
                 </p>
                 " />
 
@@ -122,8 +119,8 @@ export default {
         getYearsRange() : Array<string> {
             return ['10-11', '12-13', '14-15', '16-17', '18-19', '20-21'];
         },
-        getLineDataset() : any {
-            let retArr: { [key: string]: any } = [];
+        getArrSysAldersfordeling() : any {
+            let retArr: { [key: string]: any } = {};
             let totalPopulationYear = {} as any;
 
             for(let year of this.selectedYears) {
@@ -149,31 +146,14 @@ export default {
                 }
             }
             
-
-            const lineDataset = [] as any;
-            let colorId = 0;
-            for(let year of this.selectedYears) {
-                let data = [];
-                for(let key in retArr[year]) {
-                    data.push((retArr[year][key] / totalPopulationYear[year] * 100).toFixed(1));
-                }
-                let color = getRandomColor(.5, colorId);
-                lineDataset.push({
-                    label: this.selectedKommune.title + ' ' + year.toString(),
-                    data: data, 
-                    borderColor: 'transparent',
-                    backgroundColor: color,
-                    borderWidth: 2
-                });
-                colorId++;
-            }
-
-            return lineDataset;
+            return retArr;
         },
         getDataset() : any {
+            let arrSysAldersfordeling = this.getArrSysAldersfordeling();
 
-            var dataArr = [] as any;
+            var dataArr = {} as any;
             let totalPopulationYear = {} as any;
+            let retArrObjs = [];
             
             for(let kData in this.kommunerData) {                
                 for(let d of this.kommunerData[kData]) {
@@ -205,23 +185,25 @@ export default {
 
             var retArr = [] as any;
             let colorId = 0;
+
             for(let year in dataArr) {
                 let kData = dataArr[year];
-                let totalPopulation = totalPopulationYear[year];
+                let kDataArrSys = arrSysAldersfordeling[year];
 
-                // Calculate percentage. Divide by the ages by 2 because we have two years in each age group 
-                for(let kDataKey in dataArr[year]) {
-                    kData[kDataKey] = ((kData[kDataKey] / totalPopulation) * 100).toFixed(1);
-
+                for(let alderKey in arrSysAldersfordeling[year]) {
+                    if(kData[alderKey] == 0) {
+                        kData[alderKey] = 0;
+                    } else {
+                        kData[alderKey] = (kDataArrSys[alderKey] / (kData[alderKey]) * 100).toFixed(1);
+                    }
                 }
                 
                 let opacityColor = 1; //kData.kommune.id == 0 ? 1 : .4;
                 let color = getRandomColor(opacityColor, colorId);
+                
                 retArr.push(
                     {
-                        label: this.selectedKommune.title + ' SSB ' + year,
-                        type: 'line',
-                        tension: 0.2, // Smoothen the line
+                        label: this.selectedKommune.title + year,
                         borderColor: color,
                         backgroundColor: color,
                         data: (<any>Object).values(kData),

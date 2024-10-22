@@ -5,6 +5,7 @@
             <MultiBarChart ref="chart"
                 :labels="getLabels()" 
                 :dataset="getDataset()"
+                :labelCallbackFunction="(tooltipItem) => `${tooltipItem.raw} deltaker${tooltipItem.raw > 1 ? 'e' : ''}`"
             />
         </div>
 
