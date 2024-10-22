@@ -35,6 +35,11 @@
         required: false,
         default: false
       },
+      labelCallbackFunction: {
+        type: Function as PropType<(tooltipItem: any) => string>,
+        required: false,
+        default: (tooltipItem: any) => `${tooltipItem.raw}`
+      }
     },
     data() {
       return {
@@ -66,7 +71,9 @@
                         display: true
                     },
                     tooltip: {
-                        enabled: true
+                      callbacks: {
+                        label: this.labelCallbackFunction
+                      }
                     }
                 },
                 scales: {

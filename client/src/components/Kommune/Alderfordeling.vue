@@ -8,6 +8,7 @@
             <MultiBarChart ref="chart"
                 :labels="getYearsRange()" 
                 :dataset="getDataset()"
+                :labelCallbackFunction="(tooltipItem) => `${tooltipItem.raw} deltaker${tooltipItem.raw > 1 ? 'e' : ''}`"
             />
         </div>
         <div v-else-if="fetchingStarted">
@@ -86,7 +87,7 @@ export default {
 
         },
         getYearsRange() : Array<string> {
-            return ['10-11', '12-13', '14-15', '16-17', '18-19', '20+'];
+            return ['< 10', '10-11', '12-13', '14-15', '16-17', '18-19', '20+'];
         },
         getDataset() : any {
 
@@ -117,7 +118,9 @@ export default {
                             idAlder = alder.age % 2 !== 0 ? (parseInt(alder.age) - 1) + '-' + alder.age : alder.age + '-' + (parseInt(alder.age) + 1);
                         }
 
-                        dataArr['' + year][idAlder] = dataArr['' + year][idAlder] ? dataArr['' + year][idAlder] + parseInt(alder.antall) : parseInt(alder.antall);;
+                        console.log('IDALDER', idAlder, alder.antall);
+
+                        dataArr['' + year][idAlder] = dataArr['' + year][idAlder] ? dataArr['' + year][idAlder] + parseInt(alder.antall) : parseInt(alder.antall);
                     }
                 }
             }
