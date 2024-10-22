@@ -39,6 +39,11 @@
         type: Function as PropType<(tooltipItem: any) => string>,
         required: false,
         default: (tooltipItem: any) => `${tooltipItem.raw}`
+      },
+      titleCallbackFunction: {
+        type: Function as PropType<(tooltipItem: any) => string>,
+        required: false,
+        default: (tooltipItem: any) => `${tooltipItem[0].label}`
       }
     },
     data() {
@@ -72,7 +77,8 @@
                     },
                     tooltip: {
                       callbacks: {
-                        label: this.labelCallbackFunction
+                        label: this.labelCallbackFunction,
+                        title: this.titleCallbackFunction
                       }
                     }
                 },
