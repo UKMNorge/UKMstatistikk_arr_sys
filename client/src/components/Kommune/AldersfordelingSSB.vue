@@ -125,14 +125,14 @@ export default {
             let retArr: { [key: string]: any } = {};
             let totalPopulationYear = {} as any;
 
+            retArr = {};
+            retArr['10-11'] = {};
+            retArr['12-13'] = {};
+            retArr['14-15'] = {};
+            retArr['16-17'] = {};
+            retArr['18-19'] = {};
+            retArr['20-21'] = {};
             for(let year of this.selectedYears) {
-                retArr = [];
-                retArr['10-11'] = [];
-                retArr['12-13'] = [];
-                retArr['14-15'] = [];
-                retArr['16-17'] = [];
-                retArr['18-19'] = [];
-                retArr['20-21'] = [];
                 retArr['10-11'][year.toString()] = 0;
                 retArr['12-13'][year.toString()] = 0;
                 retArr['14-15'][year.toString()] = 0;
@@ -163,17 +163,18 @@ export default {
             let totalPopulationYear = {} as any;
             let retArrObjs = [];
             
+            dataArr = {};
+            dataArr['10-11'] = {};
+            dataArr['12-13'] = {};
+            dataArr['14-15'] = {};
+            dataArr['16-17'] = {};
+            dataArr['18-19'] = {};
+            dataArr['20-21'] = {};
+
             for(let kData in this.kommunerData) {                
                 for(let d of this.kommunerData[kData]) {
                     let year = d.year;
 
-                    dataArr = [];
-                    dataArr['10-11'] = [];
-                    dataArr['12-13'] = [];
-                    dataArr['14-15'] = [];
-                    dataArr['16-17'] = [];
-                    dataArr['18-19'] = [];
-                    dataArr['20-21'] = [];
                     dataArr['10-11']['' + year] = 0;
                     dataArr['12-13']['' + year] = 0;
                     dataArr['14-15']['' + year] = 0;
@@ -199,6 +200,12 @@ export default {
 
             var retArr = [] as any;
             let colorId = 0;
+            
+            console.log(1331);
+            console.log(this.kommunerData);
+            console.log(dataArr);
+
+
 
             for(let year in dataArr) {
                 let kData = dataArr[year];
