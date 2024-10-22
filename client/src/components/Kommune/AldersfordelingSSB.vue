@@ -18,7 +18,7 @@
                 </p>
                 <br>
                 <p>
-                    - Stolpene representerer prosentandelen av befolkningen i kommunen som deltar i arrangørsystemet innenfor hver aldersgruppe. Hvis en stolpe for aldersgruppen 18-19 år viser 20 %, betyr det at 20 % av befolkningen i denne aldersgruppen deltar i arrangementene i en sesong.
+                    - Stolpene representerer prosentandelen av befolkningen i kommunen som deltar i arrangørsystemet innenfor hver aldersgruppe. Hvis en stolpe for aldersgruppen 18-19 år viser 20 %, betyr det at 20 % av befolkningen i din kommune i denne aldersgruppen deltar i arrangementene i en sesong.
                 </p>
                 <br>
                 <p>
