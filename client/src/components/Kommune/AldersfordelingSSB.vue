@@ -203,7 +203,7 @@ export default {
                 
                 retArr.push(
                     {
-                        label: this.selectedKommune.title + year,
+                        label: this.selectedKommune.title + (this.selectedYears.length > 1 ? ' ' + year : ''),
                         borderColor: color,
                         backgroundColor: color,
                         data: (<any>Object).values(kData),
