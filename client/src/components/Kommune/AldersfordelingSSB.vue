@@ -9,6 +9,7 @@
                 :labels="getYearsRange()" 
                 :dataset="getDataset()"
                 :labelCallbackFunction="(tooltipItem) => `${tooltipItem.raw}%`"
+                :titleCallbackFunction="(tooltipItems) => `${tooltipItems[0].dataset.label}`"
             />
             <div class="as-margin-top-space-4">
                 <PermanentNotification :typeNotification="'primary'" tittel="Info om statistikken" :isHTML="true" description="
@@ -117,20 +118,27 @@ export default {
 
         },
         getYearsRange() : Array<string> {
-            return ['10-11', '12-13', '14-15', '16-17', '18-19', '20-21'];
+            return this.selectedYears.map(year => year.toString());
+            // return ['10-11', '12-13', '14-15', '16-17', '18-19', '20-21'];
         },
         getArrSysAldersfordeling() : any {
             let retArr: { [key: string]: any } = {};
             let totalPopulationYear = {} as any;
 
             for(let year of this.selectedYears) {
-                retArr[year.toString()] = [];
-                retArr[year.toString()]['10-11'] = 0;
-                retArr[year.toString()]['12-13'] = 0;
-                retArr[year.toString()]['14-15'] = 0;
-                retArr[year.toString()]['16-17'] = 0;
-                retArr[year.toString()]['18-19'] = 0;
-                retArr[year.toString()]['20-21'] = 0;
+                retArr = [];
+                retArr['10-11'] = [];
+                retArr['12-13'] = [];
+                retArr['14-15'] = [];
+                retArr['16-17'] = [];
+                retArr['18-19'] = [];
+                retArr['20-21'] = [];
+                retArr['10-11'][year.toString()] = 0;
+                retArr['12-13'][year.toString()] = 0;
+                retArr['14-15'][year.toString()] = 0;
+                retArr['16-17'][year.toString()] = 0;
+                retArr['18-19'][year.toString()] = 0;
+                retArr['20-21'][year.toString()] = 0;
 
                 for(let aldersFordel of this.arrSysAldersfordeling[year]) {
 
@@ -142,7 +150,7 @@ export default {
 
                     let idAlder = aldersFordel.age % 2 !== 0 ? (parseInt(aldersFordel.age) - 1) + '-' + aldersFordel.age : aldersFordel.age + '-' + (parseInt(aldersFordel.age) + 1);
 
-                    retArr[year.toString()][idAlder] = retArr[year.toString()][idAlder] ? retArr[year.toString()][idAlder] + parseInt(aldersFordel.antall) : parseInt(aldersFordel.antall);;
+                    retArr[idAlder][year.toString()] = retArr[idAlder][year.toString()] ? retArr[idAlder][year.toString()] + parseInt(aldersFordel.antall) : parseInt(aldersFordel.antall);;
                 }
             }
             
@@ -159,13 +167,19 @@ export default {
                 for(let d of this.kommunerData[kData]) {
                     let year = d.year;
 
-                    dataArr['' + year] = [];
-                    dataArr['' + year]['10-11'] = 0;
-                    dataArr['' + year]['12-13'] = 0;
-                    dataArr['' + year]['14-15'] = 0;
-                    dataArr['' + year]['16-17'] = 0;
-                    dataArr['' + year]['18-19'] = 0;
-                    dataArr['' + year]['20-21'] = 0;
+                    dataArr = [];
+                    dataArr['10-11'] = [];
+                    dataArr['12-13'] = [];
+                    dataArr['14-15'] = [];
+                    dataArr['16-17'] = [];
+                    dataArr['18-19'] = [];
+                    dataArr['20-21'] = [];
+                    dataArr['10-11']['' + year] = 0;
+                    dataArr['12-13']['' + year] = 0;
+                    dataArr['14-15']['' + year] = 0;
+                    dataArr['16-17']['' + year] = 0;
+                    dataArr['18-19']['' + year] = 0;
+                    dataArr['20-21']['' + year] = 0;
 
                     totalPopulationYear['' + year] = 0;
 
@@ -178,7 +192,7 @@ export default {
 
                         idAlder = alder.age % 2 !== 0 ? (parseInt(alder.age) - 1) + '-' + alder.age : alder.age + '-' + (parseInt(alder.age) + 1);
 
-                        dataArr['' + year][idAlder] = dataArr['' + year][idAlder] ? dataArr['' + year][idAlder] + parseInt(alder.antall) : parseInt(alder.antall);;
+                        dataArr[idAlder]['' + year] = dataArr[idAlder]['' + year] ? dataArr[idAlder]['' + year] + parseInt(alder.antall) : parseInt(alder.antall);;
                     }
                 }
             }
@@ -203,7 +217,7 @@ export default {
                 
                 retArr.push(
                     {
-                        label: this.selectedKommune.title + (this.selectedYears.length > 1 ? ' ' + year : ''),
+                        label: year,
                         borderColor: color,
                         backgroundColor: color,
                         data: (<any>Object).values(kData),
