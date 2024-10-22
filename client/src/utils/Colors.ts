@@ -2,10 +2,10 @@
 export function getRandomColor(transparency = 1, position: number): string {
     // Colors array
     const Colours = [
-        `rgba(255, 87, 51, ${transparency})`, // Vivid Red-Orange
         `rgba(51, 161, 255, ${transparency})`, // Bright Sky Blue
         `rgba(40, 167, 69, ${transparency})`, // Medium Green
         `rgba(255, 193, 7, ${transparency})`, // Amber Yellow
+        `rgba(255, 87, 51, ${transparency})`, // Vivid Red-Orange
         `rgba(111, 66, 193, ${transparency})`, // Medium Purple
         `rgba(232, 62, 140, ${transparency})`, // Vivid Pink
         `rgba(32, 201, 151, ${transparency})`, // Bright Mint Green
