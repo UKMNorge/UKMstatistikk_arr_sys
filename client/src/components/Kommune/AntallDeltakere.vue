@@ -6,6 +6,7 @@
                 :labels="getLabels()" 
                 :dataset="getDataset()"
                 :labelCallbackFunction="(tooltipItem) => `${tooltipItem.raw} deltaker${tooltipItem.raw > 1 ? 'e' : ''}`"
+                :titleCallbackFunction="titleCallbackFunction"
             />
         </div>
 
@@ -90,14 +91,23 @@ export default {
         },
         getLabels() : any {
             let retArr = [];
-            for(let kommune of this.selectedKommuner) {
-                retArr.push(kommune.title);
+
+            // If it is 1 kommune selected, show years as labels
+            if(this.selectedKommuner.length == 1) {
+                for(let year of this.getAllSelectedYears()) {
+                    retArr.push(year.toString());
+                }
+            } else {
+                for(let kommune of this.selectedKommuner) {
+                    retArr.push(kommune.title);
+                }
             }
 
             return retArr;
         },
         getDataset() : any { 
             var retArr = [] as any;
+            var singleRetArr = [] as any;
             
             var count = 0;
             let colorId = 0;
@@ -105,18 +115,43 @@ export default {
                 var dataKomm = [];
                 for(let data of this.kommunerData[year]) {
                     dataKomm.push(data.antall);
-                }
+                    singleRetArr.push(data.antall);
 
-                retArr.push({
-                    label: year.toString(),
-                    data: dataKomm, 
-                    backgroundColor: getRandomColor(1, colorId),
-                });
+                }
+                
+                if(this.selectedKommuner.length > 1) {
+                    retArr.push({
+                        label: year.toString(),
+                        data: dataKomm, 
+                        backgroundColor: getRandomColor(1, colorId),
+                    });
+                }
                 count++;
                 colorId++;
             }
 
+            if(this.selectedKommuner.length == 1) {
+                retArr.push({
+                    label: 'Antall deltakere i ' + this.selectedKommuner[0].title,
+                    data: singleRetArr, 
+                    backgroundColor: getRandomColor(1, 0),
+                });
+            }
+
             return retArr;
+        },
+        getAllSelectedYears(): number[] {
+            var firstYear = this.selectedYears[0];
+            var lastYear = this.selectedYears[this.selectedYears.length - 1];
+            var years = [];
+            for (let i = firstYear; i <= lastYear; i++) {
+                years.push(i);
+            }
+
+            return years;
+        },
+        titleCallbackFunction(tooltipItem : any) {
+            return tooltipItem[0].dataset.label;
         }
     }
 }
