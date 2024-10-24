@@ -6,7 +6,15 @@
               :labels="selectedYears"
               :datasets="getDataset()"
           />
+            <div class="as-margin-top-space-4">
+                <PermanentNotification :typeNotification="'primary'" :isHTML="true" tittel="Info om statistikken" description="
+                <p>
+                    'Gjennomsnitt i alle fylker' refererer til det nasjonale gjennomsnittet, som inkluderer data fra alle fylker i Norge.
+                </p>"
+                />
+            </div>
           </div>
+          
           <div v-else-if="fetchingStarted">
               <LoadingComponent />
           </div>
@@ -19,6 +27,7 @@ import KommuneObj from '../../objects/Kommune'; // Ensure Kommune is imported co
 import LoadingComponent from '../Other/LoadingComponent.vue';
 import Fylke from '../../objects/Fylke';
 import { getRandomColor } from '../../utils/Colors';
+import { PermanentNotification } from 'ukm-components-vue3';
   
   
   export default {
@@ -38,6 +47,7 @@ import { getRandomColor } from '../../utils/Colors';
     components: {
       LineChart : LineChart,
       LoadingComponent : LoadingComponent,
+      PermanentNotification,
     },
     data() {
         return {
@@ -90,7 +100,7 @@ import { getRandomColor } from '../../utils/Colors';
               var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
   
               let arr = {
-                  fylkeNavn: 'Deltaker gjennomsnitt i alle fylker',
+                  fylkeNavn: 'Gjennomsnitt i alle fylker',
                   year: year,
                   antall: results.gjennomsnitt
               }
