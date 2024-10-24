@@ -155,7 +155,7 @@ export default {
         },
         getDataset() : any {
             return [{
-                label: 'Dataset',
+                label: 'Kjønnsfordeling',
                 data: [this.kommuneData['female'], this.kommuneData['male'], this.kommuneData['unknown']], // Data for pie slices
                 backgroundColor: [
                     '#fbcce4',
@@ -203,9 +203,10 @@ export default {
                 backgroundColor: '#d5d5d5',
             });
 
+            console.log('retArr 1927');
+            console.log(retArr);
+
             return retArr;
-
-
         },
         getAllSelectedYears(): number[] {
             var firstYear = this.selectedYears[0];
