@@ -121,10 +121,10 @@ export default {
 
         },
         getLabels() : Array<string> {
-            if(this.isBarChart) {
+            if(!this.isBarChart) {
                 return ['Jenter', 'Gutter', 'Ukjent'];
             }
-            
+
             return this.getAllSelectedYears().map(year => year.toString()); 
         },
         getDataset() : any {
