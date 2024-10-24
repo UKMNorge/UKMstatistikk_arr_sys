@@ -31,6 +31,30 @@
                 :titleCallbackFunction="(tooltipItems) => `${tooltipItems[0].dataset.label} ${tooltipItems[0].label}`"
                 :stacked="true"
             />
+
+            <div class="as-margin-top-space-4">
+                <PermanentNotification :typeNotification="'primary'" tittel="Hvordan vi genererer kjønnsdata" :isHTML="true" description="
+                <br>
+                <p>
+                    I vårt påmeldingssystem <b>innhenter vi ikke informasjon om kjønn</b> direkte fra deltakerne. I stedet bruker vi et automatisert verktøy som estimerer kjønn basert på deltakerens fornavn. Dette er en teknisk løsning som lar oss gi deg nødvendig statistikk uten å be deltakerne spesifikt oppgi sitt kjønn.
+                </p>
+                <p>
+                    For noen navn klarer ikke systemet å fastslå et kjønnsestimat. I disse tilfellene vil personen bli kategorisert som «Ukjent» i statistikkene. Dette betyr ikke at personen har valgt å ikke identifisere seg med et bestemt kjønn, men heller at verktøyet ikke har vært i stand til å generere et kjønn basert på navnet.
+                </p>
+                <br>
+                <p>
+                    Det er viktig å merke seg at statistikken noen ganger kan være unøyaktig, siden kjønnsbestemmelsen er basert på navn, noe som kan gi feil resultater for enkelte personer.
+                </p>
+                <br>
+                <p>  
+                    Vi i UKM Norge har full forståelse for at enkelte ikke ønsker å identifisere seg med et spesifikt kjønn. Selv om systemet vårt er avhengig av å generere kjønnsdata for statistiske formål, blir ingen personlig identifiserbar informasjon om kjønnsidentitet lagret. Kjønnsdata genereres kun for å gi anonymisert statistikk.
+                </p>
+                "/>
+
+            </div>
+
+
+
         </div>
 
         <div v-else-if="fetchingStarted">
@@ -45,8 +69,9 @@ import type Kommune from '../../objects/Kommune'; // Ensure Kommune is imported 
 import type { PropType } from 'vue';  // Use type-only import for PropType
 import { toRaw } from 'vue';  // Use type-only import for PropType
 import LoadingComponent from '../Other/LoadingComponent.vue';
-import { getRandomColor } from '../../utils/Colors';
 import MultiBarChart from '../charts/MultiBarChart.vue';
+import { PermanentNotification } from 'ukm-components-vue3';
+
 
 
 export default {
@@ -67,6 +92,7 @@ export default {
         Pie : Pie,
         MultiBarChart : MultiBarChart,
         LoadingComponent : LoadingComponent,
+        PermanentNotification,
     },
     data() {
         return {
@@ -134,7 +160,7 @@ export default {
                 backgroundColor: [
                     '#fbcce4',
                     '#afd7ff',
-                    '#ededed'
+                    '#d5d5d5'
                 ]
             }];
         },
@@ -174,7 +200,7 @@ export default {
             retArr.push({
                 label: 'Ukjent',
                 data: arrU,
-                backgroundColor: '#ededed',
+                backgroundColor: '#d5d5d5',
             });
 
             return retArr;
