@@ -1,7 +1,17 @@
 <template>
     <div>
         <div v-if="dataFetched == true" class="as-card-1 as-padding-space-3 as-margin-top-space-4">
-            <div class="as-display-flex">
+            <div class="as-display-flex as-margin-bottom-space-4">
+                <div class="as-margin-auto as-margin-left-none">
+                    <h4>
+                        <template v-if="selectedYears.length > 1">
+                            {{ selectedFylke.title }} kjønnsfordeling fra {{ selectedYears[0] }} til {{ selectedYears[selectedYears.length-1] }}
+                        </template>
+                        <template v-else>
+                            {{ selectedFylke.title }} kjønnsfordeling for {{ selectedYears[0] }}
+                        </template>
+                    </h4>
+                </div>
                 <div class="as-margin-auto as-margin-right-none">
                     <v-switch 
                         inset 

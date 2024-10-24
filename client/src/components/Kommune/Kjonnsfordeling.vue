@@ -1,7 +1,17 @@
 <template>
     <div>
         <div class="as-card-1 as-padding-space-3 as-margin-top-space-4" v-if="dataFetched == true && startYear == selectedYears[0] && endYear == selectedYears[selectedYears.length-1]">
-            <div class="as-display-flex">
+            <div class="as-display-flex as-margin-bottom-space-4">
+                <div class="as-margin-auto as-margin-left-none">
+                    <h4>
+                        <template v-if="selectedYears.length > 1">
+                            {{ selectedKommune.title }} kjønnsfordeling fra {{ selectedYears[0] }} til {{ selectedYears[selectedYears.length-1] }}
+                        </template>
+                        <template v-else>
+                            {{ selectedKommune.title }} kjønnsfordeling for {{ selectedYears[0] }}
+                        </template>
+                    </h4>
+                </div>
                 <div class="as-margin-auto as-margin-right-none">
                     <v-switch 
                         inset 
@@ -10,16 +20,6 @@
                         label="Stolpediagram">
                     </v-switch>
                 </div>
-            </div>
-            <div class="as-margin-bottom-space-4">
-                <h4>
-                    <template v-if="selectedYears.length > 1">
-                        {{ selectedKommune.title }} kjønnsfordeling fra {{ selectedYears[0] }} til {{ selectedYears[selectedYears.length-1] }}
-                    </template>
-                    <template v-else>
-                        {{ selectedKommune.title }} kjønnsfordeling for {{ selectedYears[0] }}
-                    </template>
-                </h4>
             </div>
             <Pie v-if="!isBarChart" ref="chart"
                 :labels="getLabels()" 
