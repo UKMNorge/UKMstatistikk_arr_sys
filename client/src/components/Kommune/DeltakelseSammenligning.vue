@@ -7,7 +7,16 @@
             :datasets="getDataset()"
         />
         <div class="as-margin-top-space-4">
-            <PermanentNotification :typeNotification="'info'" tittel="Info om statistikken" description="Vær oppmerksom på at ikke alle kommuner er inkludert i det nasjonale gjennomsnittet. Enkelte kommuner kan mangle deltakere i noen sesonger, og derfor er de utelatt fra beregningen. Dette gjøres for å sikre at statistikken gir en mest mulig nøyaktig representasjon av kommuner med aktiv deltakelse." />
+            <PermanentNotification :typeNotification="'primary'" :isHTML="true" tittel="Info om statistikken" description="
+            <br>
+            <p>
+                'Kommuner i hele landet' refererer til det nasjonale gjennomsnittet, som inkluderer data fra alle kommuner i Norge. Dette gjennomsnittet representerer antall deltakere fra kommuner som aktivt har bidratt med data i den spesifikke tidsperioden.
+            </p>
+            <br>
+            <p>
+                Vær oppmerksom på at ikke alle kommuner er inkludert i det nasjonale gjennomsnittet. Enkelte kommuner kan mangle deltakere i noen sesonger, og derfor er de utelatt fra beregningen. Dette gjøres for å sikre at statistikken gir en mest mulig nøyaktig representasjon av kommuner med aktiv deltakelse.
+            </p>"
+            />
         </div>
         </div>
         <div v-else-if="fetchingStarted">
@@ -89,7 +98,7 @@ export default {
           // Get gjennomsnitt deltakere i hele landet
           for(let year of this.selectedYears) {
             // Simulate statistikk for hele landet som kommune
-            var landKommune = new KommuneObj(0, 'Hele landet');
+            var landKommune = new KommuneObj(0, 'Kommuner i hele landet');
 
             let data = {
                 action: 'UKMstatistikk_ajax',
