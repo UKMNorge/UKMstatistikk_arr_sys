@@ -44,6 +44,12 @@
         type: Function as PropType<(tooltipItem: any) => string>,
         required: false,
         default: (tooltipItem: any) => `${tooltipItem[0].label}`
+      },
+      // Fusion dataset in single bar
+      stacked: {
+        type: Boolean,
+        required: false,
+        default: false
       }
     },
     data() {
@@ -71,6 +77,9 @@
             },
             options: {
                 responsive: true,
+                parsing: {
+
+                },
                 plugins: {
                     legend: {
                         display: true
@@ -84,10 +93,12 @@
                 },
                 scales: {
                     x: {
-                        beginAtZero: true
+                        // beginAtZero: true,
+                        stacked: this.stacked
                     },
                     y: {
-                        beginAtZero: true
+                        // beginAtZero: true,
+                        stacked: this.stacked
                     }
                 }
             }
