@@ -36,25 +36,14 @@
                 <PermanentNotification :typeNotification="'primary'" tittel="Hvordan vi genererer kjønnsdata" :isHTML="true" description="
                 <br>
                 <p>
-                    I vårt påmeldingssystem <b>innhenter vi ikke informasjon om kjønn</b> direkte fra deltakerne. I stedet bruker vi et automatisert verktøy som estimerer kjønn basert på deltakerens fornavn. Dette er en teknisk løsning som lar oss gi deg nødvendig statistikk uten å be deltakerne spesifikt oppgi sitt kjønn.
-                </p>
-                <p>
-                    For noen navn klarer ikke systemet å fastslå et kjønnsestimat. I disse tilfellene vil personen bli kategorisert som «Ukjent» i statistikkene. Dette betyr ikke at personen har valgt å ikke identifisere seg med et bestemt kjønn, men heller at verktøyet ikke har vært i stand til å generere et kjønn basert på navnet.
-                </p>
-                <br>
-                <p>
-                    Det er viktig å merke seg at statistikken noen ganger kan være unøyaktig, siden kjønnsbestemmelsen er basert på navn, noe som kan gi feil resultater for enkelte personer.
+                    UKMs påmeldingssystem <b>innhenter ikke informasjon om kjønn</b> fra deltakerne. Statistikkmodulen bruker et automatisert verktøy som estimerer kjønn basert på deltakernes fornavn. Dette er en teknisk løsning som gjør det mulig å generere nødvendig statistikk uten å be deltakerne oppgi kjønn, og uten at dette kobles til enkeltdeltakere noe sted. Kjønnsdata genereres altså kun for å gi anonymisert statistikk.
                 </p>
                 <br>
                 <p>  
-                    Vi i UKM Norge har full forståelse for at enkelte ikke ønsker å identifisere seg med et spesifikt kjønn. Selv om systemet vårt er avhengig av å generere kjønnsdata for statistiske formål, blir ingen personlig identifiserbar informasjon om kjønnsidentitet lagret. Kjønnsdata genereres kun for å gi anonymisert statistikk.
+                    Enkelte fornavn kan være vanskelig for systemet å kjønnsbestemme. I disse tilfellene vil personen bli kategorisert som «ukjent» i statistikkene. Det er derfor viktig å merke seg at statistikken vil være noe unøyaktig.
                 </p>
                 "/>
-
             </div>
-
-
-
         </div>
 
         <div v-else-if="fetchingStarted">
