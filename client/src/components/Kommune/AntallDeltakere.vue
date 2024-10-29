@@ -8,11 +8,17 @@
                 :labelCallbackFunction="(tooltipItem) => `${tooltipItem.raw} deltaker${tooltipItem.raw > 1 ? 'e' : ''}`"
                 :titleCallbackFunction="titleCallbackFunction"
             />
-        </div>
 
+            <div>
+                <FlereKommunerMessage :alleKommuner="alleKommuner" :selectedKommuner="selectedKommuner" />
+            </div>
+
+
+        </div>
         <div v-else-if="fetchingStarted">
             <LoadingComponent />
         </div>
+        
     </div>
 </template>
 
@@ -21,7 +27,7 @@ import MultiBarChart from '../charts/MultiBarChart.vue';
 import type Kommune from '../../objects/Kommune'; // Ensure Kommune is imported correctly
 import LoadingComponent from '../Other/LoadingComponent.vue';
 import { getRandomColor } from '../../utils/Colors';  
-
+import FlereKommunerMessage from '../Other/FlereKommunerMessage.vue';
 
 export default {
     props: {
@@ -40,6 +46,7 @@ export default {
     components: {
         MultiBarChart : MultiBarChart,
         LoadingComponent : LoadingComponent,
+        FlereKommunerMessage : FlereKommunerMessage,
 
     },
     data() {
@@ -49,6 +56,7 @@ export default {
             dataFetched: false,
             colors : ['#FF6384', '#36A2EB', '#FFCE56'],
             fetchingStarted: false,
+            alleKommuner: {} as any,
         }
     },
     methods: {
@@ -56,11 +64,10 @@ export default {
             // Empty old data
             this.fetchingStarted = true;
             this.dataFetched = false;
-            this.kommunerData = [];
+            this.kommunerData = {};
 
             for(let kommune of this.selectedKommuner) {
                 for(let year of this.selectedYears) {
-                    console.warn("AJAX...");
                     var data = {
                         action: 'UKMstatistikk_ajax',
                         controller: 'kommune/antallDeltakere',
@@ -70,6 +77,16 @@ export default {
                     };
 
                     var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+
+                    if (!this.alleKommuner[kommune.id]) {
+                        this.alleKommuner[kommune.id] = {};
+                    }
+                    if (!this.alleKommuner[kommune.id][year]) {
+                        this.alleKommuner[kommune.id][year] = {};
+                    }
+                    for(let oldKomKey in results.kommuner) {
+                        this.alleKommuner[kommune.id][year][results.kommuner[oldKomKey]] = results.kommuner[oldKomKey];
+                    }
 
                     var arr = {
                         kommune: kommune,
@@ -84,6 +101,9 @@ export default {
                     this.kommunerData[year].push(arr);
                 }
             }
+
+            console.log(1246);
+            console.log(this.alleKommuner);
 
             this.fetchingStarted = false;
             this.dataFetched = true;
