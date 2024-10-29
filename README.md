@@ -179,7 +179,7 @@ Alle deltakere på kommune er kun hentet fra gyldige innslag (fullførte innslag
 - **URL:** `kommune/antallDeltakere`
 - **Access:** Tilgang til kommune (kommuneId)
 - **Method:** `POST`
-- **Description:** Antall deltakere i gyldige innslag i en kommune. Det er mulig å hente unike og ikke unike deltakere ved å sende `unike` parameter
+- **Description:** Antall deltakere i gyldige innslag i en kommune. Det er mulig å hente unike og ikke unike deltakere ved å sende `unike` parameter. Attribut kommuner på svar representerer alle kommuner som ble brukt for å generere statistikken. Flere kommuner returneres når kommunen har blitt sammenslått eller har endret navn. 
 
 #### URL Parameters
 
@@ -193,7 +193,12 @@ Alle deltakere på kommune er kun hentet fra gyldige innslag (fullførte innslag
 ```json
 {
   "erUnike":false,
-  "antall":26
+  "antall":26,
+  "kommuner":{
+    "Lindesnes":"Lindesnes",
+    "Mandal":"Mandal",
+    "Marnardal":"Marnardal"
+  }
 }
 ```
 
