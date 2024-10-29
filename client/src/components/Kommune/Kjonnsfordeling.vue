@@ -32,6 +32,10 @@
                 :stacked="true"
             />
 
+            <div>
+                <FlereKommunerMessage :alleKommuner="alleKommuner" :selectedKommuner="[selectedKommune]" />
+            </div>
+
             <div class="as-margin-top-space-4">
                 <PermanentNotification :typeNotification="'primary'" tittel="Hvordan vi genererer kjønnsdata" :isHTML="true" description="
                 <br>
@@ -60,7 +64,7 @@ import { toRaw } from 'vue';  // Use type-only import for PropType
 import LoadingComponent from '../Other/LoadingComponent.vue';
 import MultiBarChart from '../charts/MultiBarChart.vue';
 import { PermanentNotification } from 'ukm-components-vue3';
-
+import FlereKommunerMessage from '../Other/FlereKommunerMessage.vue';
 
 
 export default {
@@ -82,6 +86,8 @@ export default {
         MultiBarChart : MultiBarChart,
         LoadingComponent : LoadingComponent,
         PermanentNotification,
+        FlereKommunerMessage : FlereKommunerMessage,
+
     },
     data() {
         return {
@@ -93,6 +99,7 @@ export default {
             endYear: 0,
             fetchingStarted: false,
             isBarChart: false,
+            alleKommuner: {} as any,
         }
     },
     methods: {
@@ -121,14 +128,25 @@ export default {
 
                 var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
 
-                this.kommuneData['female'] += results['female'] ? results['female'] : 0;
-                this.kommuneData['male'] += results['male'] ? results['male'] : 0;
-                this.kommuneData['unknown'] += results['unknown'] ? results['unknown'] : 0;
+                if (!this.alleKommuner[this.selectedKommune.id]) {
+                    this.alleKommuner[this.selectedKommune.id] = {};
+                }
+                if (!this.alleKommuner[this.selectedKommune.id][year]) {
+                    this.alleKommuner[this.selectedKommune.id][year] = {};
+                }
+                for(let oldKomKey in results.kommuner) {
+                    this.alleKommuner[this.selectedKommune.id][year][results.kommuner[oldKomKey]] = results.kommuner[oldKomKey];
+                }
+
+                var resultsData = results.data;
+                this.kommuneData['female'] += resultsData['female'] ? resultsData['female'] : 0;
+                this.kommuneData['male'] += resultsData['male'] ? resultsData['male'] : 0;
+                this.kommuneData['unknown'] += resultsData['unknown'] ? resultsData['unknown'] : 0;
 
                 this.kommuneDataYear[year] = {} as any;
-                this.kommuneDataYear[year]['female'] = results['female'] ?? 0;
-                this.kommuneDataYear[year]['male'] = results['male'] ?? 0;
-                this.kommuneDataYear[year]['unknown'] = results['unknown'] ?? 0;
+                this.kommuneDataYear[year]['female'] = resultsData['female'] ?? 0;
+                this.kommuneDataYear[year]['male'] = resultsData['male'] ?? 0;
+                this.kommuneDataYear[year]['unknown'] = resultsData['unknown'] ?? 0;
             }
 
             this.fetchingStarted = false;
