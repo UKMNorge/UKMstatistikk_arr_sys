@@ -300,9 +300,16 @@ Alle deltakere på kommune er kun hentet fra gyldige innslag (fullførte innslag
 #### Response Example
 ```json
 {
+  "data":{
   "unknown":13,
   "male":11,
   "female":2
+  },
+  "kommuner":{
+    "Lindesnes":"Lindesnes",
+    "Mandal":"Mandal",
+    "Marnardal":"Marnardal"
+  }
 }
 ```
 

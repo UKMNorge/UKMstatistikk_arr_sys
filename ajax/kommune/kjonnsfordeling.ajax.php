@@ -36,8 +36,12 @@ try{
     $handleCall->sendErrorToClient('Kunne ikke hente statistikk for kommune', 401);
 }
 
-$retArr = $statKom->getKjonnsfordeling();
+$retArr = [];
+$retArr['data'] = $statKom->getKjonnsfordeling();
+$retArr['kommuner'] = [];
 
-
+foreach($kommune->getTidligereKommuner($season) as $tKommune) {
+    $retArr['kommuner'][$tKommune->getNavn()] = $tKommune->getNavn();
+}
 
 $handleCall->sendToClient($retArr);
