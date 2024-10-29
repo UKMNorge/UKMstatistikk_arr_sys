@@ -110,7 +110,7 @@ export default {
 
                 var resultsAldersfordeling = await this.spaInteraction.runAjaxCall('/', 'POST', dataAldersfordeling);
 
-                this.arrSysAldersfordeling[year] = resultsAldersfordeling;
+                this.arrSysAldersfordeling[year] = resultsAldersfordeling.data;
             }
 
             this.fetchingStarted = false;

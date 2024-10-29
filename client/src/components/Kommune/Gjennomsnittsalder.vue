@@ -6,6 +6,10 @@
               :labels="selectedYears"
               :datasets="getDataset()"
             />
+
+            <div>
+                <FlereKommunerMessage :alleKommuner="alleKommuner" :selectedKommuner="selectedKommuner" />
+            </div>
         </div>
 
         <div v-else-if="fetchingStarted">
@@ -20,6 +24,7 @@
     import type Kommune from '../../objects/Kommune'; // Ensure Kommune is imported correctly
     import LoadingComponent from '../Other/LoadingComponent.vue';
     import { getRandomColor } from '../../utils/Colors';
+    import FlereKommunerMessage from '../Other/FlereKommunerMessage.vue';
   
   
     export default {
@@ -39,6 +44,7 @@
         components: {
             LineChart : LineChart,
             LoadingComponent : LoadingComponent,
+            FlereKommunerMessage : FlereKommunerMessage,
         },
         data() {
             return {
@@ -47,6 +53,7 @@
                 dataFetched: false,
                 colors : ['#FF6384', '#36A2EB', '#FFCE56'],
                 fetchingStarted: false,
+                alleKommuner: {} as any,
             }
         },
         methods: {
@@ -67,9 +74,19 @@
     
                         var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
 
+                        if (!this.alleKommuner[kommune.id]) {
+                        this.alleKommuner[kommune.id] = {};
+                        }
+                        if (!this.alleKommuner[kommune.id][year]) {
+                            this.alleKommuner[kommune.id][year] = {};
+                        }
+                        for(let oldKomKey in results.kommuner) {
+                            this.alleKommuner[kommune.id][year][results.kommuner[oldKomKey]] = results.kommuner[oldKomKey];
+                        }
+
                         let total = 0;
                         let antall = 0;
-                        for(let res of results) {
+                        for(let res of results.data) {
                             let age = parseInt(res.age);
                             if(age < 10) {
                                 age = 10;
