@@ -39,6 +39,12 @@ try{
 
 $retArr = [];
 $retArr['erUnike'] = $erUnike;
+$retArr['kommuner'] = [];
+
+foreach($kommune->getTidligereKommuner($season) as $tKommune) {
+    $retArr['kommuner'][$tKommune->getNavn()] = $tKommune->getNavn();
+}
+
 
 if($erUnike) {
     $retArr['antall'] = $statKom->getAntallUnikeDeltakere();
