@@ -93,7 +93,7 @@ export default {
                 var arr = {
                     kommune: this.selectedKommune,
                     year: year,
-                    data: results
+                    data: results.data
                 }
 
                 if(this.kommunerData[year] == undefined) {
