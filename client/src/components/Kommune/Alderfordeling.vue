@@ -10,6 +10,10 @@
                 :dataset="getDataset()"
                 :labelCallbackFunction="(tooltipItem) => `${tooltipItem.raw} deltaker${tooltipItem.raw > 1 ? 'e' : ''}`"
             />
+
+            <div>
+                <FlereKommunerMessage :alleKommuner="alleKommuner" :selectedKommuner="[selectedKommune]" />
+            </div>
         </div>
         <div v-else-if="fetchingStarted">
             <LoadingComponent />
@@ -23,6 +27,7 @@ import type Kommune from '../../objects/Kommune'; // Ensure Kommune is imported 
 import type { PropType } from 'vue';  // Use type-only import for PropType
 import LoadingComponent from '../Other/LoadingComponent.vue';
 import { getRandomColor } from '../../utils/Colors';
+import FlereKommunerMessage from '../Other/FlereKommunerMessage.vue';
 
 export default {
     props: {
@@ -41,6 +46,7 @@ export default {
     components: {
         MultiBarChart : MultiBarChart,
         LoadingComponent : LoadingComponent,
+        FlereKommunerMessage : FlereKommunerMessage,
     },
     data() {
         return {
@@ -48,6 +54,8 @@ export default {
             kommunerData: {} as any, //{kommune : Kommune, year : number, antall : number}[]
             dataFetched: false,
             fetchingStarted: false,
+            alleKommuner: {} as any,
+
         }
     },
     methods: {
@@ -68,10 +76,20 @@ export default {
 
                 var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
 
+                if (!this.alleKommuner[this.selectedKommune.id]) {
+                    this.alleKommuner[this.selectedKommune.id] = {};
+                }
+                if (!this.alleKommuner[this.selectedKommune.id][year]) {
+                    this.alleKommuner[this.selectedKommune.id][year] = {};
+                }
+                for(let oldKomKey in results.kommuner) {
+                    this.alleKommuner[this.selectedKommune.id][year][results.kommuner[oldKomKey]] = results.kommuner[oldKomKey];
+                }
+
                 var arr = {
                     kommune: this.selectedKommune,
                     year: year,
-                    data: results
+                    data: results.data
                 }
 
                 if(this.kommunerData[year] == undefined) {

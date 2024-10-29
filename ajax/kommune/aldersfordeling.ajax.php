@@ -38,4 +38,12 @@ catch(Exception $e) {
 
 }
 
-$handleCall->sendToClient($statKom->getAldersfordeling());
+$retArr = [];
+$retArr['data'] = $statKom->getAldersfordeling();
+$retArr['kommuner'] = [];
+
+foreach($kommune->getTidligereKommuner($season) as $tKommune) {
+    $retArr['kommuner'][$tKommune->getNavn()] = $tKommune->getNavn();
+}
+
+$handleCall->sendToClient($retArr);
