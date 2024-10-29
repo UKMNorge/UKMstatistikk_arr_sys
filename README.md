@@ -331,26 +331,33 @@ Alle deltakere på kommune er kun hentet fra gyldige innslag (fullførte innslag
 #### Response Example
 ```json
 {
-  "musikk":
-    {
-      "antall":3,
-      "type_navn":"Musikk"
-    },
-  "enkeltperson":
-    {
-      "antall":4,
-      "type_navn":"Person"
-    },
-  "utstilling":
-    {
-      "antall":2,
-      "type_navn":"Utstilling"
-    },
-  "video":
-    {
-      "antall":3,
-      "type_navn":"Film"
-    }
+  "data":{
+    "musikk":
+      {
+        "antall":3,
+        "type_navn":"Musikk"
+      },
+    "enkeltperson":
+      {
+        "antall":4,
+        "type_navn":"Person"
+      },
+    "utstilling":
+      {
+        "antall":2,
+        "type_navn":"Utstilling"
+      },
+    "video":
+      {
+        "antall":3,
+        "type_navn":"Film"
+      }
+  },
+  "kommuner":{
+    "Lindesnes":"Lindesnes",
+    "Mandal":"Mandal",
+    "Marnardal":"Marnardal"
+  }
 }
 ```
 
