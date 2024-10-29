@@ -1,11 +1,16 @@
 <template>
   <div>
       <!-- Bare hvis data er fetched, kan chart opprettes -->
-      <div v-if="dataFetched == true" class="as-card-1 as-padding-space-3 as-margin-top-space-4">
+    <div v-if="dataFetched == true" class="as-card-1 as-padding-space-3 as-margin-top-space-4">
         <LineChart ref="chart"
             :labels="selectedYears"
             :datasets="getDataset()"
         />
+
+        <div>
+            <FlereKommunerMessage :alleKommuner="alleKommuner" :selectedKommuner="selectedKommuner" />
+        </div>
+
         <div class="as-margin-top-space-4">
             <PermanentNotification :typeNotification="'primary'" :isHTML="true" tittel="Info om statistikken" description="
             <br>
@@ -18,10 +23,10 @@
             </p>"
             />
         </div>
-        </div>
-        <div v-else-if="fetchingStarted">
-            <LoadingComponent />
-        </div>
+       </div>
+    <div v-else-if="fetchingStarted">
+        <LoadingComponent />
+    </div>
   </div>
 </template>
 
@@ -32,6 +37,7 @@ import KommuneObj from '../../objects/Kommune'; // Ensure Kommune is imported co
 import type Kommune from '../../objects/Kommune'; // Ensure Kommune is imported correctly
 import LoadingComponent from '../Other/LoadingComponent.vue';
 import { getRandomColor } from '../../utils/Colors';
+import FlereKommunerMessage from '../Other/FlereKommunerMessage.vue';
 
 
 export default {
@@ -52,6 +58,7 @@ export default {
     PermanentNotification : PermanentNotification,
     LineChart : LineChart,
     LoadingComponent : LoadingComponent,
+    FlereKommunerMessage : FlereKommunerMessage,
   },
   data() {
       return {
@@ -60,6 +67,7 @@ export default {
           dataFetched: false,
           colors : ['#FF6384', '#36A2EB', '#FFCE56'],
           fetchingStarted: false,
+          alleKommuner: {} as any,
       }
   },
   methods: {
@@ -71,27 +79,37 @@ export default {
 
           for(let kommune of this.selectedKommuner) {
               for(let year of this.selectedYears) {
-                  var data = {
-                      action: 'UKMstatistikk_ajax',
-                      controller: 'kommune/antallDeltakere',
-                      kommuneId: kommune.id,
-                      season: year,
-                      unike: true
-                  };
+                    var data = {
+                        action: 'UKMstatistikk_ajax',
+                        controller: 'kommune/antallDeltakere',
+                        kommuneId: kommune.id,
+                        season: year,
+                        unike: true
+                    };
 
-                  var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+                    var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
 
-                  var arr = {
-                      kommune: kommune,
-                      year: year,
-                      antall: results.antall
-                  }
+                    if (!this.alleKommuner[kommune.id]) {
+                        this.alleKommuner[kommune.id] = {};
+                    }
+                    if (!this.alleKommuner[kommune.id][year]) {
+                        this.alleKommuner[kommune.id][year] = {};
+                    }
+                    for(let oldKomKey in results.kommuner) {
+                        this.alleKommuner[kommune.id][year][results.kommuner[oldKomKey]] = results.kommuner[oldKomKey];
+                    }
 
-                  if(this.kommunerData[year] == undefined) {
-                      this.kommunerData[year] = [];
-                  }
+                    var arr = {
+                        kommune: kommune,
+                        year: year,
+                        antall: results.antall
+                    }
 
-                  this.kommunerData[year].push(arr);
+                    if(this.kommunerData[year] == undefined) {
+                        this.kommunerData[year] = [];
+                    }
+
+                    this.kommunerData[year].push(arr);
               }
           }
 
