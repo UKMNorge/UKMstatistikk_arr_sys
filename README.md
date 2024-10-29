@@ -218,21 +218,28 @@ Alle deltakere på kommune er kun hentet fra gyldige innslag (fullførte innslag
 
 #### Response Example
 ```json
-[
-  {"age":"11","antall":"2"},
-  {"age":"12","antall":"1"},
-  {"age":"13","antall":"5"},
-  {"age":"14","antall":"2"},
-  {"age":"15","antall":"2"},
-  {"age":"16","antall":"1"},
-  {"age":"17","antall":"1"},
-  {"age":"19","antall":"5"},
-  {"age":"20","antall":"1"},
-  {"age":"21","antall":"1"},
-  {"age":"22","antall":"1"},
-  {"age":"23","antall":"2"},
-  {"age":"50","antall":"2"}
-]
+{
+  "data":[
+      {"age":"11","antall":"2"},
+      {"age":"12","antall":"1"},
+      {"age":"13","antall":"5"},
+      {"age":"14","antall":"2"},
+      {"age":"15","antall":"2"},
+      {"age":"16","antall":"1"},
+      {"age":"17","antall":"1"},
+      {"age":"19","antall":"5"},
+      {"age":"20","antall":"1"},
+      {"age":"21","antall":"1"},
+      {"age":"22","antall":"1"},
+      {"age":"23","antall":"2"},
+      {"age":"50","antall":"2"}
+    ],
+  "kommuner":{
+    "Lindesnes":"Lindesnes",
+    "Mandal":"Mandal",
+    "Marnardal":"Marnardal"
+  }
+}
 
 ```
 
