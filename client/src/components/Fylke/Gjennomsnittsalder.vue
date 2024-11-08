@@ -145,11 +145,12 @@
                     colorId++;
                 }
                 
+                let gjennomsnittColor = getRandomColor(.6, 10);
                 retArr.push(
                     {
                         label: 'Gjennomsnitt alle fylker',
-                        borderColor: 'seinna',
-                        backgroundColor: 'seinna',
+                        borderColor: gjennomsnittColor,
+                        backgroundColor: gjennomsnittColor,
                         data: Object.values(this.gjennomsnittAlleFylker),
                         fill: true,
                     }
