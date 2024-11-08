@@ -3,6 +3,7 @@ export function getRandomColor(transparency = 1, position: number): string {
     // Colors array
     const Colours = [
         `rgba(51, 161, 255, ${transparency})`, // Bright Sky Blue
+        `rgba(255, 99, 71, ${transparency})`, // Tomato Red
         `rgba(40, 167, 69, ${transparency})`, // Medium Green
         `rgba(255, 193, 7, ${transparency})`, // Amber Yellow
         `rgba(255, 87, 51, ${transparency})`, // Vivid Red-Orange
@@ -12,7 +13,6 @@ export function getRandomColor(transparency = 1, position: number): string {
         `rgba(253, 126, 20, ${transparency})`, // Orange
         `rgba(102, 16, 242, ${transparency})`, // Indigo
         `rgba(23, 162, 184, ${transparency})`, // Cyan
-        `rgba(255, 99, 71, ${transparency})`, // Tomato Red
         `rgba(139, 69, 19, ${transparency})`, // Saddle Brown
         `rgba(0, 206, 209, ${transparency})`, // Dark Turquoise
         `rgba(201, 255, 67, ${transparency})`, // Lime Green
