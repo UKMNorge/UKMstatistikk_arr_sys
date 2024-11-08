@@ -42,6 +42,7 @@
             return {
                 spaInteraction : (<any>window).spaInteraction, // Definert i main.ts
                 fylkeData: {} as any, //{kommune : Kommune, year : number, antall : number}[]
+                gjennomsnittAlleFylker: {} as any,
                 dataFetched: false,
                 colors : ['#FF6384', '#36A2EB', '#FFCE56'],
                 fetchingStarted: false,
@@ -95,6 +96,18 @@
                     this.fylkeData[year].push(arr);
                 }
 
+                // Get gjennomsnitt aldersfordeling i alle fylker i alle år
+                let data2 = {
+                    action: 'UKMstatistikk_ajax',
+                    controller: 'fylke/aldersfordelingGjennomsnitt',
+                    fra : this.selectedYears[0],
+                    til : this.selectedYears[this.selectedYears.length - 1]
+                };
+
+                var results2 = await this.spaInteraction.runAjaxCall('/', 'POST', data2);
+
+                this.gjennomsnittAlleFylker = results2;
+
                 this.fetchingStarted = false;
                 this.dataFetched = true;
             },
@@ -131,6 +144,16 @@
                     );
                     colorId++;
                 }
+                
+                retArr.push(
+                    {
+                        label: 'Gjennomsnitt alle fylker',
+                        borderColor: 'seinna',
+                        backgroundColor: 'seinna',
+                        data: this.gjennomsnittAlleFylker,
+                        fill: true,
+                    }
+                );
             
                 
                 console.log('retArr');
