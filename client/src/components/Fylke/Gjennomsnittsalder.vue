@@ -150,7 +150,7 @@
                         label: 'Gjennomsnitt alle fylker',
                         borderColor: 'seinna',
                         backgroundColor: 'seinna',
-                        data: this.gjennomsnittAlleFylker,
+                        data: Object.values(this.gjennomsnittAlleFylker),
                         fill: true,
                     }
                 );
