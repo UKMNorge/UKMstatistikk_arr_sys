@@ -37,12 +37,12 @@ export default {
         }
     },
     methods: {
-        async _fetchFeedback(campaignId : number) {
-            var data : any = {
-                action: 'UKMStatistikk_ajax',
-                controller: '/feedback/hasUserAnsweredFeedback',
+        async _fetchFeedback(campaignId : number) {    
+            var data = {
+                action: 'UKMstatistikk_ajax',
+                controller: 'feedback/hasUserAnsweredFeedback',
             };
-            
+
             var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
             this.answered = response.hasAnswered == true ? true : false;
         },
@@ -57,7 +57,7 @@ export default {
         },
         saveFeedback(answer : {id : String, text : String, iconClass : String}, question : String, campaignId : String) {
             // Save to server
-            var data : any = {
+            var data = {
                 action: 'UKMStatistikk_ajax',
                 controller: 'feedback/saveFeedback',
                 campaignId: campaignId,

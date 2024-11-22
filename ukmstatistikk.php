@@ -124,7 +124,7 @@ class UKMstatistikk extends UKMNorge\Wordpress\Modul
         echo '<script>var ukm_statistikk_klient = [];';
         echo 'ukm_statistikk_klient["omrade"]=[];</script>';
         foreach($omrader as $omrade) {
-            echo '<script>console.log("bcb"); ukm_statistikk_klient["omrade"].push({"type": "'. $omrade->getType() .'", "id" : "'. $omrade->getForeignId() .'", "name": "' . $omrade->getNavn() .'"});</script>';
+            echo '<script>ukm_statistikk_klient["omrade"].push({"type": "'. $omrade->getType() .'", "id" : "'. $omrade->getForeignId() .'", "name": "' . $omrade->getNavn() .'"});</script>';
         }
         echo '<script>ukm_statistikk_klient["is_superadmin"]='. is_super_admin() .';</script>';
     }
