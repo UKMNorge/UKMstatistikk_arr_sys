@@ -33,7 +33,7 @@ class UKMstatistikk extends UKMNorge\Wordpress\Modul
      */
     public static function hook()
     {
-        add_action('network_admin_menu', ['UKMstatistikk', 'meny'], 101);
+        add_action('user_admin_menu', ['UKMstatistikk', 'meny'], 101);
         add_action('wp_ajax_UKMstatistikk_ajax', ['UKMstatistikk', 'ajax']);
     }
 
@@ -88,7 +88,7 @@ class UKMstatistikk extends UKMNorge\Wordpress\Modul
     {
         $page = add_menu_page(
             'UKM Norge Statistikk', 
-            'Statistikk 2.0', 
+            'Statistikk', 
             'subscriber', 
             'UKMstatistikk',
             ['UKMstatistikk','renderAdmin'], 
