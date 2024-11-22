@@ -125,7 +125,11 @@
                 </div>
             </template>
         </div>
-        
+
+        <div v-if="countGenerating > 1" class="as-nop-impt as-margin-top-space-8">
+            <Feedback class="as-padding-top-space-2 statistikk-feedback" />
+        </div>
+
     </div>
 </template>
 
@@ -140,6 +144,7 @@ import AldersfordelingSSB from './Kommune/AldersfordelingSSB.vue';
 import Gjennomsnittsalder from './Kommune/Gjennomsnittsalder.vue';
 import Kjonnsfordeling from './Kommune/Kjonnsfordeling.vue';
 import Sjangerfordeling from './Kommune/Sjangerfordeling.vue';
+import Feedback from './feedback/Feedback.vue';
 
 export default {
     props: {
@@ -160,7 +165,8 @@ export default {
         AldersfordelingSSB : AldersfordelingSSB,
         Gjennomsnittsalder : Gjennomsnittsalder,
         Kjonnsfordeling : Kjonnsfordeling,
-        Sjangerfordeling : Sjangerfordeling
+        Sjangerfordeling : Sjangerfordeling,
+        Feedback : Feedback,
     },
     mounted() {
         this.fetchAvailableKommuner();
@@ -186,6 +192,7 @@ export default {
             availableKommuner: [] as Kommune[],  // Corrected typo here
             availableYears: [] as number[],
             selectedYears: [] as number[],
+            countGenerating: 0,
         };
     },
     methods: {
@@ -236,6 +243,8 @@ export default {
 
         },
         generateRapport() {
+            this.countGenerating++;
+
             if(this.selectedType == 'Antall deltakere') {
                 (<any>this.$refs).antallDeltakerComponent.init();
             } else if(this.selectedType == 'Deltakelse Sammenligning') {

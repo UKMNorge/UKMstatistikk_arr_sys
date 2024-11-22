@@ -137,6 +137,11 @@
             </div>
 
         </div>
+
+        <div v-if="countGenerating > 1" class="as-nop-impt as-margin-top-space-8">
+            <Feedback class="as-padding-top-space-2 statistikk-feedback" />
+        </div>
+
     </div>
 </template>
 
@@ -150,6 +155,7 @@ import Alderfordeling from './Fylke/Alderfordeling.vue';
 import Gjennomsnittsalder from './Fylke/Gjennomsnittsalder.vue';
 import Kjonnsfordeling from './Fylke/Kjonnsfordeling.vue';
 import Sjangerfordeling from './Fylke/Sjangerfordeling.vue';
+import Feedback from './feedback/Feedback.vue';
 
 export default {
     props: {
@@ -178,6 +184,7 @@ export default {
         Gjennomsnittsalder : Gjennomsnittsalder,
         Kjonnsfordeling : Kjonnsfordeling,
         Sjangerfordeling : Sjangerfordeling,
+        Feedback : Feedback,
     },
     data() {
         return {
@@ -189,6 +196,7 @@ export default {
             selectedType: null as any,
             dataTypeToggle: 0,
             dataType : false,
+            countGenerating: 0,
         }
     },
     methods: {
@@ -231,6 +239,8 @@ export default {
             }
         },
         generateRapport() {
+            this.countGenerating++;
+
             if(this.selectedType == 'alleDeltakere') {
                 (<any>this.$refs).alleDeltakerComponent.init();
             } else if(this.selectedType == 'alleDeltakereFylke') {
