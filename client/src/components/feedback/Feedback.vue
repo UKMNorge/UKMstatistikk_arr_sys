@@ -39,7 +39,7 @@ export default {
     methods: {
         async _fetchFeedback(campaignId : number) {
             var data : any = {
-                action: 'UKMrapporter_ajax',
+                action: 'UKMStatistikk_ajax',
                 controller: '/feedback/hasUserAnsweredFeedback',
             };
             
@@ -58,7 +58,7 @@ export default {
         saveFeedback(answer : {id : String, text : String, iconClass : String}, question : String, campaignId : String) {
             // Save to server
             var data : any = {
-                action: 'UKMrapporter_ajax',
+                action: 'UKMStatistikk_ajax',
                 controller: 'feedback/saveFeedback',
                 campaignId: campaignId,
                 question : question,
