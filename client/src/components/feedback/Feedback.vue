@@ -58,7 +58,7 @@ export default {
         saveFeedback(answer : {id : String, text : String, iconClass : String}, question : String, campaignId : String) {
             // Save to server
             var data = {
-                action: 'UKMStatistikk_ajax',
+                action: 'UKMstatistikk_ajax',
                 controller: 'feedback/saveFeedback',
                 campaignId: campaignId,
                 question : question,
