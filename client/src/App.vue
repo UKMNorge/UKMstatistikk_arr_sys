@@ -14,7 +14,7 @@
                     v-model="tab">
                     <v-tab text="Kommunestatistikk"></v-tab>
                     <v-tab v-if="isFylkeAdmin" text="Fylkestatistikk"></v-tab>
-                    <v-tab v-if="isSuperadmin" text="Generell statistikk"></v-tab>
+                    <v-tab v-if="isSuperadmin" text="Nasjonal statistikk"></v-tab>
                 </v-tabs>
                 
                 <div class="as-margin-top-space-4">
