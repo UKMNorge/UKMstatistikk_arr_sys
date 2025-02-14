@@ -699,6 +699,7 @@ OBS: Noen ganger tall stemmer ikke helt. Det er pga noen deltakere er lagt til m
 
 ### Antall deltakere i hele landet
 
+- **STATUS:** Deprecated. Overtatt av `nasjonalt/antallDeltakere`
 - **URL:** `land/antallDeltakere`
 - **Access:** Alle som er administrator i minst 1 fylke
 - **Method:** `POST`

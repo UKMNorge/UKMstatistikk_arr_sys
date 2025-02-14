@@ -6,6 +6,12 @@ use UKMNorge\OAuth2\ArrSys\HandleAPICallWithAuthorization;
 use UKMNorge\Statistikk\Objekter\StatistikkFylke;
 
 
+
+$handleCall = new HandleAPICallWithAuthorization([], [], ['GET', 'POST'], false, false, null, null);
+$handleCall->sendErrorToClient('Denne endepunktet er ikke lenger i bruk. Bruk nasjonalt/antallDeltakere', 410); // Return HTTP 410 (Gone) status code
+
+die;
+
 $tilgang = 'fylke';
 $tilgangAttribute = null; // Er admin i minst 1 fylke
 
