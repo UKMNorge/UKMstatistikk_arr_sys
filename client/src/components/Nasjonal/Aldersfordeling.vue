@@ -134,7 +134,7 @@ export default {
                 for(let age in data) {
 
                     let alder = parseInt(age);
-                    var antallIAlder = this.isProsentandel ? data[alder]/antallPersoner * 100 : data[alder];
+                    var antallIAlder = this.isProsentandel ? Math.round((data[alder] / antallPersoner) * 100) : data[alder];
 
                     var idAlder = '';
 
