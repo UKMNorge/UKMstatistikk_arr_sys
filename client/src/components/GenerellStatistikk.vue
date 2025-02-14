@@ -51,6 +51,13 @@
                     :selectedYears="getAllSelectedYears()"
                 ></AntallDeltakere>
             </div>
+
+            <!-- Aldersfordeling -->
+            <div v-show="selectedType == 'Aldersfordeling'">
+                <Aldersfordeling ref="aldersfordelingComponent"
+                    :selectedYears="getAllSelectedYears()"
+                ></Aldersfordeling>
+            </div>
         </div>
 
         <div v-if="countGenerating > 1" class="as-nop-impt as-margin-top-space-8">
@@ -62,6 +69,7 @@
 
 <script lang="ts">
 import AntallDeltakere from './Nasjonal/AntallDeltakere.vue';
+import Aldersfordeling from './Nasjonal/Aldersfordeling.vue';
 import Feedback from './feedback/Feedback.vue';
 
 export default {
@@ -77,7 +85,7 @@ export default {
     },
     components: {
         AntallDeltakere : AntallDeltakere,
-       
+        Aldersfordeling : Aldersfordeling,
         Feedback : Feedback,
     },
     mounted() {
@@ -90,7 +98,8 @@ export default {
             spaInteraction : (<any>window).spaInteraction, // Definert i main.ts
             selectedType: '' as any,
             availableTypes: [
-                'Antall deltakere', 
+                'Antall deltakere',
+                'Aldersfordeling',
             ],
             availableYears: [] as number[],
             selectedYears: [] as number[],
@@ -112,14 +121,9 @@ export default {
             if(this.selectedType == 'Antall deltakere') {
                 (<any>this.$refs).antallDeltakerComponent.init();
             } 
-            // else if(this.selectedType == 'Deltakelse Sammenligning') {
-            //     (<any>this.$refs).deltakelseSammenligning.init();
-            // } else if(this.selectedType == 'Aldersfordeling') {
-            //     // Loop through all selected kommuner and call init() on each
-            //     for(let kommune of this.selectedKommuner) {
-            //         console.log(this.$refs['aldersfordeling-' + kommune.id]);
-            //         (<any>this.$refs)['aldersfordeling-' + kommune.id][0].init();
-            //     }
+            else if(this.selectedType == 'Aldersfordeling') {
+                (<any>this.$refs).aldersfordelingComponent.init();
+            }
             // } else if(this.selectedType == 'Aldersfordeling fra SSB') {
             //     for(let kommune of this.selectedKommuner) {
             //         (<any>this.$refs)['aldersfordeling-ssb-' + kommune.id][0].init();
