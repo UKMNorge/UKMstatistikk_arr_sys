@@ -20,6 +20,7 @@
                 <MultiBarChart ref="chart"
                     :labels="getYearsRange()" 
                     :dataset="getDataset()"
+                    :titleCallbackFunction="titleCallbackFunction"
                     :labelCallbackFunction="(tooltipItem) => `${tooltipItem.raw} %`"
 
                 />
@@ -28,6 +29,7 @@
                 <MultiBarChart ref="chart"
                     :labels="getYearsRange()"
                     :dataset="getDataset()"
+                    :titleCallbackFunction="titleCallbackFunction"
                     :labelCallbackFunction="(tooltipItem) => `${tooltipItem.raw} deltaker${tooltipItem.raw > 1 ? 'e' : ''}`"
                 />
             </template>
@@ -172,6 +174,9 @@ export default {
             console.log(retArr);
             return retArr;
             
+        },
+        titleCallbackFunction(tooltipItem : any) {
+            return tooltipItem[0].dataset.label;
         }
     }
 }
