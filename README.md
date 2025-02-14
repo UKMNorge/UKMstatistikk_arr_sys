@@ -1247,3 +1247,30 @@ Statistikk om landsfestivalen
   }
 }
 ```
+
+
+## Nasjoanlt
+
+Nasjonal statistikk for hele landet. Kun `superadmin` har tilgang til nasjoanle data
+Forskjellen mellom `land/...` og `nasjonalt/...` er på håndtering av resultatene. `land/...` håndterer data som gjelder hele landet men data er hentet via fylke. `nasjonalt/...` håndterer data som gjelder nasjonalt, for eksempel alle deltakere i hele landet
+
+### Antall deltakere nasjonalt
+
+- **URL:** `nasjonalt/antallDeltakere`
+- **Access:** Super admin
+- **Method:** `POST`
+- **Description:** Henter alle deltakere i alle arrangementer i en sesong. Det blir med alle arrangementer uansett type og nivå
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `season`  | `number`  | Sesong |
+| `unike`   | `boolean` | Unike eller ikke unike deltakere |
+
+#### Response Example
+```json
+{
+  "unike":true,
+  "antall":15885
+}
+```
