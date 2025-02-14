@@ -134,7 +134,7 @@ export default {
                 for(let age in data) {
 
                     let alder = parseInt(age);
-                    var antallIAlder = this.isProsentandel ? (Math.round((data[alder] / antallPersoner) * 1000) / 10).toFixed(1) : data[alder];
+                    var antallIAlder = this.isProsentandel ? Math.round((data[alder] / antallPersoner) * 100) : data[alder];
 
                     var idAlder = '';
 
@@ -146,7 +146,7 @@ export default {
                         idAlder = alder % 2 !== 0 ? (alder - 1) + '-' + alder : alder + '-' + (alder + 1);
                     }
 
-                    dataArr['' + year][idAlder] = dataArr['' + year][idAlder] ? dataArr['' + year][idAlder] + parseInt(antallIAlder) : parseInt(antallIAlder);
+                    dataArr['' + year][idAlder] = dataArr['' + year][idAlder] ? dataArr['' + year][idAlder] + antallIAlder : antallIAlder;
                 }
 
             }
