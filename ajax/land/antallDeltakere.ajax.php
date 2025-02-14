@@ -20,8 +20,6 @@ $antall = 0;
 foreach($alleFylkerISesong as $fylkeId => $fylkeNavn) {
     $fylke = new Fylke($fylkeId, '', (string)$fylkeNavn, true);
     $statistikkFylke = new StatistikkFylke($fylke, $season);
-    
-    var_dump($fylke->getNavn() . ' = ' . $statistikkFylke->getAntallUnikeDeltakere() .' |');
 
     if($erUnike) {
         $antallDeltakere = $statistikkFylke->getAntallUnikeDeltakere();
