@@ -50,7 +50,7 @@ export default {
             const requests = this.selectedYears.map(async (year) => {
                 const data = {
                     action: 'UKMstatistikk_ajax',
-                    controller: 'land/antallDeltakere',
+                    controller: 'nasjonalt/antallDeltakere',
                     season: year,
                     unike: true
                 };
