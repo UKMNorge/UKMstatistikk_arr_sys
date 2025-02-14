@@ -3,11 +3,12 @@
 use UKMNorge\DesignWordpress\Environment\Statistikk;
 use UKMNorge\Geografi\Fylke;
 use UKMNorge\OAuth2\ArrSys\HandleAPICallWithAuthorization;
+use UKMNorge\OAuth2\HandleAPICall;
 use UKMNorge\Statistikk\Objekter\StatistikkFylke;
 
 
-
-$handleCall = new HandleAPICallWithAuthorization([], [], ['GET', 'POST'], false, false, null, null);
+// Denne endepunktet er ikke lenger i bruk. Overtatt av nasjonalt/antallDeltakere
+$handleCall = new HandleAPICall([], [], ['GET', 'POST'], false, false, null, null);
 $handleCall->sendErrorToClient('Denne endepunktet er ikke lenger i bruk. Bruk nasjonalt/antallDeltakere', 410); // Return HTTP 410 (Gone) status code
 
 die;
