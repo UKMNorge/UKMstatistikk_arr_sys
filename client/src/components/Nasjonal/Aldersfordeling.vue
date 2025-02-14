@@ -75,32 +75,32 @@ export default {
             this.dataFetched = false;
             this.aldersfordelingsData = {};
 
-            for(let year of this.selectedYears) {
-                var data = {
+            const requests = this.selectedYears.map(async (year) => {
+                const data = {
                     action: 'UKMstatistikk_ajax',
                     controller: 'nasjonalt/aldersfordeling',
                     season: year,
                     unike: true
                 };
 
-                var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+                const results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
 
-                var arr = {
-                    year: year,
-                    data: results
-                }
+                return { year, data: results };
+            });
 
-                if(this.aldersfordelingsData[year] == undefined) {
+            // Wait for all requests to complete
+            const responses = await Promise.all(requests);
+
+            // Store results
+            responses.forEach(({ year, data }) => {
+                if (!this.aldersfordelingsData[year]) {
                     this.aldersfordelingsData[year] = [];
                 }
-
-                this.aldersfordelingsData[year].push(arr);
-            }
+                this.aldersfordelingsData[year].push({ year, data });
+            });
 
             this.fetchingStarted = false;
             this.dataFetched = true;
-
-
         },
         getYearsRange() : Array<string> {
             return ['< 10', '10-11', '12-13', '14-15', '16-17', '18-19', '20+'];
