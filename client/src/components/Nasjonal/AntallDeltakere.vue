@@ -7,8 +7,8 @@
                 :dataset="getDataset()"
                 :labelCallbackFunction="(tooltipItem) => `${tooltipItem.raw} deltaker${tooltipItem.raw > 1 ? 'e' : ''}`"
                 :titleCallbackFunction="titleCallbackFunction"
+                :stacked="true"
             />
-
         </div>
         <div v-else-if="fetchingStarted">
             <LoadingComponent />
@@ -55,7 +55,7 @@ export default {
                     unike: true
                 };
                 const results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
-                this.antallDeltakereData[year] = [{ year, antall: results.antall }];
+                this.antallDeltakereData[year] = [{ year, antall: results.antallDeltakere, antallUfullforte: results.antallDeltakereUfullforte }];
             });
 
             await Promise.all(requests);
@@ -76,16 +76,27 @@ export default {
             var retArr = [] as any;
             var singleRetArr = [] as any;
             
+            var arrFullforte = [] as any;
+            var arrUfullforte = [] as any;
+
             for(let year of this.selectedYears) {
                 for(let data of this.antallDeltakereData[year]) {
-                    singleRetArr.push(data.antall);
+                    // singleRetArr.push(data.antall);
+                    arrFullforte.push(data.antall);
+                    arrUfullforte.push(data.antallUfullforte);
                 }
             }
 
             retArr.push({
-                label: 'Antall deltakere nasjonalt',
-                data: singleRetArr, 
+                label: 'Fullforte',
+                data: arrFullforte,
                 backgroundColor: getRandomColor(1, 0),
+            });
+
+            retArr.push({
+                label: 'Ufullførte',
+                data: arrUfullforte,
+                backgroundColor: '#bebebe',
             });
 
             return retArr;

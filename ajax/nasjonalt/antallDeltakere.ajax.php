@@ -18,4 +18,8 @@ $statNasjonalt = new StatistikkNasjonalt($season);
 
 $antall = $erUnike ? $statNasjonalt->getAntallUnikeDeltakere() : $statNasjonalt->getAntallDeltakere();
 
-$handleCall->sendToClient(['unike' => $erUnike, 'antall' => $antall]);
+$handleCall->sendToClient([
+    'unike' => $erUnike, 
+    'antallDeltakere' => $antall,
+    'antallDeltakereUfullforte' => $statNasjonalt->getAntallUnikeUfullforteDeltakere(),
+]);
