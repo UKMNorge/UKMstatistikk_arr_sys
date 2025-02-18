@@ -8,6 +8,7 @@ Version: 1.0
 Author URI: http://www.ukm.no
 */
 
+use UKMNorge\Geografi\Fylker;
 use UKMNorge\Nettverk\Administrator;
 
 require_once('UKM/Autoloader.php');
@@ -123,8 +124,16 @@ class UKMstatistikk extends UKMNorge\Wordpress\Modul
         // Legg til kommuner og fylker som brukeren har tilgang til og som skal brukes på klient side
         echo '<script>var ukm_statistikk_klient = [];';
         echo 'ukm_statistikk_klient["omrade"]=[];</script>';
-        foreach($omrader as $omrade) {
-            echo '<script>ukm_statistikk_klient["omrade"].push({"type": "'. $omrade->getType() .'", "id" : "'. $omrade->getForeignId() .'", "name": "' . $omrade->getNavn() .'"});</script>';
+        // Superadmin får alle fylkene
+        if(is_super_admin()) {
+            foreach(Fylker::getAll() as $fylke) {
+                echo '<script>ukm_statistikk_klient["omrade"].push({"type": "fylke", "id" : "'. $fylke->getId() .'", "name": "' . $fylke->getNavn() .'"});</script>';
+            }
+        }
+        else {
+            foreach($omrader as $omrade) {
+                echo '<script>ukm_statistikk_klient["omrade"].push({"type": "'. $omrade->getType() .'", "id" : "'. $omrade->getForeignId() .'", "name": "' . $omrade->getNavn() .'"});</script>';
+            }   
         }
         echo '<script>ukm_statistikk_klient["is_superadmin"]='. is_super_admin() .';</script>';
     }
