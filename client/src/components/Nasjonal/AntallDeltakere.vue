@@ -9,6 +9,32 @@
                 :titleCallbackFunction="titleCallbackFunction"
                 :stacked="true"
             />
+
+            <div class="as-margin-top-space-4">
+                <PermanentNotification :typeNotification="'primary'" tittel="Hvordan data genereres" :isHTML="true" description="
+                <br>
+                <p>
+                    Statistikken viser antall deltakere i både fullførte og ufullførte innslag. 
+                    <b>Et fullført innslag er et innslag der alle nødvendige data er sendt inn.</b>
+                </p>
+                <br>
+                <p>
+                    Husk at statistikken viser antall deltakere, ikke antall innslag. 
+                    Siden et innslag kan ha flere deltakere, kan det være flere deltakere per fullført eller ufullført innslag. 
+                    For eksempel vil et band med fire medlemmer telles som fire deltakere.
+                </p>
+                <br>
+                <p>
+                    OBS: Deltakere telles kun <b>1 gang i en sesong</b>. En deltaker kan potensielt være med i fullførte og ufullførte beregninger og i flere sesonger.
+                </p>
+                <br>
+                <p>  
+                    Påmeldinger før 2019 kan være noe unøyaktige, spesielt for ufullførte innslag. 
+                    Dette skyldes manglende oversikt over kodene som ble brukt for å markere disse innslagene, noe som kan påvirke beregningene.
+                </p>
+
+                "/>
+            </div>
         </div>
         <div v-else-if="fetchingStarted">
             <LoadingComponent />
@@ -20,6 +46,7 @@
 <script lang="ts">
 import MultiBarChart from '../charts/MultiBarChart.vue';
 import LoadingComponent from '../Other/LoadingComponent.vue';
+import { PermanentNotification } from 'ukm-components-vue3';
 import { getRandomColor } from '../../utils/Colors';  
 
 export default {
@@ -32,6 +59,7 @@ export default {
     components: {
         MultiBarChart : MultiBarChart,
         LoadingComponent : LoadingComponent,
+        PermanentNotification,
     },
     data() {
         return {
