@@ -55,10 +55,13 @@ export default {
             this.fetchingStarted = true;
             this.dataFetched = false;
             this.fylkerData = {};
+            this.alleFylker = {};
 
-            for(let fylke of this.selectedFylker) {
-                for(let year of this.selectedYears) {
-                    var data = {
+            const promises = [];
+
+            for (let fylke of this.selectedFylker) {
+                for (let year of this.selectedYears) {
+                    const data = {
                         action: 'UKMstatistikk_ajax',
                         controller: 'fylke/antallDeltakere',
                         fylkeId: fylke,
@@ -66,35 +69,32 @@ export default {
                         unike: true
                     };
 
-                    var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+                    // Store promise instead of awaiting it
+                    promises.push(
+                        this.spaInteraction.runAjaxCall('/', 'POST', data).then((results : any) => {
+                            if (!this.alleFylker[fylke]) {
+                                this.alleFylker[fylke] = {};
+                            }
+                            if (!this.alleFylker[fylke][year]) {
+                                this.alleFylker[fylke][year] = {};
+                            }
 
-                    if (!this.alleFylker[fylke]) {
-                        this.alleFylker[fylke] = {};
-                    }
-                    if (!this.alleFylker[fylke][year]) {
-                        this.alleFylker[fylke][year] = {};
-                    }
+                            const arr = { fylke, year, antall: results.antall };
 
-                    var arr = {
-                        fylke: fylke,
-                        year: year,
-                        antall: results.antall
-                    }
-
-                    if(this.fylkerData[year] == undefined) {
-                        this.fylkerData[year] = [];
-                    }
-
-                    this.fylkerData[year].push(arr);
+                            if (!this.fylkerData[year]) {
+                                this.fylkerData[year] = [];
+                            }
+                            this.fylkerData[year].push(arr);
+                        })
+                    );
                 }
             }
 
-            console.log(1246);
-            console.log(this.alleFylker);
+            // Wait for all AJAX calls to finish
+            await Promise.all(promises);
 
             this.fetchingStarted = false;
             this.dataFetched = true;
-
         },
         getLabels() : any {
             let retArr = [];
@@ -146,8 +146,6 @@ export default {
                 count++;
                 colorId++;
             }
-
-            console.log(retArr);
 
             if(this.selectedFylker.length == 1) {
                 retArr.push({
