@@ -4,14 +4,16 @@
             <div class="as-margin-bottom-space-2 as-display-flex">
                 <h4 class="as-margin-auto as-margin-left-none">Velg fylke og type</h4>
             </div>
-
             <div class="as-margin-top-space-4">
                 <v-autocomplete 
                     variant="outlined" 
                     label="Velg fylke" 
                     class="v-autocomplete-arr-sys" 
-                    :items="availableFylker" 
-                    v-model="selectedFylke"
+                    :items="availableFylker"
+                    clearable
+                    chips
+                    multiple
+                    v-model="selectedFylker"
                     item-text="name" 
                     item-value="id">
                 </v-autocomplete>
@@ -83,7 +85,7 @@
             <!-- Alle deltakere -->
             <div v-show="selectedType == 'alleDeltakere'">
                 <AlleDeltakere ref="alleDeltakerComponent"
-                    :selectedFylkeId="selectedFylke"
+                    :selectedFylker="selectedFylker"
                     :selectedYears="getAllSelectedYears()"
                 ></AlleDeltakere>
             </div>
@@ -91,7 +93,7 @@
             <!-- Alle deltakere fylke -->
             <div v-show="selectedType == 'alleDeltakereFylke'">
                 <AlleDeltakereFylke ref="alleDeltakerFylkeComponent"
-                    :selectedFylkeId="selectedFylke"
+                    :selectedFylkeId="selectedFylker[0]"
                     :selectedYears="getAllSelectedYears()"
                 ></AlleDeltakereFylke>
             </div>
@@ -99,7 +101,7 @@
             <!-- Deltakelse sammenligning -->
             <div v-show="selectedType == 'deltakelseSammenligning'">
                 <DeltakelseSammenligning ref="deltakelseSammenligningComponent"
-                    :selectedFylke="selectedFylke"
+                    :selectedFylke="selectedFylker[0]"
                     :selectedYears="getAllSelectedYears()"
                 ></DeltakelseSammenligning>
             </div>
@@ -107,7 +109,7 @@
             <!-- Aldersfordeling -->
             <div v-show="selectedType == 'aldersfordeling'">
                 <Alderfordeling ref="aldersfordelingComponent"
-                    :selectedFylke="selectedFylke"
+                    :selectedFylke="selectedFylker[0]"
                     :selectedYears="getAllSelectedYears()"
                 ></Alderfordeling>
             </div>
@@ -115,7 +117,7 @@
              <!-- Deltakelse Sammenligning -->
              <div v-show="selectedType == 'gjennomsnittsalder'">
                 <Gjennomsnittsalder ref="gjennomsnittsalderComponent"
-                    :selectedFylke="selectedFylke"
+                    :selectedFylke="selectedFylker[0]"
                     :selectedYears="getAllSelectedYears()"
                 ></Gjennomsnittsalder>
             </div>
@@ -123,7 +125,7 @@
             <!-- Kjønnsfordeling -->
             <div v-show="selectedType == 'kjonnsfordeling'">
                 <Kjonnsfordeling ref="kjonnsfordelingComponent"
-                    :selectedFylke="selectedFylke"
+                    :selectedFylke="selectedFylker[0]"
                     :selectedYears="getAllSelectedYears()"
                 ></Kjonnsfordeling>
             </div>
@@ -131,7 +133,7 @@
             <!-- Kjønnsfordeling -->
             <div v-show="selectedType == 'sjangerfordeling'">
                 <Sjangerfordeling ref="sjangerfordelingComponent"
-                    :selectedFylke="selectedFylke"
+                    :selectedFylke="selectedFylker[0]"
                     :selectedYears="getAllSelectedYears()"
                 ></Sjangerfordeling>
             </div>
@@ -197,6 +199,7 @@ export default {
             dataTypeToggle: 0,
             dataType : false,
             countGenerating: 0,
+            selectedFylker: [] as number[],
         }
     },
     methods: {
@@ -258,7 +261,7 @@ export default {
             }
         },
         isGeneratingPossible() {
-            return this.selectedFylke != null && this.selectedType != null && this.selectedYears.length > 0 && this.dataTypeToggle != undefined;
+            return this.selectedFylker[0] != null && this.selectedType != null && this.selectedYears.length > 0 && this.dataTypeToggle != undefined;
         },
         getAllSelectedYears(): number[] {
             var firstYear = this.selectedYears[0];
