@@ -106,13 +106,17 @@
                 ></DeltakelseSammenligning>
             </div>
 
-            <!-- Aldersfordeling -->
-            <div v-show="selectedType == 'aldersfordeling'">
-                <Alderfordeling ref="aldersfordelingComponent"
-                    :selectedFylke="selectedFylker[0]"
-                    :selectedYears="getAllSelectedYears()"
-                ></Alderfordeling>
-            </div>
+            <!-- Aldersfordeling for hvert fylke -->
+            <template v-for="fylkeId in selectedFylker" v-bind:key="fylkeId">
+                <div v-show="selectedType == 'aldersfordeling'">
+                    <Alderfordeling 
+                        :ref="'aldersfordeling-' + fylkeId"
+                        :fylkeNavn="_getFylkeById(fylkeId)"
+                        :selectedFylke="fylkeId"
+                        :selectedYears="getAllSelectedYears()"
+                    ></Alderfordeling>
+                </div>
+            </template>
 
              <!-- Deltakelse Sammenligning -->
              <div v-show="selectedType == 'gjennomsnittsalder'">
@@ -241,6 +245,15 @@ export default {
                 // this.availableYears.push(i+4);
             }
         },
+        _getFylkeById(fylkeId : number) : string {
+            let omrader = (<any>window).ukm_statistikk_klient.omrade
+            for(let omrade of omrader) {
+                if(omrade.type == 'fylke' && omrade.id == fylkeId) {
+                    return omrade.name;
+                }
+            }
+            return 'Ukjent';
+        },
         generateRapport() {
             this.countGenerating++;
 
@@ -251,7 +264,11 @@ export default {
             } else if(this.selectedType == 'deltakelseSammenligning') {
                 (<any>this.$refs).deltakelseSammenligningComponent.init();
             } else if(this.selectedType == 'aldersfordeling') {
-                (<any>this.$refs).aldersfordelingComponent.init();
+                // Loop through all selected fylker and call init() on each
+                for(let fylkeId of this.selectedFylker) {
+                    console.log(this.$refs['aldersfordeling-' + fylkeId]);
+                    (<any>this.$refs)['aldersfordeling-' + fylkeId][0].init();
+                }
             } else if(this.selectedType == 'gjennomsnittsalder') {
                 (<any>this.$refs).gjennomsnittsalderComponent.init();
             } else if(this.selectedType == 'kjonnsfordeling') {

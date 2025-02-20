@@ -2,6 +2,9 @@
     <div>
         <!-- Bare hvis data er fetched, kan chart opprettes -->
         <div v-if="dataFetched == true" class="as-card-1 as-padding-space-3 as-margin-top-space-4">
+            <div class="as-margin-bottom-space-2">
+                <h4>{{ fylkeNavn }}</h4>
+            </div>
             <MultiBarChart ref="chart"
                 :labels="getYearsRange()" 
                 :dataset="getDataset()"
@@ -20,6 +23,10 @@ import { getRandomColor } from '../../utils/Colors';
 
 export default {
     props: {
+        fylkeNavn: {
+            type: String,
+            required: false
+        },
         selectedFylke: {
             type: Object as any,
             required: true
