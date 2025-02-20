@@ -101,7 +101,7 @@
             <!-- Deltakelse sammenligning -->
             <div v-show="selectedType == 'deltakelseSammenligning'">
                 <DeltakelseSammenligning ref="deltakelseSammenligningComponent"
-                    :selectedFylke="selectedFylker[0]"
+                    :selectedFylker="selectedFylker"
                     :selectedYears="getAllSelectedYears()"
                 ></DeltakelseSammenligning>
             </div>

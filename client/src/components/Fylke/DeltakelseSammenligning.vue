@@ -36,6 +36,10 @@ import { PermanentNotification } from 'ukm-components-vue3';
             type: Object as any,
             required: true
         },
+        selectedFylker: {
+            type: Array as () => number[],
+            required: true
+        },
         selectedYears: {
             type: Array as () => number[],
             required: true
@@ -64,61 +68,73 @@ import { PermanentNotification } from 'ukm-components-vue3';
             this.fetchingStarted = true;
             this.dataFetched = false;
             this.fylkeData = [];
-  
+            
+            // Create an array to hold all promises
+            let promises = [];
+
+            // Get gjennomsnitt deltakere i hele landet
+            for(let year of this.selectedYears) {  
+            let data = {
+                action: 'UKMstatistikk_ajax',
+                controller: 'land/gjennomsnittDeltakereIAlleFylker',
+                season: year,
+            };
+
+            if(this.fylkeData[year] == undefined) {
+                this.fylkeData[year] = [];
+            }
+
+            promises.push(
+                this.spaInteraction.runAjaxCall('/', 'POST', data).then(results => {
+                let arr = {
+                    fylkeNavn: 'Gjennomsnitt i alle fylker',
+                    year: year,
+                    antall: results.gjennomsnitt
+                }
+                this.fylkeData[year].push(arr);
+                })
+            );
+            }
+
             for(let year of this.selectedYears) {
+            for(let fylke of this.selectedFylker) {
                 var data = {
-                    action: 'UKMstatistikk_ajax',
-                    controller: 'fylke/antallDeltakere',
-                    fylkeId: this.selectedFylke,
-                    season: year,
-                    unike: true
+                action: 'UKMstatistikk_ajax',
+                controller: 'fylke/antallDeltakere',
+                fylkeId: fylke,
+                season: year,
+                unike: true
                 };
 
-                var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
-
-                var arr = {
+                promises.push(
+                this.spaInteraction.runAjaxCall('/', 'POST', data).then(results => {
+                    var arr = {
                     fylkeNavn: results.fylkeNavn,
                     year: year,
                     antall: results.antall
-                }
+                    }
 
-                if(this.fylkeData[year] == undefined) {
+                    if(this.fylkeData[year] == undefined) {
                     this.fylkeData[year] = [];
-                }
+                    }
 
-                this.fylkeData[year].push(arr);
+                    this.fylkeData[year].push(arr);
+                })
+                );
             }
-  
-            // Get gjennomsnitt deltakere i hele landet
-            for(let year of this.selectedYears) {  
-              let data = {
-                  action: 'UKMstatistikk_ajax',
-                  controller: 'land/gjennomsnittDeltakereIAlleFylker',
-                  season: year,
-              };
-  
-              var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
-  
-              let arr = {
-                  fylkeNavn: 'Gjennomsnitt i alle fylker',
-                  year: year,
-                  antall: results.gjennomsnitt
-              }
-  
-              this.fylkeData[year].push(arr);
             }
-  
+
+            // Wait for all promises to resolve
+            await Promise.all(promises);
+
             this.fetchingStarted = false;
             this.dataFetched = true;
-  
-  
         },
         getDataset() : any {
             var fylkeArr = [] as any;
 
             for(let kData in this.fylkeData) {
                 for(let d of this.fylkeData[kData]) {
-                    console.log(d);
                     // Create array for each fylke if it doesn't exist
                     if(fylkeArr['id-' + d.fylkeNavn] == undefined) {
                         fylkeArr['id-' + d.fylkeNavn] = {fylkeNavn : d.fylkeNavn, data : []};
