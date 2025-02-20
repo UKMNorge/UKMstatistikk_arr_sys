@@ -137,14 +137,17 @@
                     ></Kjonnsfordeling>
                 </div>
             </template>
-            
-            <!-- Sjangerfordeling -->
-            <div v-show="selectedType == 'sjangerfordeling'">
-                <Sjangerfordeling ref="sjangerfordelingComponent"
-                    :selectedFylke="selectedFylker[0]"
-                    :selectedYears="getAllSelectedYears()"
-                ></Sjangerfordeling>
-            </div>
+
+            <!-- Sjangerfordeling for hvert fylker -->
+            <template v-for="fylkeId in selectedFylker" v-bind:key="fylkeId">
+                <div v-show="selectedType == 'sjangerfordeling'">
+                    <Sjangerfordeling
+                        :ref="'sjangerfordeling-' + fylkeId"
+                        :selectedFylke="fylkeId"
+                        :selectedYears="getAllSelectedYears()"
+                    ></Sjangerfordeling>
+                </div>
+            </template>
 
         </div>
 
@@ -282,7 +285,9 @@ export default {
                     (<any>this.$refs)['kjonnsfordeling-' + fylkeId][0].init();
                 }
             } else if(this.selectedType == 'sjangerfordeling') {
-                (<any>this.$refs).sjangerfordelingComponent.init();
+                for(let fylkeId of this.selectedFylker) {
+                    (<any>this.$refs)['sjangerfordeling-' + fylkeId][0].init();
+                }
             }
         },
         isGeneratingPossible() {
