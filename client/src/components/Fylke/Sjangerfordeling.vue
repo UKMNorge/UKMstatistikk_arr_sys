@@ -53,40 +53,42 @@ export default {
             this.fetchingStarted = true;
             this.dataFetched = false;
             this.fylkeData = [];
+            this.alleSjangere = [];
 
-            for(let year of this.selectedYears) {
-                var data = {
-                    action: 'UKMstatistikk_ajax',
-                    controller: 'fylke/sjangerfordeling',
-                    fylkeId: this.selectedFylke,
-                    season: year,
-                    unike: true
-                };
+            const promises = this.selectedYears.map(async (year : number) => {
+            var data = {
+                action: 'UKMstatistikk_ajax',
+                controller: 'fylke/sjangerfordeling',
+                fylkeId: this.selectedFylke,
+                season: year,
+                unike: true
+            };
 
-                var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
-                
-                for(let sjanger in results) {
-                    if(this.alleSjangere.indexOf(sjanger) == -1) {
-                        this.alleSjangere[sjanger] = '';
-                    }
+            var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+            
+            for(let sjanger in results) {
+                if(this.alleSjangere.indexOf(sjanger) == -1) {
+                this.alleSjangere[sjanger] = '';
                 }
-
-                var arr = {
-                    fylke: this.selectedFylke,
-                    year: year,
-                    data: results
-                }
-
-                if(this.fylkeData[year] == undefined) {
-                    this.fylkeData[year] = [];
-                }
-
-                this.fylkeData[year].push(arr);
             }
+
+            var arr = {
+                fylke: this.selectedFylke,
+                year: year,
+                data: results
+            }
+
+            if(this.fylkeData[year] == undefined) {
+                this.fylkeData[year] = [];
+            }
+
+            this.fylkeData[year].push(arr);
+            });
+
+            await Promise.all(promises);
 
             this.fetchingStarted = false;
             this.dataFetched = true;
-
         },
         getLabels() : Array<string> {
             let retArr = [];
