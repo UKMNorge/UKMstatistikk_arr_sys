@@ -2,11 +2,23 @@
     <div>
         <!-- Bare hvis data er fetched, kan chart opprettes -->
         <div v-if="dataFetched == true" class="as-card-1 as-padding-space-3 as-margin-top-space-4">
+            <div class="as-margin-bottom-space-2">
+                <h4>{{ fylkeNavn }}</h4>
+            </div>
             <MultiBarChart ref="chart"
                 :labels="getLabels()" 
                 :dataset="getDataset()"
+                :labelCallbackFunction="(tooltipItem) => `${tooltipItem.raw} innslag`"
             />
-        </div>
+
+            <div class="as-margin-top-space-4">
+                <PermanentNotification :typeNotification="'primary'" :isHTML="true" tittel="Info om statistikken" description="
+                    <p>
+                        Sjangerfordelingen viser hvordan ulike sjangre er representert i innslagene, ikke blant deltakerne.
+                    </p>"
+                />
+            </div>
+        </div>        
         <div v-else-if="fetchingStarted">
             <LoadingComponent />
         </div>
@@ -19,10 +31,15 @@ import type Fylke from '../../objects/Fylke';
 import type { PropType } from 'vue';  // Use type-only import for PropType
 import LoadingComponent from '../Other/LoadingComponent.vue';
 import { getRandomColor } from '../../utils/Colors';
+import { PermanentNotification } from 'ukm-components-vue3';
 
 
 export default {
     props: {
+        fylkeNavn: {
+            type: String,
+            required: false
+        },
         selectedFylke: {
             type: Object as any,
             required: true
@@ -38,6 +55,7 @@ export default {
     components: {
         MultiBarChart : MultiBarChart,
         LoadingComponent : LoadingComponent,
+        PermanentNotification,
     },
     data() {
         return {

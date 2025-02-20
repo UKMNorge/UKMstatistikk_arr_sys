@@ -143,6 +143,7 @@
                 <div v-show="selectedType == 'sjangerfordeling'">
                     <Sjangerfordeling
                         :ref="'sjangerfordeling-' + fylkeId"
+                        :fylkeNavn="_getFylkeById(fylkeId)"
                         :selectedFylke="fylkeId"
                         :selectedYears="getAllSelectedYears()"
                     ></Sjangerfordeling>
