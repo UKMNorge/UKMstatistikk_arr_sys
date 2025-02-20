@@ -88,7 +88,7 @@
                                 fylke: results.fylke,
                                 fylkeId: fylkeId,
                                 year: year,
-                                averageAge: antall > 0 ? Math.round(total / antall) : 0
+                                averageAge: antall > 0 ? Math.round((total / antall) * 10) / 10 : 0
                             }
 
                             if(this.fylkeData[year] == undefined) {
