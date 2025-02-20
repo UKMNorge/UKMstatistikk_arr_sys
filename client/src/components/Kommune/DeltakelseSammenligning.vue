@@ -71,24 +71,25 @@ export default {
       }
   },
   methods: {
-      async init() {
-          // Empty old data
-          this.fetchingStarted = true;
-          this.dataFetched = false;
-          this.kommunerData = [];
+        async init() {
+            // Empty old data
+            this.fetchingStarted = true;
+            this.dataFetched = false;
+            this.kommunerData = [];
 
-          for(let kommune of this.selectedKommuner) {
-              for(let year of this.selectedYears) {
-                    var data = {
-                        action: 'UKMstatistikk_ajax',
-                        controller: 'kommune/antallDeltakere',
-                        kommuneId: kommune.id,
-                        season: year,
-                        unike: true
+            let promises = [];
+
+            for(let kommune of this.selectedKommuner) {
+                for(let year of this.selectedYears) {
+                    let data = {
+                    action: 'UKMstatistikk_ajax',
+                    controller: 'kommune/antallDeltakere',
+                    kommuneId: kommune.id,
+                    season: year,
+                    unike: true
                     };
 
-                    var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
-
+                    promises.push(this.spaInteraction.runAjaxCall('/', 'POST', data).then(results => {
                     if (!this.alleKommuner[kommune.id]) {
                         this.alleKommuner[kommune.id] = {};
                     }
@@ -99,7 +100,7 @@ export default {
                         this.alleKommuner[kommune.id][year][results.kommuner[oldKomKey]] = results.kommuner[oldKomKey];
                     }
 
-                    var arr = {
+                    let arr = {
                         kommune: kommune,
                         year: year,
                         antall: results.antall
@@ -110,76 +111,80 @@ export default {
                     }
 
                     this.kommunerData[year].push(arr);
-              }
-          }
-
-          // Get gjennomsnitt deltakere i hele landet
-          for(let year of this.selectedYears) {
-            // Simulate statistikk for hele landet som kommune
-            var landKommune = new KommuneObj(0, 'Kommuner i hele landet');
-
-            let data = {
-                action: 'UKMstatistikk_ajax',
-                controller: 'land/gjennomsnittDeltakereAlleKommuner',
-                season: year,
-            };
-
-            var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
-
-            let arr = {
-                kommune: landKommune,
-                year: year,
-                antall: results.gjennomsnitt
+                    }));
+                }
             }
 
-            this.kommunerData[year].push(arr);
-          }
+            // Get gjennomsnitt deltakere i hele landet
+            for(let year of this.selectedYears) {
+                // Simulate statistikk for hele landet som kommune
+                let landKommune = new KommuneObj(0, 'Kommuner i hele landet');
 
-          this.fetchingStarted = false;
-          this.dataFetched = true;
+                let data = {
+                    action: 'UKMstatistikk_ajax',
+                    controller: 'land/gjennomsnittDeltakereAlleKommuner',
+                    season: year,
+                };
 
+                promises.push(this.spaInteraction.runAjaxCall('/', 'POST', data).then(results => {
+                    let arr = {
+                    kommune: landKommune,
+                    year: year,
+                    antall: results.gjennomsnitt
+                    }
 
-      },
-      getDataset() : any {
-          var kommunerArr = [] as any;
+                    if(this.kommunerData[year] == undefined) {
+                    this.kommunerData[year] = [];
+                    }
 
-          for(let kData in this.kommunerData) {
-              for(let d of this.kommunerData[kData]) {
-                  // Create array for each kommune if it doesn't exist
-                  if(kommunerArr['id-' + d.kommune.id] == undefined) {
-                      kommunerArr['id-' + d.kommune.id] = {kommune : d.kommune, data : []};
-                  }
+                    this.kommunerData[year].push(arr);
+                }));
+            }
 
-                  // Add data to kommune array
-                  kommunerArr['id-' + d.kommune.id].data.push(d.antall);
-              }
-          }
-        
+            await Promise.all(promises);
 
-          var retArr = [];
-          let colorId = 0;
-          for(let key in kommunerArr) {
-            let kData = kommunerArr[key];
+            this.fetchingStarted = false;
+            this.dataFetched = true;
+        },
+        getDataset() : any {
+            var kommunerArr = [] as any;
+
+            for(let kData in this.kommunerData) {
+                for(let d of this.kommunerData[kData]) {
+                    // Create array for each kommune if it doesn't exist
+                    if(kommunerArr['id-' + d.kommune.id] == undefined) {
+                        kommunerArr['id-' + d.kommune.id] = {kommune : d.kommune, data : []};
+                    }
+
+                    // Add data to kommune array
+                    kommunerArr['id-' + d.kommune.id].data.push(d.antall);
+                }
+            }
             
-            let opacityColor = kData.kommune.id == 0 ? 1 : .4;
-            let color = getRandomColor(opacityColor, colorId);
-            retArr.push(
-              {
-                label: kData.kommune.title,
-                borderColor: color,
-                backgroundColor: color,
-                data: kData.data,
-                fill: true,
-              }
-            );
-            colorId++;
-          }
-        
-          
-          return retArr;
-        
-      }
-  }
+
+            var retArr = [];
+            let colorId = 0;
+            for(let key in kommunerArr) {
+                let kData = kommunerArr[key];
+                
+                let opacityColor = kData.kommune.id == 0 ? 1 : .4;
+                let color = getRandomColor(opacityColor, colorId);
+                retArr.push(
+                {
+                    label: kData.kommune.title,
+                    borderColor: color,
+                    backgroundColor: color,
+                    data: kData.data,
+                    fill: true,
+                }
+                );
+                colorId++;
+            }
+            
+            
+            return retArr;
+        }
+    }
 }
 </script>
 
