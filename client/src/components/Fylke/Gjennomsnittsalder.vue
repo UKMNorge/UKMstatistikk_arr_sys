@@ -22,8 +22,8 @@
   
     export default {
         props: {
-            selectedFylke: {
-                type: Object as any,
+            selectedFylker: {
+                type: Array as () => number[],
                 required: true
             },
             selectedYears: {
@@ -53,48 +53,54 @@
                 this.fetchingStarted = true;
                 this.dataFetched = false;
                 this.fylkeData = [];
-    
-                for(let year of this.selectedYears) {
-                    var data = {
-                        action: 'UKMstatistikk_ajax',
-                        controller: 'fylke/aldersfordeling',
-                        fylkeId: this.selectedFylke,
-                        season: year,
-                        unike: true
-                    };
 
-                    var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+                const promises = [];
 
-                    let total = 0;
-                    let antall = 0;
-                    for(let res of results.data) {
-                        let age = parseInt(res.age);
-                        if(isNaN(age)) {
-                            continue;
-                        }
-                        if(age < 10) {
-                            age = 10;
-                        } else if(age > 25) {
-                            age = 25;
-                        }
-                        
-                        total += age * parseInt(res.antall);
-                        antall += parseInt(res.antall);
+                for(let fylkeId of this.selectedFylker) {
+                    for(let year of this.selectedYears) {
+                        var data = {
+                            action: 'UKMstatistikk_ajax',
+                            controller: 'fylke/aldersfordeling',
+                            fylkeId: fylkeId,
+                            season: year,
+                            unike: true
+                        };
+
+                        promises.push(this.spaInteraction.runAjaxCall('/', 'POST', data).then((results : any) => {
+                            let total = 0;
+                            let antall = 0;
+                            for(let res of results.data) {
+                                let age = parseInt(res.age);
+                                if(isNaN(age)) {
+                                    continue;
+                                }
+                                if(age < 10) {
+                                    age = 10;
+                                } else if(age > 25) {
+                                    age = 25;
+                                }
+
+                                total += age * parseInt(res.antall);
+                                antall += parseInt(res.antall);
+                            }
+
+                            var arr = {
+                                fylke: results.fylke,
+                                fylkeId: fylkeId,
+                                year: year,
+                                averageAge: antall > 0 ? Math.round(total / antall) : 0
+                            }
+
+                            if(this.fylkeData[year] == undefined) {
+                                this.fylkeData[year] = [];
+                            }
+
+                            this.fylkeData[year].push(arr);
+                        }));
                     }
-
-                    var arr = {
-                        fylke: results.fylke,
-                        fylkeId: this.selectedFylke,
-                        year: year,
-                        antall: Math.round(total / antall)
-                    }
-
-                    if(this.fylkeData[year] == undefined) {
-                        this.fylkeData[year] = [];
-                    }
-
-                    this.fylkeData[year].push(arr);
                 }
+
+                await Promise.all(promises);
 
                 // Get gjennomsnitt aldersfordeling i alle fylker i alle år
                 let data2 = {
@@ -116,13 +122,15 @@
     
                 for(let kData in this.fylkeData) {
                     for(let d of this.fylkeData[kData]) {
+                        console.log('d');
+                        console.log(d);
                         // Create array for each kommune if it doesn't exist
                         if(fylkeArr['id-' + d.fylkeId] == undefined) {
                             fylkeArr['id-' + d.fylkeId] = {fylke : d.fylke, data : []};
                         }
     
                         // Add data to kommune array
-                        fylkeArr['id-' + d.fylkeId].data.push(d.antall);
+                        fylkeArr['id-' + d.fylkeId].data.push(d.averageAge);
                     }
                 }
             

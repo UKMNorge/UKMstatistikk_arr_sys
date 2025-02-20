@@ -121,7 +121,7 @@
              <!-- Deltakelse Sammenligning -->
              <div v-show="selectedType == 'gjennomsnittsalder'">
                 <Gjennomsnittsalder ref="gjennomsnittsalderComponent"
-                    :selectedFylke="selectedFylker[0]"
+                    :selectedFylker="selectedFylker"
                     :selectedYears="getAllSelectedYears()"
                 ></Gjennomsnittsalder>
             </div>
