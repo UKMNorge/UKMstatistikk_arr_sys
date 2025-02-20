@@ -5,10 +5,10 @@
                 <div class="as-margin-auto as-margin-left-none">
                     <h4>
                         <template v-if="selectedYears.length > 1">
-                            {{ selectedFylke.title }} kjønnsfordeling fra {{ selectedYears[0] }} til {{ selectedYears[selectedYears.length-1] }}
+                            {{ fylkeNavn }} - kjønnsfordeling fra {{ selectedYears[0] }} til {{ selectedYears[selectedYears.length-1] }}
                         </template>
                         <template v-else>
-                            {{ selectedFylke.title }} kjønnsfordeling for {{ selectedYears[0] }}
+                            {{ fylkeNavn }} - kjønnsfordeling for {{ selectedYears[0] }}
                         </template>
                     </h4>
                 </div>
@@ -61,6 +61,10 @@ import MultiBarChart from '../charts/MultiBarChart.vue';
 
 export default {
     props: {
+        fylkeNavn: {
+            type: String,
+            required: false
+        },
         selectedFylke: {
             type: Object as any,
             required: true
@@ -93,10 +97,9 @@ export default {
     },
     methods: {
         async init() {
-            
             this.startYear = this.selectedYears[0];
-            this.endYear = this.selectedYears[this.selectedYears.length-1];
-            
+            this.endYear = this.selectedYears[this.selectedYears.length - 1];
+
             this.fetchingStarted = true;
             this.dataFetched = false;
 
@@ -107,29 +110,31 @@ export default {
 
             this.fylkeDataYear = {} as any;
 
-            for(let year of this.selectedYears) {
-                var data = {
-                    action: 'UKMstatistikk_ajax',
-                    controller: 'fylke/kjonnsfordeling',
-                    fylkeId: this.selectedFylke,
-                    season: year,
-                };
+            const promises = this.selectedYears.map(async (year : number) => {
+            const data = {
+                action: 'UKMstatistikk_ajax',
+                controller: 'fylke/kjonnsfordeling',
+                fylkeId: this.selectedFylke,
+                season: year,
+            };
 
-                var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+            const results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
 
-                this.fylkeData['female'] += results['female'] ? results['female'] : 0;
-                this.fylkeData['male'] += results['male'] ? results['male'] : 0;
-                this.fylkeData['unknown'] += results['unknown'] ? results['unknown'] : 0;
+            this.fylkeData['female'] += results['female'] ? results['female'] : 0;
+            this.fylkeData['male'] += results['male'] ? results['male'] : 0;
+            this.fylkeData['unknown'] += results['unknown'] ? results['unknown'] : 0;
 
-                this.fylkeDataYear[year] = {} as any;
-                this.fylkeDataYear[year]['female'] = results['female'] ?? 0;
-                this.fylkeDataYear[year]['male'] = results['male'] ?? 0;
-                this.fylkeDataYear[year]['unknown'] = results['unknown'] ?? 0;
-            }
+            this.fylkeDataYear[year] = {
+                female: results['female'] ?? 0,
+                male: results['male'] ?? 0,
+                unknown: results['unknown'] ?? 0,
+            };
+            });
+
+            await Promise.all(promises);
 
             this.fetchingStarted = false;
             this.dataFetched = true;
-
         },
         getLabels() : Array<string> {
             if(!this.isBarChart) {
@@ -157,12 +162,8 @@ export default {
             let arrM = new Array();
             let arrU = new Array();
 
-            console.log(1921);
             for (let year of this.selectedYears) {
                 let kjData = this.fylkeDataYear[year];
-                
-                console.log(1924);
-                console.log(kjData);
 
                 let dataArr = new Array();
                 let f = kjData['female'];
@@ -191,9 +192,6 @@ export default {
                 data: arrU,
                 backgroundColor: '#d5d5d5',
             });
-
-            console.log('retArr 1927');
-            console.log(retArr);
 
             return retArr;
 

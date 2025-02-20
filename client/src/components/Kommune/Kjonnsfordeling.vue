@@ -5,10 +5,10 @@
                 <div class="as-margin-auto as-margin-left-none">
                     <h4>
                         <template v-if="selectedYears.length > 1">
-                            {{ selectedKommune.title }} kjønnsfordeling fra {{ selectedYears[0] }} til {{ selectedYears[selectedYears.length-1] }}
+                            {{ selectedKommune.title }} - kjønnsfordeling fra {{ selectedYears[0] }} til {{ selectedYears[selectedYears.length-1] }}
                         </template>
                         <template v-else>
-                            {{ selectedKommune.title }} kjønnsfordeling for {{ selectedYears[0] }}
+                            {{ selectedKommune.title }} - kjønnsfordeling for {{ selectedYears[0] }}
                         </template>
                     </h4>
                 </div>
@@ -104,7 +104,6 @@ export default {
     },
     methods: {
         async init() {
-            
             this.startYear = this.selectedYears[0];
             this.endYear = this.selectedYears[this.selectedYears.length-1];
             
@@ -118,40 +117,41 @@ export default {
 
             this.kommuneDataYear = {} as any;
 
-            for(let year of this.selectedYears) {
-                var data = {
-                    action: 'UKMstatistikk_ajax',
-                    controller: 'kommune/kjonnsfordeling',
-                    kommuneId: this.selectedKommune.id,
-                    season: year,
-                };
+            const promises = this.selectedYears.map(async (year) => {
+            var data = {
+                action: 'UKMstatistikk_ajax',
+                controller: 'kommune/kjonnsfordeling',
+                kommuneId: this.selectedKommune.id,
+                season: year,
+            };
 
-                var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+            var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
 
-                if (!this.alleKommuner[this.selectedKommune.id]) {
-                    this.alleKommuner[this.selectedKommune.id] = {};
-                }
-                if (!this.alleKommuner[this.selectedKommune.id][year]) {
-                    this.alleKommuner[this.selectedKommune.id][year] = {};
-                }
-                for(let oldKomKey in results.kommuner) {
-                    this.alleKommuner[this.selectedKommune.id][year][results.kommuner[oldKomKey]] = results.kommuner[oldKomKey];
-                }
-
-                var resultsData = results.data;
-                this.kommuneData['female'] += resultsData['female'] ? resultsData['female'] : 0;
-                this.kommuneData['male'] += resultsData['male'] ? resultsData['male'] : 0;
-                this.kommuneData['unknown'] += resultsData['unknown'] ? resultsData['unknown'] : 0;
-
-                this.kommuneDataYear[year] = {} as any;
-                this.kommuneDataYear[year]['female'] = resultsData['female'] ?? 0;
-                this.kommuneDataYear[year]['male'] = resultsData['male'] ?? 0;
-                this.kommuneDataYear[year]['unknown'] = resultsData['unknown'] ?? 0;
+            if (!this.alleKommuner[this.selectedKommune.id]) {
+                this.alleKommuner[this.selectedKommune.id] = {};
             }
+            if (!this.alleKommuner[this.selectedKommune.id][year]) {
+                this.alleKommuner[this.selectedKommune.id][year] = {};
+            }
+            for(let oldKomKey in results.kommuner) {
+                this.alleKommuner[this.selectedKommune.id][year][results.kommuner[oldKomKey]] = results.kommuner[oldKomKey];
+            }
+
+            var resultsData = results.data;
+            this.kommuneData['female'] += resultsData['female'] ? resultsData['female'] : 0;
+            this.kommuneData['male'] += resultsData['male'] ? resultsData['male'] : 0;
+            this.kommuneData['unknown'] += resultsData['unknown'] ? resultsData['unknown'] : 0;
+
+            this.kommuneDataYear[year] = {} as any;
+            this.kommuneDataYear[year]['female'] = resultsData['female'] ?? 0;
+            this.kommuneDataYear[year]['male'] = resultsData['male'] ?? 0;
+            this.kommuneDataYear[year]['unknown'] = resultsData['unknown'] ?? 0;
+            });
+
+            await Promise.all(promises);
 
             this.fetchingStarted = false;
             this.dataFetched = true;
-
         },
         getLabels() : Array<string> {
             if(!this.isBarChart) {

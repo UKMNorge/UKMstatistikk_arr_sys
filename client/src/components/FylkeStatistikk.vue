@@ -118,7 +118,7 @@
                 </div>
             </template>
 
-             <!-- Deltakelse Sammenligning -->
+             <!-- Gjennomsnittsalder -->
              <div v-show="selectedType == 'gjennomsnittsalder'">
                 <Gjennomsnittsalder ref="gjennomsnittsalderComponent"
                     :selectedFylker="selectedFylker"
@@ -127,14 +127,18 @@
             </div>
 
             <!-- Kjønnsfordeling -->
-            <div v-show="selectedType == 'kjonnsfordeling'">
-                <Kjonnsfordeling ref="kjonnsfordelingComponent"
-                    :selectedFylke="selectedFylker[0]"
-                    :selectedYears="getAllSelectedYears()"
-                ></Kjonnsfordeling>
-            </div>
+            <template v-for="fylkeId in selectedFylker" v-bind:key="fylkeId">
+                <div v-show="selectedType == 'kjonnsfordeling'">
+                    <Kjonnsfordeling 
+                        :ref="'kjonnsfordeling-' + fylkeId"
+                        :fylkeNavn="_getFylkeById(fylkeId)"
+                        :selectedFylke="fylkeId"
+                        :selectedYears="getAllSelectedYears()"
+                    ></Kjonnsfordeling>
+                </div>
+            </template>
             
-            <!-- Kjønnsfordeling -->
+            <!-- Sjangerfordeling -->
             <div v-show="selectedType == 'sjangerfordeling'">
                 <Sjangerfordeling ref="sjangerfordelingComponent"
                     :selectedFylke="selectedFylker[0]"
@@ -271,8 +275,12 @@ export default {
                 }
             } else if(this.selectedType == 'gjennomsnittsalder') {
                 (<any>this.$refs).gjennomsnittsalderComponent.init();
+            // } else if(this.selectedType == 'kjonnsfordeling') {
+            //     (<any>this.$refs).kjonnsfordelingComponent.init();
             } else if(this.selectedType == 'kjonnsfordeling') {
-                (<any>this.$refs).kjonnsfordelingComponent.init();
+                for(let fylkeId of this.selectedFylker) {
+                    (<any>this.$refs)['kjonnsfordeling-' + fylkeId][0].init();
+                }
             } else if(this.selectedType == 'sjangerfordeling') {
                 (<any>this.$refs).sjangerfordelingComponent.init();
             }
