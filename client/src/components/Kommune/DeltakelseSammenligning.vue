@@ -89,7 +89,7 @@ export default {
                     unike: true
                     };
 
-                    promises.push(this.spaInteraction.runAjaxCall('/', 'POST', data).then(results => {
+                    promises.push(this.spaInteraction.runAjaxCall('/', 'POST', data).then((results : any) => {
                     if (!this.alleKommuner[kommune.id]) {
                         this.alleKommuner[kommune.id] = {};
                     }
@@ -126,7 +126,7 @@ export default {
                     season: year,
                 };
 
-                promises.push(this.spaInteraction.runAjaxCall('/', 'POST', data).then(results => {
+                promises.push(this.spaInteraction.runAjaxCall('/', 'POST', data).then((results : any) => {
                     let arr = {
                     kommune: landKommune,
                     year: year,
