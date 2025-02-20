@@ -79,7 +79,7 @@ export default {
             this.dataFetched = false;
             this.kommunerData = [];
 
-            for(let year of this.selectedYears) {
+            const promises = this.selectedYears.map(async (year : number) => {
                 var dataSSB = {
                     action: 'UKMstatistikk_ajax',
                     controller: 'kommune/aldersfordelingSSB',
@@ -92,9 +92,9 @@ export default {
                     kommune: this.selectedKommune,
                     year: year,
                     data: results
-                }
+                };
 
-                if(this.kommunerData[year] == undefined) {
+                if (this.kommunerData[year] == undefined) {
                     this.kommunerData[year] = [];
                 }
 
@@ -111,11 +111,12 @@ export default {
                 var resultsAldersfordeling = await this.spaInteraction.runAjaxCall('/', 'POST', dataAldersfordeling);
 
                 this.arrSysAldersfordeling[year] = resultsAldersfordeling.data;
-            }
+            });
+
+            await Promise.all(promises);
 
             this.fetchingStarted = false;
             this.dataFetched = true;
-
         },
         getYearsRange() : Array<string> {
             return this.selectedYears.map(year => year.toString());
