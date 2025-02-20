@@ -74,7 +74,7 @@ export default {
             this.dataFetched = false;
             this.kommunerData = [];
 
-            for(let year of this.selectedYears) {
+            const promises = this.selectedYears.map(async (year) => {
                 var data = {
                     action: 'UKMstatistikk_ajax',
                     controller: 'kommune/sjangerfordeling',
@@ -84,19 +84,19 @@ export default {
                 };
 
                 var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
-                
+
                 if (!this.alleKommuner[this.selectedKommune.id]) {
                     this.alleKommuner[this.selectedKommune.id] = {};
                 }
                 if (!this.alleKommuner[this.selectedKommune.id][year]) {
                     this.alleKommuner[this.selectedKommune.id][year] = {};
                 }
-                for(let oldKomKey in results.kommuner) {
+                for (let oldKomKey in results.kommuner) {
                     this.alleKommuner[this.selectedKommune.id][year][results.kommuner[oldKomKey]] = results.kommuner[oldKomKey];
                 }
 
-                for(let sjanger in results.data) {
-                    if(this.alleSjangere.indexOf(sjanger) == -1) {
+                for (let sjanger in results.data) {
+                    if (this.alleSjangere.indexOf(sjanger) === -1) {
                         this.alleSjangere[sjanger] = '';
                     }
                 }
@@ -105,18 +105,19 @@ export default {
                     kommune: this.selectedKommune,
                     year: year,
                     data: results.data
-                }
+                };
 
-                if(this.kommunerData[year] == undefined) {
+                if (!this.kommunerData[year]) {
                     this.kommunerData[year] = [];
                 }
 
                 this.kommunerData[year].push(arr);
-            }
+            });
+
+            await Promise.all(promises);
 
             this.fetchingStarted = false;
             this.dataFetched = true;
-
         },
         getLabels() : Array<string> {
             let retArr = [];
