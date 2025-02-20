@@ -9,7 +9,15 @@
                 :labels="getLabels()" 
                 :dataset="getDataset()"
             />
-            
+
+            <div class="as-margin-top-space-4">
+                <PermanentNotification :typeNotification="'primary'" :isHTML="true" tittel="Info om statistikken" description="
+                    <p>
+                        Sjangerfordelingen viser hvordan ulike sjangre er representert i innslagene, ikke blant deltakerne.
+                    </p>"
+                />
+            </div>
+
             <div>
                 <FlereKommunerMessage :alleKommuner="alleKommuner" :selectedKommuner="[selectedKommune]" />
             </div>
@@ -27,6 +35,8 @@ import type { PropType } from 'vue';  // Use type-only import for PropType
 import LoadingComponent from '../Other/LoadingComponent.vue';
 import { getRandomColor } from '../../utils/Colors';
 import FlereKommunerMessage from '../Other/FlereKommunerMessage.vue';
+import { PermanentNotification } from 'ukm-components-vue3';
+
 
 export default {
     props: {
@@ -46,6 +56,7 @@ export default {
         MultiBarChart : MultiBarChart,
         LoadingComponent : LoadingComponent,
         FlereKommunerMessage : FlereKommunerMessage,
+        PermanentNotification,
     },
     data() {
         return {
