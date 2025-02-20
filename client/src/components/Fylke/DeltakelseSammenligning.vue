@@ -32,10 +32,6 @@ import { PermanentNotification } from 'ukm-components-vue3';
   
   export default {
     props: {
-        selectedFylke: {
-            type: Object as any,
-            required: true
-        },
         selectedFylker: {
             type: Array as () => number[],
             required: true
@@ -85,7 +81,7 @@ import { PermanentNotification } from 'ukm-components-vue3';
             }
 
             promises.push(
-                this.spaInteraction.runAjaxCall('/', 'POST', data).then(results => {
+                this.spaInteraction.runAjaxCall('/', 'POST', data).then((results : any) => {
                 let arr = {
                     fylkeNavn: 'Gjennomsnitt i alle fylker',
                     year: year,
@@ -107,11 +103,11 @@ import { PermanentNotification } from 'ukm-components-vue3';
                 };
 
                 promises.push(
-                this.spaInteraction.runAjaxCall('/', 'POST', data).then(results => {
+                this.spaInteraction.runAjaxCall('/', 'POST', data).then((results : any) => {
                     var arr = {
-                    fylkeNavn: results.fylkeNavn,
-                    year: year,
-                    antall: results.antall
+                        fylkeNavn: results.fylkeNavn,
+                        year: year,
+                        antall: results.antall
                     }
 
                     if(this.fylkeData[year] == undefined) {
