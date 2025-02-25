@@ -58,6 +58,15 @@
                     :selectedYears="getAllSelectedYears()"
                 ></Aldersfordeling>
             </div>
+
+            <!-- Gjennomsnittsalder -->
+            <div v-show="selectedType == 'Gjennomsnittsalder'">
+                <Gjennomsnittsalder ref="gjennomsnittsalderComponent"
+                    :selectedFylker="[]"
+                    :selectedYears="getAllSelectedYears()"
+                ></Gjennomsnittsalder>
+            </div>
+
         </div>
 
         <div v-if="countGenerating > 1" class="as-nop-impt as-margin-top-space-8">
@@ -70,6 +79,7 @@
 <script lang="ts">
 import AntallDeltakere from './Nasjonal/AntallDeltakere.vue';
 import Aldersfordeling from './Nasjonal/Aldersfordeling.vue';
+import Gjennomsnittsalder from './Fylke/Gjennomsnittsalder.vue';
 import Feedback from './feedback/Feedback.vue';
 
 export default {
@@ -86,6 +96,7 @@ export default {
     components: {
         AntallDeltakere : AntallDeltakere,
         Aldersfordeling : Aldersfordeling,
+        Gjennomsnittsalder : Gjennomsnittsalder,
         Feedback : Feedback,
     },
     mounted() {
@@ -100,6 +111,7 @@ export default {
             availableTypes: [
                 'Antall deltakere',
                 'Aldersfordeling',
+                'Gjennomsnittsalder',
             ],
             availableYears: [] as number[],
             selectedYears: [] as number[],
@@ -123,6 +135,9 @@ export default {
             } 
             else if(this.selectedType == 'Aldersfordeling') {
                 (<any>this.$refs).aldersfordelingComponent.init();
+            }
+            else if(this.selectedType == 'Gjennomsnittsalder') {
+                (<any>this.$refs).gjennomsnittsalderComponent.init();
             }
             // } else if(this.selectedType == 'Aldersfordeling fra SSB') {
             //     for(let kommune of this.selectedKommuner) {
