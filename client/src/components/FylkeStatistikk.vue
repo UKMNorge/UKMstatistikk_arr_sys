@@ -85,22 +85,17 @@
             <!-- Alle deltakere -->
             <div v-show="selectedType == 'alleDeltakere'">
                 <AlleDeltakere ref="alleDeltakerComponent"
+                    :endpoint="'fylke/antallDeltakere'"
                     :selectedFylker="selectedFylker"
                     :selectedYears="getAllSelectedYears()"
                 ></AlleDeltakere>
             </div>
 
-            <!-- Alle deltakere fylke -->
-            <div v-show="selectedType == 'alleDeltakereFylke'">
-                <AlleDeltakereFylke ref="alleDeltakerFylkeComponent"
-                    :selectedFylkeId="selectedFylker[0]"
-                    :selectedYears="getAllSelectedYears()"
-                ></AlleDeltakereFylke>
-            </div>
-
             <!-- Deltakelse sammenligning -->
             <div v-show="selectedType == 'deltakelseSammenligning'">
                 <DeltakelseSammenligning ref="deltakelseSammenligningComponent"
+                    :endpoint="'fylke/antallDeltakere'"
+                    :permanentMelding="'Gjennomsnitt i alle fylker refererer til det nasjonale gjennomsnittet, som inkluderer data fra alle fylker i Norge.'"
                     :selectedFylker="selectedFylker"
                     :selectedYears="getAllSelectedYears()"
                 ></DeltakelseSammenligning>
@@ -150,6 +145,27 @@
                 </div>
             </template>
 
+            <!-- Fylkearrangementer under -->
+            <!-- Alle deltakere fylke -->
+             <div v-show="selectedType == 'alleDeltakereFylke'">
+                <AlleDeltakere ref="alleDeltakerFylkeComponent"
+                    :endpoint="'fylke/antallDeltakereFylke'"
+                    :selectedFylker="selectedFylker"
+                    :selectedYears="getAllSelectedYears()"
+                ></AlleDeltakere>
+            </div>
+
+            <!-- Deltakelse sammenligning fylke arrangementer -->
+            <div v-show="selectedType == 'deltakelseSammenligningFylke'">
+                <DeltakelseSammenligning ref="deltakelseSammenligningFylkeComponent"
+                    :permanentMelding="'På grunn av fylkesreformer og endringer i fylkesorganiseringen kan data for enkelte år være utilgjengelig.'"
+                    :inkludererGjennomsnitt="false"
+                    :endpoint="'fylke/antallDeltakereFylke'"
+                    :selectedFylker="selectedFylker"
+                    :selectedYears="getAllSelectedYears()"
+                ></DeltakelseSammenligning>
+            </div>
+
         </div>
 
         <div v-if="countGenerating > 1" class="as-nop-impt as-margin-top-space-8">
@@ -163,7 +179,6 @@
 import Fylke from '../objects/Fylke';
 import { PermanentNotification } from 'ukm-components-vue3';
 import AlleDeltakere from './Fylke/AlleDeltakere.vue';
-import AlleDeltakereFylke from './Fylke/AlleDeltakereFylke.vue';
 import DeltakelseSammenligning from './Fylke/DeltakelseSammenligning.vue';
 import Alderfordeling from './Fylke/Alderfordeling.vue';
 import Gjennomsnittsalder from './Fylke/Gjennomsnittsalder.vue';
@@ -192,7 +207,6 @@ export default {
     components : {
         PermanentNotification : PermanentNotification,
         AlleDeltakere : AlleDeltakere,
-        AlleDeltakereFylke : AlleDeltakereFylke,
         DeltakelseSammenligning : DeltakelseSammenligning,
         Alderfordeling : Alderfordeling,
         Gjennomsnittsalder : Gjennomsnittsalder,
@@ -229,6 +243,7 @@ export default {
             } else if(this.dataTypeToggle == 1) {
                 this.availableTyper = [
                     {title: 'Alle deltakere', value: 'alleDeltakereFylke'},
+                    {title: 'Deltakelse Sammenligning', value: 'deltakelseSammenligningFylke'},
                 ];
             }
             else {
@@ -269,6 +284,8 @@ export default {
                 (<any>this.$refs).alleDeltakerComponent.init();
             } else if(this.selectedType == 'alleDeltakereFylke') {
                 (<any>this.$refs).alleDeltakerFylkeComponent.init();
+            } else if(this.selectedType == 'deltakelseSammenligningFylke') {
+                (<any>this.$refs).deltakelseSammenligningFylkeComponent.init();
             } else if(this.selectedType == 'deltakelseSammenligning') {
                 (<any>this.$refs).deltakelseSammenligningComponent.init();
             } else if(this.selectedType == 'aldersfordeling') {

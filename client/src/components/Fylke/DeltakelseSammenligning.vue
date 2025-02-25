@@ -6,11 +6,11 @@
               :labels="selectedYears"
               :datasets="getDataset()"
           />
-            <div class="as-margin-top-space-4">
-                <PermanentNotification :typeNotification="'primary'" :isHTML="true" tittel="Info om statistikken" description="
-                <p>
-                    'Gjennomsnitt i alle fylker' refererer til det nasjonale gjennomsnittet, som inkluderer data fra alle fylker i Norge.
-                </p>"
+            <div v-if="permanentMelding.length > 0" class="as-margin-top-space-4">
+                <PermanentNotification :typeNotification="'primary'" :isHTML="true" tittel="Info om statistikken" :description="
+                '<p>'+
+                    permanentMelding
+                +'</p>'"
                 />
             </div>
           </div>
@@ -32,12 +32,26 @@ import { PermanentNotification } from 'ukm-components-vue3';
   
   export default {
     props: {
+        permanentMelding: {
+            type: String,
+            required: false,
+            default: ''
+        },
+        inkludererGjennomsnitt: {
+            type: Boolean,
+            required: false,
+            default: true
+        },
         selectedFylker: {
             type: Array as () => number[],
             required: true
         },
         selectedYears: {
             type: Array as () => number[],
+            required: true
+        },
+        endpoint: {
+            type: String,
             required: true
         }
     },
@@ -70,54 +84,56 @@ import { PermanentNotification } from 'ukm-components-vue3';
 
             // Get gjennomsnitt deltakere i hele landet
             for(let year of this.selectedYears) {  
-            let data = {
-                action: 'UKMstatistikk_ajax',
-                controller: 'land/gjennomsnittDeltakereIAlleFylker',
-                season: year,
-            };
+                let data = {
+                    action: 'UKMstatistikk_ajax',
+                    controller: 'land/gjennomsnittDeltakereIAlleFylker',
+                    season: year,
+                };
 
-            if(this.fylkeData[year] == undefined) {
-                this.fylkeData[year] = [];
-            }
-
-            promises.push(
-                this.spaInteraction.runAjaxCall('/', 'POST', data).then((results : any) => {
-                let arr = {
-                    fylkeNavn: 'Gjennomsnitt i alle fylker',
-                    year: year,
-                    antall: results.gjennomsnitt
+                if(this.fylkeData[year] == undefined) {
+                    this.fylkeData[year] = [];
                 }
-                this.fylkeData[year].push(arr);
-                })
-            );
+                
+                if(this.inkludererGjennomsnitt) {
+                    promises.push(
+                        this.spaInteraction.runAjaxCall('/', 'POST', data).then((results : any) => {
+                        let arr = {
+                            fylkeNavn: 'Gjennomsnitt i alle fylker',
+                            year: year,
+                            antall: results.gjennomsnitt
+                        }
+                        this.fylkeData[year].push(arr);
+                        })
+                    );
+                }
             }
 
             for(let year of this.selectedYears) {
-            for(let fylke of this.selectedFylker) {
-                var data = {
-                action: 'UKMstatistikk_ajax',
-                controller: 'fylke/antallDeltakere',
-                fylkeId: fylke,
-                season: year,
-                unike: true
-                };
+                for(let fylke of this.selectedFylker) {
+                    var data = {
+                    action: 'UKMstatistikk_ajax',
+                    controller: this.endpoint,
+                    fylkeId: fylke,
+                    season: year,
+                    unike: true
+                    };
 
-                promises.push(
-                this.spaInteraction.runAjaxCall('/', 'POST', data).then((results : any) => {
-                    var arr = {
-                        fylkeNavn: results.fylkeNavn,
-                        year: year,
-                        antall: results.antall
-                    }
+                    promises.push(
+                    this.spaInteraction.runAjaxCall('/', 'POST', data).then((results : any) => {
+                        var arr = {
+                            fylkeNavn: results.fylkeNavn,
+                            year: year,
+                            antall: results.antall
+                        }
 
-                    if(this.fylkeData[year] == undefined) {
-                    this.fylkeData[year] = [];
-                    }
+                        if(this.fylkeData[year] == undefined) {
+                        this.fylkeData[year] = [];
+                        }
 
-                    this.fylkeData[year].push(arr);
-                })
-                );
-            }
+                        this.fylkeData[year].push(arr);
+                    })
+                    );
+                }
             }
 
             // Wait for all promises to resolve

@@ -23,6 +23,10 @@ import { getRandomColor } from '../../utils/Colors';
 
 export default {
     props: {
+        endpoint: {
+            type: String,
+            required: true
+        },
         selectedFylker: {
             type: Array as () => number[],
             required: true
@@ -63,7 +67,7 @@ export default {
                 for (let year of this.selectedYears) {
                     const data = {
                         action: 'UKMstatistikk_ajax',
-                        controller: 'fylke/antallDeltakere',
+                        controller: this.endpoint,
                         fylkeId: fylke,
                         season: year,
                         unike: true
