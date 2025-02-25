@@ -83,18 +83,18 @@ import { PermanentNotification } from 'ukm-components-vue3';
             let promises = [];
 
             // Get gjennomsnitt deltakere i hele landet
-            for(let year of this.selectedYears) {  
-                let data = {
-                    action: 'UKMstatistikk_ajax',
-                    controller: 'land/gjennomsnittDeltakereIAlleFylker',
-                    season: year,
-                };
+            if(this.inkludererGjennomsnitt) {
+                for(let year of this.selectedYears) {  
+                    let data = {
+                        action: 'UKMstatistikk_ajax',
+                        controller: 'land/gjennomsnittDeltakereIAlleFylker',
+                        season: year,
+                    };
 
-                if(this.fylkeData[year] == undefined) {
-                    this.fylkeData[year] = [];
-                }
-                
-                if(this.inkludererGjennomsnitt) {
+                    if(this.fylkeData[year] == undefined) {
+                        this.fylkeData[year] = [];
+                    }
+                    
                     promises.push(
                         this.spaInteraction.runAjaxCall('/', 'POST', data).then((results : any) => {
                         let arr = {
@@ -104,7 +104,7 @@ import { PermanentNotification } from 'ukm-components-vue3';
                         }
                         this.fylkeData[year].push(arr);
                         })
-                    );
+                    );   
                 }
             }
 
