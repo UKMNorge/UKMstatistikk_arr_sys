@@ -1260,7 +1260,7 @@ Forskjellen mellom `land/...` og `nasjonalt/...` er på håndtering av resultate
 - **URL:** `nasjonalt/antallDeltakere`
 - **Access:** Super admin
 - **Method:** `POST`
-- **Description:** Henter alle deltakere i alle arrangementer i en sesong. Det blir med alle arrangementer uansett type og nivå
+- **Description:** Henter alle deltakere i alle arrangementer. Det blir med alle arrangementer i hele landet
 #### URL Parameters
 
 | Parameter | Type   | Description                |
@@ -1275,3 +1275,83 @@ Forskjellen mellom `land/...` og `nasjonalt/...` er på håndtering av resultate
   "antall":15885
 }
 ```
+
+
+### Aldersfordeling nasjonalt
+
+- **URL:** `nasjonalt/aldersfordeling`
+- **Access:** Super admin
+- **Method:** `POST`
+- **Description:** Aldersfordeling i alle arrangementer i en sesong. Det blir med alle arrangementer i hele landet
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `season`  | `number`  | Sesong |
+
+#### Response Example
+```json
+{
+  "15":1512,
+  "16":1287,
+  "17":921
+}
+```
+
+
+### Kjønnsfordeling nasjonalt
+
+- **URL:** `nasjonalt/kjonnsfordeling`
+- **Access:** Super admin
+- **Method:** `POST`
+- **Description:** Kjønnsfordeling i alle arrangementer i en sesong. Det blir med alle arrangementer i hele landet
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `season`  | `number`  | Sesong |
+
+#### Response Example
+```json
+{
+  "male":2109,
+  "female":4210,
+  "unknown":1483
+}
+```
+
+
+### Sjangerfordeling nasjonalt
+
+- **URL:** `nasjonalt/sjangerfordeling`
+- **Access:** Super admin
+- **Method:** `POST`
+- **Description:** Sjangerfordeling i alle arrangementer i en sesong. Det blir med alle arrangementer i hele landet
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `season`  | `number`  | Sesong |
+
+#### Response Example
+```json
+{
+  "Arrangør": 1274,
+  "Dans": 706,
+  "Musikk": 3112,
+  "Konferansier": 405,
+  "Utstilling": 2202,
+  "Person": 1177,
+  "Media": 301,
+  "Noe annet på scene": 137,
+  "Cosplay": 28,
+  "Teater": 73,
+  "Litteratur": 63,
+  "Dataspill": 160,
+  "Film": 189,
+  "Datakultur": 30,
+  "Ressurs": 51,
+  "Matkultur": 4
+}
+```
+
