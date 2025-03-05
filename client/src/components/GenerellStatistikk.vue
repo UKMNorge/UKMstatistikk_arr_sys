@@ -59,14 +59,22 @@
                 ></Aldersfordeling>
             </div>
 
+            
             <!-- Gjennomsnittsalder -->
             <div v-show="selectedType == 'Gjennomsnittsalder'">
                 <Gjennomsnittsalder ref="gjennomsnittsalderComponent"
-                    :selectedFylker="[]"
-                    :selectedYears="getAllSelectedYears()"
+                :selectedFylker="[]"
+                :selectedYears="getAllSelectedYears()"
                 ></Gjennomsnittsalder>
             </div>
-
+            
+            <!-- Aldersfordeling -->
+            <div v-show="selectedType == 'Kjønnsfordeling'">
+                <Kjonnsfordeling ref="kjonnsfordelingComponent"
+                    :fylkeNavn="'Nasjonalt'"
+                    :selectedYears="getAllSelectedYears()"
+                ></Kjonnsfordeling>
+            </div>
         </div>
 
         <div v-if="countGenerating > 1" class="as-nop-impt as-margin-top-space-8">
@@ -80,6 +88,7 @@
 import AntallDeltakere from './Nasjonal/AntallDeltakere.vue';
 import Aldersfordeling from './Nasjonal/Aldersfordeling.vue';
 import Gjennomsnittsalder from './Fylke/Gjennomsnittsalder.vue';
+import Kjonnsfordeling from './Nasjonal/Kjonnsfordeling.vue';
 import Feedback from './feedback/Feedback.vue';
 
 export default {
@@ -97,6 +106,7 @@ export default {
         AntallDeltakere : AntallDeltakere,
         Aldersfordeling : Aldersfordeling,
         Gjennomsnittsalder : Gjennomsnittsalder,
+        Kjonnsfordeling : Kjonnsfordeling,
         Feedback : Feedback,
     },
     mounted() {
@@ -112,6 +122,7 @@ export default {
                 'Antall deltakere',
                 'Aldersfordeling',
                 'Gjennomsnittsalder',
+                'Kjønnsfordeling',
             ],
             availableYears: [] as number[],
             selectedYears: [] as number[],
@@ -138,11 +149,9 @@ export default {
             }
             else if(this.selectedType == 'Gjennomsnittsalder') {
                 (<any>this.$refs).gjennomsnittsalderComponent.init();
+            } else if(this.selectedType == 'Kjønnsfordeling') {
+                (<any>this.$refs).kjonnsfordelingComponent.init();
             }
-            // } else if(this.selectedType == 'Aldersfordeling fra SSB') {
-            //     for(let kommune of this.selectedKommuner) {
-            //         (<any>this.$refs)['aldersfordeling-ssb-' + kommune.id][0].init();
-            //     }
             // } else if(this.selectedType == 'Gjennomsnittsalder') {
             //     (<any>this.$refs).gjennomsnittsalder.init();
             // } else if(this.selectedType == 'Kjønnsfordeling') {
