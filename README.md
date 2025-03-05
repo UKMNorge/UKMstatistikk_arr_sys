@@ -1250,7 +1250,7 @@ Statistikk om landsfestivalen
 ```
 
 
-## Nasjoanlt
+## Nasjonalt
 
 Nasjonal statistikk for hele landet. Kun `superadmin` har tilgang til nasjoanle data
 Forskjellen mellom `land/...` og `nasjonalt/...` er på håndtering av resultatene. `land/...` håndterer data som gjelder hele landet men data er hentet via fylke. `nasjonalt/...` håndterer data som gjelder nasjonalt, for eksempel alle deltakere i hele landet
