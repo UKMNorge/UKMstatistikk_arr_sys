@@ -2,14 +2,37 @@
     <div>
         <!-- Bare hvis data er fetched, kan chart opprettes -->
         <div v-if="dataFetched == true" class="as-card-1 as-padding-space-3 as-margin-top-space-4">
-            <div class="as-margin-bottom-space-2">
-                <h4>{{ 'navnaw' }}</h4>
+            <div class="as-display-flex as-margin-bottom-space-4">
+                <div class="as-margin-auto as-margin-left-none">
+                    <h4>Sjangerfordeling nasjonalt {{ isProsentandel ? 'i prosent' : 'i antall innslag' }}</h4>
+                </div>
+                <div class="as-margin-auto as-margin-right-none">
+                    <v-switch 
+                        inset 
+                        color="primary" 
+                        v-model="isProsentandel" 
+                        label="Prosentandel">
+                    </v-switch>
+                </div>
             </div>
-            <MultiBarChart ref="chart"
-                :labels="getLabels()" 
-                :dataset="getDataset()"
-                :labelCallbackFunction="(tooltipItem) => `${tooltipItem.raw} innslag`"
-            />
+            
+            <template v-if="isProsentandel">
+                <MultiBarChart ref="chart"
+                    :labels="getLabels()" 
+                    :dataset="getDataset()"
+                    :labelCallbackFunction="(tooltipItem) => `${tooltipItem.raw} %`"
+                    :titleCallbackFunction="titleCallbackFunction"
+                />
+            </template>
+
+            <template v-if="!isProsentandel">
+                <MultiBarChart ref="chart"
+                    :labels="getLabels()" 
+                    :dataset="getDataset()"
+                    :labelCallbackFunction="(tooltipItem) => `${tooltipItem.raw} innslag`"
+                    :titleCallbackFunction="titleCallbackFunction"
+                />
+            </template>
 
             <div class="as-margin-top-space-4">
                 <PermanentNotification :typeNotification="'primary'" :isHTML="true" tittel="Info om statistikken" description="
@@ -54,6 +77,7 @@ export default {
             dataFetched: false,
             alleSjangere: [] as any,
             fetchingStarted: false,
+            isProsentandel: false,
         }
     },
     methods: {
@@ -117,9 +141,22 @@ export default {
                     dataArr['' + year][sjanger] = [];
                 }
 
-                for(let key in d.data) {
-                    let value = d.data[key];
-                    dataArr['' + year][key] = parseInt(value);;
+                if(this.isProsentandel) {
+                    let total = 0;
+                    for(let key in d.data) {
+                        total += d.data[key];
+                    }
+
+                    for(let key in d.data) {
+                        let value = d.data[key];
+                        dataArr['' + year][key] = parseFloat(((value / total) * 100).toFixed(2));
+                    }
+                } else {
+
+                    for(let key in d.data) {
+                        let value = d.data[key];
+                        dataArr['' + year][key] = parseInt(value);
+                    }
                 }
             }
 
@@ -143,6 +180,9 @@ export default {
             }
 
             return retArr;
+        },
+        titleCallbackFunction(tooltipItem : any) {
+            return tooltipItem[0].dataset.label;
         }
     }
 }
