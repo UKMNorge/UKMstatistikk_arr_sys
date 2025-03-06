@@ -12,6 +12,7 @@
                     fixed-tabs
                     bg-color="#fff"
                     v-model="tab">
+                    <v-tab text="Arrangementstatistikk"></v-tab>
                     <v-tab text="Kommunestatistikk"></v-tab>
                     <v-tab v-if="isFylkeAdmin" text="Fylkestatistikk"></v-tab>
                     <v-tab v-if="isSuperadmin" text="Nasjonal statistikk"></v-tab>
@@ -19,6 +20,14 @@
                 
                 <div class="as-margin-top-space-4">
                     <v-tabs-window v-model="tab">
+
+                        <!-- Arrangementstatistikk -->
+                        <v-tabs-window-item>
+                            <div class="as-containercontainer">
+                                <Arrangementstatistikk />
+                            </div>
+                        </v-tabs-window-item>
+
                         <!-- Kommunestatistikk -->
                         <v-tabs-window-item>
                         <div class="as-containercontainer">
@@ -39,6 +48,7 @@
                                 <GenerellStatistikk />
                             </div>
                         </v-tabs-window-item>
+
                     </v-tabs-window>
                 </div>
             </div>
@@ -51,6 +61,7 @@ import { defineComponent, ref, watch, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 // Components
+import Arrangementstatistikk from './components/Arrangementstatistikk.vue';
 import KommuneStatistikk from './components/KommuneStatistikk.vue';
 import FylkeStatistikk from './components/FylkeStatistikk.vue';
 import GenerellStatistikk from './components/GenerellStatistikk.vue';
@@ -67,6 +78,7 @@ export default {
     },
 
     components : {
+        Arrangementstatistikk : Arrangementstatistikk,
         KommuneStatistikk : KommuneStatistikk,
         FylkeStatistikk : FylkeStatistikk,
         GenerellStatistikk : GenerellStatistikk,
