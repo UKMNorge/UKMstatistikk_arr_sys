@@ -5,7 +5,7 @@
                 <h4 class="as-margin-auto as-margin-left-none">Velg område, arrangement og type</h4>
             </div>
             
-            <div v-if="availableFylker.length > 0" class="as-margin-top-space-1">
+            <div v-if="availableFylker.length > 0" class="as-margin-top-space-4 as-margin-bottom-space-1">
                 <v-btn-toggle
                     v-model="selectOmradeType"
                     color="blue-accent-2"
@@ -62,24 +62,7 @@
                 </v-autocomplete>
             </div>
 
-            <!-- Årstall -->
-            <div class="as-margin-top-space-1">
-                <div class="as-padding-top-space-2 as-padding-bottom-space-4">
-                    <h5>Velg tidsperioden</h5> 
-                </div>
-                <v-range-slider
-                    v-model="selectedYears"
-                    :items="availableYears" 
-                    :min="2009"
-                    :max="new Date().getFullYear() + 1"
-                    :step="1"
-                    thumb-label="always"
-                    class="align-center"
-                >
-                </v-range-slider>
-            </div>
-
-            <div>
+            <div class="as-margin-top-space-2">
                 <v-btn
                     class="v-btn-as v-btn-success"
                     rounded="large"
@@ -95,10 +78,12 @@
         <div>
             <!-- Antall deltakere -->
             <div v-show="selectedType == 'Antall deltakere'">
-                <AntallDeltakere ref="antallDeltakerComponent"
-                    :selectedKommuner="[]"
-                    :selectedYears="getAllSelectedYears()"
-                ></AntallDeltakere>
+                <template v-if="selectedArrangement != null">
+                    <AntallDeltakere ref="antallDeltakerComponent"
+                        :selectedArrangement="selectedArrangement"
+                        :selectedYears="getAllSelectedYears()"
+                    ></AntallDeltakere>
+                </template>
             </div>
 
             <!-- Deltakelse Sammenligning -->
@@ -173,7 +158,7 @@
 import Arrangement from './ArrSys/Arrangement.vue';
 import Kommune from '../objects/Kommune';
 import Fylke from '../objects/Fylke';
-import AntallDeltakere from './Kommune/AntallDeltakere.vue';
+import AntallDeltakere from './Arrangement/AntallDeltakere.vue';
 import DeltakelseSammenligning from './Kommune/DeltakelseSammenligning.vue';
 import Alderfordeling from './Kommune/Alderfordeling.vue';
 import AldersfordelingSSB from './Kommune/AldersfordelingSSB.vue';
