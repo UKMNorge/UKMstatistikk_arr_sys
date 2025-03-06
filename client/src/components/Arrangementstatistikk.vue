@@ -2,10 +2,10 @@
     <div>
         <div class="as-card-1 as-padding-space-3 as-margin-bottom-space-2"> 
             <div class="as-margin-bottom-space-2 as-display-flex">
-                <h4 class="as-margin-auto as-margin-left-none">Velg arrangement og type</h4>
+                <h4 class="as-margin-auto as-margin-left-none">Velg område, arrangement og type</h4>
             </div>
             
-            <div class="as-margin-top-space-4">
+            <div v-if="availableFylker.length > 0" class="as-margin-top-space-1">
                 <v-btn-toggle
                     v-model="selectOmradeType"
                     color="blue-accent-2"
@@ -14,9 +14,8 @@
                         <v-btn class="v-btn-as v-btn-grey" value="1">Fylker</v-btn>
                 </v-btn-toggle>
             </div>
-            
-            <div v-if="availableFylker.length > 0">
-                <div v-if="selectOmradeType == 0" class="as-margin-top-space-4">
+            <div>
+                <div v-if="selectOmradeType == 0" class="as-margin-top-space-3">
                     <v-autocomplete 
                         variant="outlined" 
                         label="Velg kommune"
@@ -24,11 +23,11 @@
                         :items="availableKommuner"
                         item-title="title"
                         item-value="id"
-                        v-model="selectedKommuner">
+                        v-model="selectedKommune">
                     </v-autocomplete>
                 </div>
     
-                <div v-if="selectOmradeType == 1" class="as-margin-top-space-4">
+                <div v-if="selectOmradeType == 1" class="as-margin-top-space-3">
                     <v-autocomplete 
                         variant="outlined" 
                         label="Velg fylke"
@@ -53,7 +52,7 @@
                 </v-autocomplete>
             </div>
 
-            <div class="as-margin-top-space-4">
+            <div class="as-margin-top-space-1">
                 <v-autocomplete 
                     variant="outlined" 
                     label="Velg type" 
@@ -97,21 +96,21 @@
             <!-- Antall deltakere -->
             <div v-show="selectedType == 'Antall deltakere'">
                 <AntallDeltakere ref="antallDeltakerComponent"
-                    :selectedKommuner="selectedKommuner"
+                    :selectedKommuner="[]"
                     :selectedYears="getAllSelectedYears()"
                 ></AntallDeltakere>
             </div>
 
             <!-- Deltakelse Sammenligning -->
-            <div v-show="selectedType == 'Deltakelse Sammenligning'">
+            <!-- <div v-show="selectedType == 'Deltakelse Sammenligning'">
                 <DeltakelseSammenligning ref="deltakelseSammenligning"
                     :selectedKommuner="selectedKommuner"
                     :selectedYears="getAllSelectedYears()"
                 ></DeltakelseSammenligning>
-            </div>
+            </div> -->
 
             <!-- Aldersfordeling for hver kommuner -->
-            <template v-for="kommune in selectedKommuner" v-bind:key="kommune.id">
+            <!-- <template v-for="kommune in selectedKommuner" v-bind:key="kommune.id">
                 <div v-show="selectedType == 'Aldersfordeling'">
                     <Alderfordeling 
                         :ref="'aldersfordeling-' + kommune.id"
@@ -119,10 +118,10 @@
                         :selectedYears="getAllSelectedYears()"
                     ></Alderfordeling>
                 </div>
-            </template>
+            </template> -->
 
             <!-- Aldersfordeling fra SSB -->
-            <template v-for="kommune in selectedKommuner" v-bind:key="kommune.id">
+            <!-- <template v-for="kommune in selectedKommuner" v-bind:key="kommune.id">
                 <div v-show="selectedType == 'Aldersfordeling fra SSB'">
                     <AldersfordelingSSB
                         :ref="'aldersfordeling-ssb-' + kommune.id"
@@ -130,18 +129,18 @@
                         :selectedYears="getAllSelectedYears()"
                     ></AldersfordelingSSB>
                 </div>
-            </template>
+            </template> -->
 
             <!-- Deltakelse Sammenligning -->
-            <div v-show="selectedType == 'Gjennomsnittsalder'">
+            <!-- <div v-show="selectedType == 'Gjennomsnittsalder'">
                 <Gjennomsnittsalder ref="gjennomsnittsalder"
                     :selectedKommuner="selectedKommuner"
                     :selectedYears="getAllSelectedYears()"
                 ></Gjennomsnittsalder>
-            </div>
+            </div> -->
 
             <!-- Kjønnsfordeling -->
-            <template v-for="kommune in selectedKommuner" v-bind:key="kommune.id">
+            <!-- <template v-for="kommune in selectedKommuner" v-bind:key="kommune.id">
                 <div v-show="selectedType == 'Kjønnsfordeling'">
                     <Kjonnsfordeling 
                         :ref="'kjonnsfordeling-' + kommune.id"
@@ -149,10 +148,10 @@
                         :selectedYears="getAllSelectedYears()"
                     ></Kjonnsfordeling>
                 </div>
-            </template>
+            </template> -->
 
             <!-- Sjangerfordeling for hver kommuner -->
-            <template v-for="kommune in selectedKommuner" v-bind:key="kommune.id">
+            <!-- <template v-for="kommune in selectedKommuner" v-bind:key="kommune.id">
                 <div v-show="selectedType == 'Sjangerfordeling'">
                     <Sjangerfordeling 
                         :ref="'sjangerfordeling-' + kommune.id"
@@ -160,7 +159,7 @@
                         :selectedYears="getAllSelectedYears()"
                     ></Sjangerfordeling>
                 </div>
-            </template>
+            </template> -->
         </div>
 
         <div v-if="countGenerating > 1" class="as-nop-impt as-margin-top-space-8">
@@ -196,7 +195,7 @@ export default {
         }
     },
     watch: {
-        selectedKommuner(kommune : Kommune) {
+        selectedKommune(kommune : Kommune) {
             console.log("selectedKommuner changed:", kommune);
             this.fetchAvailableArrangementer(kommune, 'kommune');
         },
@@ -227,15 +226,15 @@ export default {
         return {
             spaInteraction : (<any>window).spaInteraction, // Definert i main.ts
             selectedType: '' as any,
-            selectedKommuner: [] as Kommune[],  // Hold the ids of selected municipalities
+            selectedKommune: null as Kommune | null,  // Hold the ids of selected municipalities
             availableTypes: [
                 'Antall deltakere', 
-                'Deltakelse Sammenligning', 
-                'Aldersfordeling',
-                'Gjennomsnittsalder', 
-                'Aldersfordeling fra SSB', 
-                'Kjønnsfordeling', 
-                'Sjangerfordeling',
+                // 'Deltakelse Sammenligning', 
+                // 'Aldersfordeling',
+                // 'Gjennomsnittsalder', 
+                // 'Aldersfordeling fra SSB', 
+                // 'Kjønnsfordeling', 
+                // 'Sjangerfordeling',
             ],
             availableArrangementer : [] as ArrangementObject[],
             selectedArrangement: null as ArrangementObject | null,
@@ -251,6 +250,7 @@ export default {
     methods: {
         async fetchAvailableArrangementer(omradeId : any, omradeType : string) {
             this.availableArrangementer = [];
+            this.selectedArrangement = null;
 
             // Fetch available arrangementer
             var data = {
@@ -323,33 +323,32 @@ export default {
                 (<any>this.$refs).antallDeltakerComponent.init();
             } else if(this.selectedType == 'Deltakelse Sammenligning') {
                 (<any>this.$refs).deltakelseSammenligning.init();
-            } else if(this.selectedType == 'Aldersfordeling') {
-                // Loop through all selected kommuner and call init() on each
-                for(let kommune of this.selectedKommuner) {
-                    console.log(this.$refs['aldersfordeling-' + kommune.id]);
-                    (<any>this.$refs)['aldersfordeling-' + kommune.id][0].init();
-                }
-            } else if(this.selectedType == 'Aldersfordeling fra SSB') {
-                for(let kommune of this.selectedKommuner) {
-                    (<any>this.$refs)['aldersfordeling-ssb-' + kommune.id][0].init();
-                }
-            } else if(this.selectedType == 'Gjennomsnittsalder') {
-                (<any>this.$refs).gjennomsnittsalder.init();
-            } else if(this.selectedType == 'Kjønnsfordeling') {
-                for(let kommune of this.selectedKommuner) {
-                    (<any>this.$refs)['kjonnsfordeling-' + kommune.id][0].init();
-                }
-            } else if(this.selectedType == 'Sjangerfordeling') {
-                for(let kommune of this.selectedKommuner) {
-                    (<any>this.$refs)['sjangerfordeling-' + kommune.id][0].init();
-                }
+            // } else if(this.selectedType == 'Aldersfordeling') {
+            //     // Loop through all selected kommuner and call init() on each
+            //     for(let kommune of this.selectedKommuner) {
+            //         console.log(this.$refs['aldersfordeling-' + kommune.id]);
+            //         (<any>this.$refs)['aldersfordeling-' + kommune.id][0].init();
+            //     }
+            // } else if(this.selectedType == 'Aldersfordeling fra SSB') {
+            //     for(let kommune of this.selectedKommuner) {
+            //         (<any>this.$refs)['aldersfordeling-ssb-' + kommune.id][0].init();
+            //     }
+            // } else if(this.selectedType == 'Gjennomsnittsalder') {
+            //     (<any>this.$refs).gjennomsnittsalder.init();
+            // } else if(this.selectedType == 'Kjønnsfordeling') {
+            //     for(let kommune of this.selectedKommuner) {
+            //         (<any>this.$refs)['kjonnsfordeling-' + kommune.id][0].init();
+            //     }
+            // } else if(this.selectedType == 'Sjangerfordeling') {
+            //     for(let kommune of this.selectedKommuner) {
+            //         (<any>this.$refs)['sjangerfordeling-' + kommune.id][0].init();
+            //     }
             }
 
-            console.log('Selected Kommuner IDs:', this.selectedKommuner);
             // Map the selected ids to their corresponding names
         },
         isGeneratingPossible(): boolean {
-            return this.selectedType !== '' && this.selectedKommuner.length > 0 && this.selectedYears.length > 0;
+            return this.selectedArrangement != null && this.selectedType !== '' && this.selectedYears.length > 0;
         },
         getAllSelectedYears(): number[] {
             var firstYear = this.selectedYears[0];
