@@ -24,20 +24,20 @@ OBS: Arrangement tilgang sjekkes gjennom StatistikkManager
 
 #### Response Example
 ```json
-[
-  {
-    "age":"16",
-    "antall":"1"
-  },
-  {
-    "age":"17",
-    "antall":"1"
-  },
-  {
-    "age":"21",
-    "antall":"1"
-  },
-]
+```json
+{
+  "season": 2024,
+  "data": [
+    {
+      "age": "14",
+      "antall": "7"
+    },
+    {
+      "age": "16",
+      "antall": "9"
+    }
+  ]
+}
 ```
 
 
