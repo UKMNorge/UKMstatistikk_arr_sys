@@ -95,15 +95,14 @@
             </div> -->
 
             <!-- Aldersfordeling for hver kommuner -->
-            <!-- <template v-for="kommune in selectedKommuner" v-bind:key="kommune.id">
+            <!-- <template v-for="kommune in selectedKommuner" v-bind:key="kommune.id"> -->
                 <div v-show="selectedType == 'Aldersfordeling'">
                     <Alderfordeling 
-                        :ref="'aldersfordeling-' + kommune.id"
-                        :selectedKommune="kommune"
-                        :selectedYears="getAllSelectedYears()"
+                        :ref="'aldersfordelingArrangement'"
+                        :selectedArrangement="selectedArrangement"
                     ></Alderfordeling>
                 </div>
-            </template> -->
+            <!-- </template> -->
 
             <!-- Aldersfordeling fra SSB -->
             <!-- <template v-for="kommune in selectedKommuner" v-bind:key="kommune.id">
@@ -159,8 +158,8 @@ import Arrangement from './ArrSys/Arrangement.vue';
 import Kommune from '../objects/Kommune';
 import Fylke from '../objects/Fylke';
 import AntallDeltakere from './Arrangement/AntallDeltakere.vue';
+import Alderfordeling from './Arrangement/Alderfordeling.vue';
 import DeltakelseSammenligning from './Kommune/DeltakelseSammenligning.vue';
-import Alderfordeling from './Kommune/Alderfordeling.vue';
 import AldersfordelingSSB from './Kommune/AldersfordelingSSB.vue';
 import Gjennomsnittsalder from './Kommune/Gjennomsnittsalder.vue';
 import Kjonnsfordeling from './Kommune/Kjonnsfordeling.vue';
@@ -190,10 +189,10 @@ export default {
         },
     },
     components: {
+        Alderfordeling : Alderfordeling,
         Arrangement : Arrangement,
         AntallDeltakere : AntallDeltakere,
         DeltakelseSammenligning : DeltakelseSammenligning,
-        Alderfordeling : Alderfordeling,
         AldersfordelingSSB : AldersfordelingSSB,
         Gjennomsnittsalder : Gjennomsnittsalder,
         Kjonnsfordeling : Kjonnsfordeling,
@@ -215,7 +214,7 @@ export default {
             availableTypes: [
                 'Antall deltakere', 
                 // 'Deltakelse Sammenligning', 
-                // 'Aldersfordeling',
+                'Aldersfordeling',
                 // 'Gjennomsnittsalder', 
                 // 'Aldersfordeling fra SSB', 
                 // 'Kjønnsfordeling', 
@@ -308,12 +307,9 @@ export default {
                 (<any>this.$refs).antallDeltakerComponent.init();
             } else if(this.selectedType == 'Deltakelse Sammenligning') {
                 (<any>this.$refs).deltakelseSammenligning.init();
-            // } else if(this.selectedType == 'Aldersfordeling') {
-            //     // Loop through all selected kommuner and call init() on each
-            //     for(let kommune of this.selectedKommuner) {
-            //         console.log(this.$refs['aldersfordeling-' + kommune.id]);
-            //         (<any>this.$refs)['aldersfordeling-' + kommune.id][0].init();
-            //     }
+            } else if(this.selectedType == 'Aldersfordeling') {
+                // Loop through all selected kommuner and call init() on each
+                (<any>this.$refs).aldersfordelingArrangement.init();
             // } else if(this.selectedType == 'Aldersfordeling fra SSB') {
             //     for(let kommune of this.selectedKommuner) {
             //         (<any>this.$refs)['aldersfordeling-ssb-' + kommune.id][0].init();
