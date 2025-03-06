@@ -1,11 +1,11 @@
 <template>
     <div>
         <div class="as-card-1 as-padding-space-3 as-margin-bottom-space-2"> 
-            <div class="as-margin-bottom-space-2 as-display-flex">
+            <div class="as-margin-bottom-space-4 as-display-flex">
                 <h4 class="as-margin-auto as-margin-left-none">Velg område, arrangement og type</h4>
             </div>
             
-            <div v-if="availableFylker.length > 0" class="as-margin-top-space-4 as-margin-bottom-space-1">
+            <div v-if="availableFylker.length > 0" class="as-margin-top-space-2 as-margin-bottom-space-1">
                 <v-btn-toggle
                     v-model="selectOmradeType"
                     color="blue-accent-2"

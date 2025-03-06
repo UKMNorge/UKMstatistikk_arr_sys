@@ -12,7 +12,7 @@
                     fixed-tabs
                     bg-color="#fff"
                     v-model="tab">
-                    <v-tab text="Arrangementstatistikk"></v-tab>
+                    <!-- <v-tab text="Arrangementstatistikk"></v-tab> -->
                     <v-tab text="Kommunestatistikk"></v-tab>
                     <v-tab v-if="isFylkeAdmin" text="Fylkestatistikk"></v-tab>
                     <v-tab v-if="isSuperadmin" text="Nasjonal statistikk"></v-tab>
@@ -22,11 +22,11 @@
                     <v-tabs-window v-model="tab">
 
                         <!-- Arrangementstatistikk -->
-                        <v-tabs-window-item>
+                        <!-- <v-tabs-window-item>
                             <div class="as-containercontainer">
                                 <Arrangementstatistikk />
                             </div>
-                        </v-tabs-window-item>
+                        </v-tabs-window-item> -->
 
                         <!-- Kommunestatistikk -->
                         <v-tabs-window-item>
