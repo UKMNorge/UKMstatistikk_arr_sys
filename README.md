@@ -58,7 +58,8 @@ OBS: Arrangement tilgang sjekkes gjennom StatistikkManager
 ```json
 {
   "erUnike":true,
-  "antall":15
+  "antall":15,
+  "season":2025 
 }
 ```
 
