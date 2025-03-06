@@ -33,6 +33,7 @@ $statArr = new StatistikkArrangement($arrangement->getId(), $arrangement->getSes
 
 $retArr = [];
 $retArr['erUnike'] = $erUnike == 'true';
+$retArr['season'] = $arrangement->getSesong();
 
 if($erUnike == 'true') {
     $retArr['antall'] = $statArr->getAntallUnikeDeltakere();
