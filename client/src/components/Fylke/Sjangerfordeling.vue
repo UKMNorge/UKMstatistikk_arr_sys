@@ -71,39 +71,47 @@ export default {
             this.fetchingStarted = true;
             this.dataFetched = false;
             this.fylkeData = [];
-            this.alleSjangere = [];
+            this.alleSjangere = {};
 
-            const promises = this.selectedYears.map(async (year : number) => {
-            var data = {
-                action: 'UKMstatistikk_ajax',
-                controller: 'fylke/sjangerfordeling',
-                fylkeId: this.selectedFylke,
-                season: year,
-                unike: true
-            };
+            const promises = this.selectedYears.map(async (year: number) => {
+                var data = {
+                    action: 'UKMstatistikk_ajax',
+                    controller: 'fylke/sjangerfordeling',
+                    fylkeId: this.selectedFylke,
+                    season: year,
+                    unike: true
+                };
 
-            var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
-            
-            for(let sjanger in results) {
-                if(this.alleSjangere.indexOf(sjanger) == -1) {
-                this.alleSjangere[sjanger] = '';
+                var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+
+                for (let sjanger in results) {
+                    if (!(sjanger in this.alleSjangere)) {
+                        this.alleSjangere[sjanger] = '';
+                    }
                 }
-            }
 
-            var arr = {
-                fylke: this.selectedFylke,
-                year: year,
-                data: results
-            }
+                var arr = {
+                    fylke: this.selectedFylke,
+                    year: year,
+                    data: results
+                };
 
-            if(this.fylkeData[year] == undefined) {
-                this.fylkeData[year] = [];
-            }
+                if (this.fylkeData[year] == undefined) {
+                    this.fylkeData[year] = [];
+                }
 
-            this.fylkeData[year].push(arr);
+                this.fylkeData[year].push(arr);
             });
 
             await Promise.all(promises);
+
+            // Sort alleSjangere by keys
+            this.alleSjangere = Object.keys(this.alleSjangere)
+                .sort()  
+                .reduce((sortedObj : any, key) => {
+                    sortedObj[key] = this.alleSjangere[key];
+                    return sortedObj;
+                }, {});
 
             this.fetchingStarted = false;
             this.dataFetched = true;
