@@ -62,6 +62,7 @@ export default {
             this.alleFylker = {};
 
             const promises = [];
+            let tempFylkerData: any = {}; // Temporary storage
 
             for (let fylke of this.selectedFylker) {
                 for (let year of this.selectedYears) {
@@ -75,20 +76,11 @@ export default {
 
                     // Store promise instead of awaiting it
                     promises.push(
-                        this.spaInteraction.runAjaxCall('/', 'POST', data).then((results : any) => {
-                            if (!this.alleFylker[fylke]) {
-                                this.alleFylker[fylke] = {};
+                        this.spaInteraction.runAjaxCall('/', 'POST', data).then((results: any) => {
+                            if (!tempFylkerData[year]) {
+                                tempFylkerData[year] = [];
                             }
-                            if (!this.alleFylker[fylke][year]) {
-                                this.alleFylker[fylke][year] = {};
-                            }
-
-                            const arr = { fylke, year, antall: results.antall };
-
-                            if (!this.fylkerData[year]) {
-                                this.fylkerData[year] = [];
-                            }
-                            this.fylkerData[year].push(arr);
+                            tempFylkerData[year].push({ fylke, year, antall: results.antall });
                         })
                     );
                 }
@@ -97,6 +89,9 @@ export default {
             // Wait for all AJAX calls to finish
             await Promise.all(promises);
 
+            // Assign the correctly structured data
+            this.fylkerData = tempFylkerData;
+            
             this.fetchingStarted = false;
             this.dataFetched = true;
         },
