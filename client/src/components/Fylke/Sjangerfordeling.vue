@@ -62,7 +62,7 @@ export default {
             spaInteraction : (<any>window).spaInteraction, // Definert i main.ts
             fylkeData: {} as any,
             dataFetched: false,
-            alleSjangere: [] as any,
+            alleSjangere: {} as any,
             fetchingStarted: false,
         }
     },
@@ -111,7 +111,7 @@ export default {
                 .reduce((sortedObj : any, key) => {
                     sortedObj[key] = this.alleSjangere[key];
                     return sortedObj;
-                }, {});
+            }, {});
 
             this.fetchingStarted = false;
             this.dataFetched = true;
