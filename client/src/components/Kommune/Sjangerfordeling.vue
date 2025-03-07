@@ -63,7 +63,7 @@ export default {
             spaInteraction : (<any>window).spaInteraction, // Definert i main.ts
             kommunerData: {} as any, //{kommune : Kommune, year : number, antall : number}[]
             dataFetched: false,
-            alleSjangere: [] as any,
+            alleSjangere: {} as any,
             fetchingStarted: false,
             alleKommuner: {} as any,
         }
@@ -73,6 +73,7 @@ export default {
             this.fetchingStarted = true;
             this.dataFetched = false;
             this.kommunerData = [];
+            this.alleSjangere = {};
 
             const promises = this.selectedYears.map(async (year) => {
                 var data = {
@@ -96,7 +97,7 @@ export default {
                 }
 
                 for (let sjanger in results.data) {
-                    if (this.alleSjangere.indexOf(sjanger) === -1) {
+                    if (!(sjanger in this.alleSjangere)) {
                         this.alleSjangere[sjanger] = '';
                     }
                 }
@@ -115,6 +116,14 @@ export default {
             });
 
             await Promise.all(promises);
+
+            // Sort alleSjangere by keys
+            this.alleSjangere = Object.keys(this.alleSjangere)
+                .sort()  
+                .reduce((sortedObj : any, key) => {
+                    sortedObj[key] = this.alleSjangere[key];
+                    return sortedObj;
+            }, {});
 
             this.fetchingStarted = false;
             this.dataFetched = true;
