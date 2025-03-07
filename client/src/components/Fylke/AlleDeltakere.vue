@@ -77,10 +77,13 @@ export default {
                     // Store promise instead of awaiting it
                     promises.push(
                         this.spaInteraction.runAjaxCall('/', 'POST', data).then((results: any) => {
-                            if (!tempFylkerData[year]) {
-                                tempFylkerData[year] = [];
+                            if (!tempFylkerData[fylke]) {
+                                tempFylkerData[fylke] = {}; // Initialize fylke data
                             }
-                            tempFylkerData[year].push({ fylke, year, antall: results.antall });
+                            if (!tempFylkerData[fylke][year]) {
+                                tempFylkerData[fylke][year] = []; // Initialize year data
+                            }
+                            tempFylkerData[fylke][year].push({ fylke, year, antall: results.antall });
                         })
                     );
                 }
@@ -124,29 +127,31 @@ export default {
         getDataset() : any { 
             var retArr = [] as any;
             var singleRetArr = [] as any;
-                        
-            var count = 0;
-            let colorId = 0;
-            for(let year of this.selectedYears) {
-                var dataKomm = [];
-                for(let data of this.fylkerData[year]) {
-                    dataKomm.push(data.antall);
-                    singleRetArr.push(data.antall);
 
-                }
+            let colorId = 0;
+            for (let year of this.selectedYears) {
+                var dataKomm = [];
                 
-                if(this.selectedFylker.length > 1) {
+                for (let fylke of this.selectedFylker) {
+                    // Make sure fylke and year are both checked
+                    const fylkeData = this.fylkerData[fylke] && this.fylkerData[fylke][year];
+                    if (fylkeData) {
+                        dataKomm.push(fylkeData[0].antall);
+                        singleRetArr.push(fylkeData[0].antall);
+                    }
+                }
+
+                if (this.selectedFylker.length > 1) {
                     retArr.push({
                         label: year.toString(),
                         data: dataKomm, 
                         backgroundColor: getRandomColor(1, colorId),
                     });
                 }
-                count++;
                 colorId++;
             }
 
-            if(this.selectedFylker.length == 1) {
+            if (this.selectedFylker.length == 1) {
                 retArr.push({
                     label: 'Antall deltakere i ' + this._getFylkeById(this.selectedFylker[0]),
                     data: singleRetArr, 
