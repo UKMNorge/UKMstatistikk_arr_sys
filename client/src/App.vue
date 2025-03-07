@@ -12,7 +12,7 @@
                     fixed-tabs
                     bg-color="#fff"
                     v-model="tab">
-                    <v-tab text="Arrangementstatistikk"></v-tab>
+                    <v-tab text="Arrangementsstatistikk"></v-tab>
                     <v-tab text="Kommunestatistikk"></v-tab>
                     <v-tab v-if="isFylkeAdmin" text="Fylkestatistikk"></v-tab>
                     <v-tab v-if="isSuperadmin" text="Nasjonal statistikk"></v-tab>
