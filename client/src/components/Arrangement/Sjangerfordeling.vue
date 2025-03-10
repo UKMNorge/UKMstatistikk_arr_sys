@@ -3,7 +3,7 @@
         <!-- Bare hvis data er fetched, kan chart opprettes -->
         <div v-if="dataFetched == true" class="as-card-1 as-padding-space-3 as-margin-top-space-4">
             <div class="as-margin-bottom-space-2">
-                <h4>{{ fylkeNavn }}</h4>
+                <h4>{{ arrangementNavn }}</h4>
             </div>
             <MultiBarChart ref="chart"
                 :labels="getLabels()" 
@@ -36,18 +36,14 @@ import { PermanentNotification } from 'ukm-components-vue3';
 
 export default {
     props: {
-        fylkeNavn: {
+        arrangementNavn: {
             type: String,
             required: false
         },
-        selectedFylke: {
+        selectedArrangement: {
             type: Object as any,
             required: true
         },
-        selectedYears: {
-            type: Array as () => number[],
-            required: true
-        }
     },
     mounted() {
 
@@ -64,6 +60,7 @@ export default {
             dataFetched: false,
             alleSjangere: {} as any,
             fetchingStarted: false,
+
         }
     },
     methods: {
@@ -73,37 +70,30 @@ export default {
             this.fylkeData = [];
             this.alleSjangere = {};
 
-            const promises = this.selectedYears.map(async (year: number) => {
-                var data = {
-                    action: 'UKMstatistikk_ajax',
-                    controller: 'fylke/sjangerfordeling',
-                    fylkeId: this.selectedFylke,
-                    season: year,
-                    unike: true
-                };
+            
+            var data = {
+                action: 'UKMstatistikk_ajax',
+                controller: 'arrangement/sjangerfordeling',
+                plId: this.selectedArrangement,
+            };
 
-                var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+            var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
 
-                for (let sjanger in results) {
-                    if (!(sjanger in this.alleSjangere)) {
-                        this.alleSjangere[sjanger] = '';
-                    }
+            for (let sjanger in results) {
+                if (!(sjanger in this.alleSjangere)) {
+                    this.alleSjangere[sjanger] = '';
                 }
+            }
 
-                var arr = {
-                    fylke: this.selectedFylke,
-                    year: year,
-                    data: results
-                };
+            var arr = {
+                fylke: this.selectedArrangement,
+                year: 'season',
+                data: results
+            };
 
-                if (this.fylkeData[year] == undefined) {
-                    this.fylkeData[year] = [];
-                }
 
-                this.fylkeData[year].push(arr);
-            });
-
-            await Promise.all(promises);
+            this.fylkeData.push(arr);
+           
 
             // Sort alleSjangere by keys
             this.alleSjangere = Object.keys(this.alleSjangere)
@@ -128,45 +118,31 @@ export default {
 
             var dataArr = [] as any;
 
-            for(let kData in this.fylkeData) {
-                for(let d of this.fylkeData[kData]) {
-                    let year = d.year;
+            for(let key in this.fylkeData[0].data) {
+                let arrData = this.fylkeData[0].data[key];
 
-                    dataArr['' + year] = [];
-
-                    for(let sjanger in this.alleSjangere) {
-                        dataArr['' + year][sjanger] = [];
-                    }
-
-                    for(let key in d.data) {
-                        let value = d.data[key];
-
-                        dataArr['' + year][key] = parseInt(value.antall);;
-                    }
-                }
+                dataArr[key] = parseInt(arrData.antall);
             }
 
             var retArr = [] as any;
+            let arrAll = [] as any;
             let colorId = 0;
             for(let key in dataArr) {
-                let kData = dataArr[key];
-                
-                let opacityColor = 1;
-                let color = getRandomColor(opacityColor, colorId);
-                retArr.push(
-                    {
-                        label: key,
-                        borderColor: color,
-                        backgroundColor: color,
-                        data: (<any>Object).values(kData),
-                        fill: true,
-                    }
-                );
-                colorId++;
+                arrAll.push(dataArr[key]);
             }
+                
+            let opacityColor = 1;
+            let color = getRandomColor(opacityColor, colorId);
+            retArr.push(
+                {
+                    label: this.arrangementNavn + ' - Sjangerfordeling',
+                    borderColor: color,
+                    backgroundColor: color,
+                    data: arrAll,
+                    fill: true,
+                }
+            );
 
-            console.log('retArr');
-            console.log(retArr);
 
             return retArr;
 

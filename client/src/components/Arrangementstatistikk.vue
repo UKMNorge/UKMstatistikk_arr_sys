@@ -135,15 +135,13 @@
             </template> -->
 
             <!-- Sjangerfordeling for hver kommuner -->
-            <!-- <template v-for="kommune in selectedKommuner" v-bind:key="kommune.id">
-                <div v-show="selectedType == 'Sjangerfordeling'">
-                    <Sjangerfordeling 
-                        :ref="'sjangerfordeling-' + kommune.id"
-                        :selectedKommune="kommune"
-                        :selectedYears="getAllSelectedYears()"
-                    ></Sjangerfordeling>
-                </div>
-            </template> -->
+            <div v-show="selectedType == 'Sjangerfordeling'">
+                <Sjangerfordeling   
+                    :ref="'sjangerfordelingArrangement'"
+                    :selectedArrangement="selectedArrangement"
+                    :arrangementNavn="_getArrangementById(selectedArrangement)"
+                ></Sjangerfordeling>
+            </div>
         </div>
 
         <div v-if="countGenerating > 1" class="as-nop-impt as-margin-top-space-8">
@@ -163,7 +161,7 @@ import DeltakelseSammenligning from './Kommune/DeltakelseSammenligning.vue';
 import AldersfordelingSSB from './Kommune/AldersfordelingSSB.vue';
 import Gjennomsnittsalder from './Kommune/Gjennomsnittsalder.vue';
 import Kjonnsfordeling from './Kommune/Kjonnsfordeling.vue';
-import Sjangerfordeling from './Kommune/Sjangerfordeling.vue';
+import Sjangerfordeling from './Arrangement/Sjangerfordeling.vue';
 import Feedback from './feedback/Feedback.vue';
 import ArrangementObject from '../objects/Arrangement';
 
@@ -218,7 +216,7 @@ export default {
                 // 'Gjennomsnittsalder', 
                 // 'Aldersfordeling fra SSB', 
                 // 'Kjønnsfordeling', 
-                // 'Sjangerfordeling',
+                'Sjangerfordeling',
             ],
             availableArrangementer : [] as ArrangementObject[],
             selectedArrangement: null as ArrangementObject | null,
@@ -320,10 +318,8 @@ export default {
             //     for(let kommune of this.selectedKommuner) {
             //         (<any>this.$refs)['kjonnsfordeling-' + kommune.id][0].init();
             //     }
-            // } else if(this.selectedType == 'Sjangerfordeling') {
-            //     for(let kommune of this.selectedKommuner) {
-            //         (<any>this.$refs)['sjangerfordeling-' + kommune.id][0].init();
-            //     }
+            } else if(this.selectedType == 'Sjangerfordeling') {
+                (<any>this.$refs).sjangerfordelingArrangement.init();
             }
 
             // Map the selected ids to their corresponding names
@@ -340,7 +336,15 @@ export default {
             }
 
             return years;
-        }
+        },
+        _getArrangementById(arrangementId : any) : string {
+            for(let arrangement of this.availableArrangementer) {
+                if(arrangement.id == arrangementId) {
+                    return arrangement.title;
+                }
+            }
+            return 'Ukjent';
+        },
     }
 }
 </script>
