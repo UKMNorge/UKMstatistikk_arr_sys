@@ -75,7 +75,7 @@ export default {
             spaInteraction : (<any>window).spaInteraction, // Definert i main.ts
             sjangerData: {} as any,
             dataFetched: false,
-            alleSjangere: [] as any,
+            alleSjangere: {} as any,
             fetchingStarted: false,
             isProsentandel: false,
         }
@@ -85,7 +85,7 @@ export default {
             this.fetchingStarted = true;
             this.dataFetched = false;
             this.sjangerData = {};
-            this.alleSjangere = [];
+            this.alleSjangere = {};
 
             const promises = this.selectedYears.map(async (year : number) => {
                 var data = {
@@ -97,8 +97,8 @@ export default {
 
                 var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
                 
-                for(let sjanger in results) {
-                    if(this.alleSjangere.indexOf(sjanger) == -1) {
+                for (let sjanger in results) {
+                    if (!(sjanger in this.alleSjangere)) {
                         this.alleSjangere[sjanger] = '';
                     }
                 }
@@ -116,6 +116,14 @@ export default {
             });
 
             await Promise.all(promises);
+
+            // Sort alleSjangere by keys
+            this.alleSjangere = Object.keys(this.alleSjangere)
+                .sort()  
+                .reduce((sortedObj : any, key) => {
+                    sortedObj[key] = this.alleSjangere[key];
+                    return sortedObj;
+            }, {});
 
             this.fetchingStarted = false;
             this.dataFetched = true;
