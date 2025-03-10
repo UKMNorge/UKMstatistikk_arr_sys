@@ -127,3 +127,13 @@ export default {
     }
 }
 </script>
+
+<style>
+.statistikk-feedback {
+    display: flex;
+}
+.statistikk-feedback .as-container.container {
+    padding: 0;
+}
+
+</style>
