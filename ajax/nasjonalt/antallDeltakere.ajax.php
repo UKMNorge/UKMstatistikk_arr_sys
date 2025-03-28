@@ -22,4 +22,5 @@ $handleCall->sendToClient([
     'unike' => $erUnike, 
     'antallDeltakere' => $antall,
     'antallDeltakereUfullforte' => $statNasjonalt->getAntallUnikeUfullforteDeltakere(),
+    'antallUregistrerteDeltakere' => $statNasjonalt->getAntallUregistrerteDeltakere(),
 ]);

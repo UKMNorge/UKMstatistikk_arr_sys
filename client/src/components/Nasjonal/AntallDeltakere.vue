@@ -83,7 +83,7 @@ export default {
                     unike: true
                 };
                 const results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
-                this.antallDeltakereData[year] = [{ year, antall: results.antallDeltakere, antallUfullforte: results.antallDeltakereUfullforte }];
+                this.antallDeltakereData[year] = [{ year, antall: results.antallDeltakere, antallUfullforte: results.antallDeltakereUfullforte, antallUregistrerte: results.antallUregistrerteDeltakere }];
             });
 
             await Promise.all(requests);
@@ -106,15 +106,16 @@ export default {
             
             var arrFullforte = [] as any;
             var arrUfullforte = [] as any;
+            var arrUregistrerte = [] as any;
 
             for(let year of this.selectedYears) {
                 for(let data of this.antallDeltakereData[year]) {
                     // singleRetArr.push(data.antall);
                     arrFullforte.push(data.antall);
                     arrUfullforte.push(data.antallUfullforte);
+                    arrUregistrerte.push(data.antallUregistrerte);
                 }
             }
-
             retArr.push({
                 label: 'Fullforte',
                 data: arrFullforte,
@@ -125,6 +126,12 @@ export default {
                 label: 'Ufullførte',
                 data: arrUfullforte,
                 backgroundColor: '#bebebe',
+            });
+
+            retArr.push({
+                label: 'Uregistrerte',
+                data: arrUregistrerte,
+                backgroundColor: '#7a7a7a',
             });
 
             return retArr;
@@ -139,6 +146,7 @@ export default {
         }
     }
 }
+
 </script>
 
 
