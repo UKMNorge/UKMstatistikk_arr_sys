@@ -123,16 +123,17 @@ export default {
             });
 
             retArr.push({
+                label: 'Uregistrerte',
+                data: arrUregistrerte,
+                backgroundColor: 'green',
+            });
+
+            retArr.push({
                 label: 'Ufullførte',
                 data: arrUfullforte,
                 backgroundColor: '#bebebe',
             });
 
-            retArr.push({
-                label: 'Uregistrerte',
-                data: arrUregistrerte,
-                backgroundColor: '#7a7a7a',
-            });
 
             return retArr;
         },
