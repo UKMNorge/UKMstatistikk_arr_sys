@@ -39,6 +39,7 @@ try{
 $retArr = [];
 $retArr['erUnike'] = $erUnike;
 $retArr['fylkeNavn'] = $fylke->getNavn();
+$retArr['antallUregistrerteDeltakere'] = $statFylke->getAntallUregistrerteDeltakere();
 
 if($erUnike) {
     $retArr['antall'] = $statFylke->getAntallUnikeDeltakereFylke();

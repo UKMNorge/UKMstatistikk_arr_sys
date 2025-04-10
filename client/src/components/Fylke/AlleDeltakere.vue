@@ -83,7 +83,7 @@ export default {
                                 this.alleFylker[fylke][year] = {};
                             }
 
-                            const arr = { fylke, year, antall: results.antall };
+                            const arr = { fylke, year, antall: results.antall, antallUregistrerte: results.antallUregistrerteDeltakere };
 
                             if (!this.fylkerData[year]) {
                                 this.fylkerData[year] = [];
@@ -129,6 +129,7 @@ export default {
         getDataset() : any { 
             var retArr = [] as any;
             var singleRetArr = [] as any;
+            var arrUregistrerte = [] as any;
                         
             var count = 0;
             let colorId = 0;
@@ -137,9 +138,9 @@ export default {
                 for(let data of this.fylkerData[year]) {
                     dataKomm.push(data.antall);
                     singleRetArr.push(data.antall);
+                    arrUregistrerte.push(data.antallUregistrerte);
 
                 }
-                
                 if(this.selectedFylker.length > 1) {
                     retArr.push({
                         label: year.toString(),
@@ -156,6 +157,11 @@ export default {
                     label: 'Antall deltakere i ' + this._getFylkeById(this.selectedFylker[0]),
                     data: singleRetArr, 
                     backgroundColor: getRandomColor(1, 0),
+                });
+                retArr.push({
+                    label: 'Uregistrerte deltakere i ' + this._getFylkeById(this.selectedFylker[0]),
+                    data: arrUregistrerte, 
+                    backgroundColor: '#bebebe',
                 });
             }
 
