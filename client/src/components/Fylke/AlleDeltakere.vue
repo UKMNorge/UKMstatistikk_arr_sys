@@ -160,7 +160,7 @@ export default {
                     backgroundColor: getRandomColor(1, 0),
                 });
                 retArr.push({
-                    label: 'Atnall uregistrerte deltakere i ' + this._getFylkeById(this.selectedFylker[0]),
+                    label: 'Antall uregistrerte deltakere i ' + this._getFylkeById(this.selectedFylker[0]),
                     data: singleRetArrUregistrerte, 
                     backgroundColor: getRandomColor(1, 2),
                 });
