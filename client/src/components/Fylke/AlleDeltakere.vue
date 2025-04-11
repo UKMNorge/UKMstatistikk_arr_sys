@@ -83,7 +83,7 @@ export default {
                             if (!tempFylkerData[fylke][year]) {
                                 tempFylkerData[fylke][year] = []; // Initialize year data
                             }
-                            tempFylkerData[fylke][year].push({ fylke, year, antall: results.antall });
+                            tempFylkerData[fylke][year].push({ fylke, year, antall: results.antall, antallUregistrerte: results.antallUregistrerteDeltakere });
                         })
                     );
                 }
@@ -137,7 +137,7 @@ export default {
                     const fylkeData = this.fylkerData[fylke] && this.fylkerData[fylke][year];
                     if (fylkeData) {
                         dataKomm.push(fylkeData[0].antall);
-                        singleRetArr.push(fylkeData[0].antall);
+                        singleRetArr.push([fylkeData[0].antall, fylkeData[0].antallUregistrerte]);
                     }
                 }
 

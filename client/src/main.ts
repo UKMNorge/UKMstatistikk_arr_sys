@@ -64,11 +64,11 @@ const router = createRouter({
 
 const app = createApp(App);
 
-// Make Director global
-import { Director } from 'ukm-spa/Director';
+// // Make Director global
+// import { Director } from 'ukm-spa/Director';
 
-var director = new Director();
-(<any>window).director = director;
+// var director = new Director();
+// (<any>window).director = director;
 
 app.use(hljsVuePlugin);
 app.use(vuetify);
