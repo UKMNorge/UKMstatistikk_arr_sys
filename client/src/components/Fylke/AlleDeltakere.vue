@@ -161,7 +161,7 @@ export default {
                 retArr.push({
                     label: 'Uregistrerte deltakere i ' + this._getFylkeById(this.selectedFylker[0]),
                     data: arrUregistrerte, 
-                    backgroundColor: 'green',
+                    backgroundColor: '#bebebe',
                 });
             }
 
