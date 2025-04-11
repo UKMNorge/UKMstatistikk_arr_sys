@@ -24,20 +24,20 @@ OBS: Arrangement tilgang sjekkes gjennom StatistikkManager
 
 #### Response Example
 ```json
-[
-  {
-    "age":"16",
-    "antall":"1"
-  },
-  {
-    "age":"17",
-    "antall":"1"
-  },
-  {
-    "age":"21",
-    "antall":"1"
-  },
-]
+```json
+{
+  "season": 2024,
+  "data": [
+    {
+      "age": "14",
+      "antall": "7"
+    },
+    {
+      "age": "16",
+      "antall": "9"
+    }
+  ]
+}
 ```
 
 
@@ -58,7 +58,8 @@ OBS: Arrangement tilgang sjekkes gjennom StatistikkManager
 ```json
 {
   "erUnike":true,
-  "antall":15
+  "antall":15,
+  "season":2025 
 }
 ```
 
@@ -1250,7 +1251,7 @@ Statistikk om landsfestivalen
 ```
 
 
-## Nasjoanlt
+## Nasjonalt
 
 Nasjonal statistikk for hele landet. Kun `superadmin` har tilgang til nasjoanle data
 Forskjellen mellom `land/...` og `nasjonalt/...` er på håndtering av resultatene. `land/...` håndterer data som gjelder hele landet men data er hentet via fylke. `nasjonalt/...` håndterer data som gjelder nasjonalt, for eksempel alle deltakere i hele landet
@@ -1260,7 +1261,7 @@ Forskjellen mellom `land/...` og `nasjonalt/...` er på håndtering av resultate
 - **URL:** `nasjonalt/antallDeltakere`
 - **Access:** Super admin
 - **Method:** `POST`
-- **Description:** Henter alle deltakere i alle arrangementer i en sesong. Det blir med alle arrangementer uansett type og nivå
+- **Description:** Henter alle deltakere i alle arrangementer. Det blir med alle arrangementer i hele landet
 #### URL Parameters
 
 | Parameter | Type   | Description                |
@@ -1275,3 +1276,83 @@ Forskjellen mellom `land/...` og `nasjonalt/...` er på håndtering av resultate
   "antall":15885
 }
 ```
+
+
+### Aldersfordeling nasjonalt
+
+- **URL:** `nasjonalt/aldersfordeling`
+- **Access:** Super admin
+- **Method:** `POST`
+- **Description:** Aldersfordeling i alle arrangementer i en sesong. Det blir med alle arrangementer i hele landet
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `season`  | `number`  | Sesong |
+
+#### Response Example
+```json
+{
+  "15":1512,
+  "16":1287,
+  "17":921
+}
+```
+
+
+### Kjønnsfordeling nasjonalt
+
+- **URL:** `nasjonalt/kjonnsfordeling`
+- **Access:** Super admin
+- **Method:** `POST`
+- **Description:** Kjønnsfordeling i alle arrangementer i en sesong. Det blir med alle arrangementer i hele landet
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `season`  | `number`  | Sesong |
+
+#### Response Example
+```json
+{
+  "male":2109,
+  "female":4210,
+  "unknown":1483
+}
+```
+
+
+### Sjangerfordeling nasjonalt
+
+- **URL:** `nasjonalt/sjangerfordeling`
+- **Access:** Super admin
+- **Method:** `POST`
+- **Description:** Sjangerfordeling i alle arrangementer i en sesong. Det blir med alle arrangementer i hele landet
+#### URL Parameters
+
+| Parameter | Type   | Description                |
+|-----------|--------|----------------------------|
+| `season`  | `number`  | Sesong |
+
+#### Response Example
+```json
+{
+  "Arrangør": 1274,
+  "Dans": 706,
+  "Musikk": 3112,
+  "Konferansier": 405,
+  "Utstilling": 2202,
+  "Person": 1177,
+  "Media": 301,
+  "Noe annet på scene": 137,
+  "Cosplay": 28,
+  "Teater": 73,
+  "Litteratur": 63,
+  "Dataspill": 160,
+  "Film": 189,
+  "Datakultur": 30,
+  "Ressurs": 51,
+  "Matkultur": 4
+}
+```
+

@@ -59,14 +59,29 @@
                 ></Aldersfordeling>
             </div>
 
+            
             <!-- Gjennomsnittsalder -->
             <div v-show="selectedType == 'Gjennomsnittsalder'">
                 <Gjennomsnittsalder ref="gjennomsnittsalderComponent"
-                    :selectedFylker="[]"
-                    :selectedYears="getAllSelectedYears()"
+                :selectedFylker="[]"
+                :selectedYears="getAllSelectedYears()"
                 ></Gjennomsnittsalder>
             </div>
+            
+            <!-- Kjønnsfordeling -->
+            <div v-show="selectedType == 'Kjønnsfordeling'">
+                <Kjonnsfordeling ref="kjonnsfordelingComponent"
+                    :fylkeNavn="'Nasjonalt'"
+                    :selectedYears="getAllSelectedYears()"
+                ></Kjonnsfordeling>
+            </div>
 
+            <!-- Sjangerfordeling -->
+            <div v-show="selectedType == 'Sjangerfordeling'">
+                <Sjangerfordeling ref="sjangerfordelingComponent"
+                    :selectedYears="getAllSelectedYears()"
+                ></Sjangerfordeling>
+            </div>
         </div>
 
         <div v-if="countGenerating > 1" class="as-nop-impt as-margin-top-space-8">
@@ -80,6 +95,8 @@
 import AntallDeltakere from './Nasjonal/AntallDeltakere.vue';
 import Aldersfordeling from './Nasjonal/Aldersfordeling.vue';
 import Gjennomsnittsalder from './Fylke/Gjennomsnittsalder.vue';
+import Kjonnsfordeling from './Nasjonal/Kjonnsfordeling.vue';
+import Sjangerfordeling from './Nasjonal/Sjangerfordeling.vue';
 import Feedback from './feedback/Feedback.vue';
 
 export default {
@@ -97,6 +114,8 @@ export default {
         AntallDeltakere : AntallDeltakere,
         Aldersfordeling : Aldersfordeling,
         Gjennomsnittsalder : Gjennomsnittsalder,
+        Kjonnsfordeling : Kjonnsfordeling,
+        Sjangerfordeling : Sjangerfordeling,
         Feedback : Feedback,
     },
     mounted() {
@@ -112,6 +131,8 @@ export default {
                 'Antall deltakere',
                 'Aldersfordeling',
                 'Gjennomsnittsalder',
+                'Kjønnsfordeling',
+                'Sjangerfordeling',
             ],
             availableYears: [] as number[],
             selectedYears: [] as number[],
@@ -138,22 +159,11 @@ export default {
             }
             else if(this.selectedType == 'Gjennomsnittsalder') {
                 (<any>this.$refs).gjennomsnittsalderComponent.init();
+            } else if(this.selectedType == 'Kjønnsfordeling') {
+                (<any>this.$refs).kjonnsfordelingComponent.init();
+            } else if(this.selectedType == 'Sjangerfordeling') {
+                (<any>this.$refs).sjangerfordelingComponent.init();
             }
-            // } else if(this.selectedType == 'Aldersfordeling fra SSB') {
-            //     for(let kommune of this.selectedKommuner) {
-            //         (<any>this.$refs)['aldersfordeling-ssb-' + kommune.id][0].init();
-            //     }
-            // } else if(this.selectedType == 'Gjennomsnittsalder') {
-            //     (<any>this.$refs).gjennomsnittsalder.init();
-            // } else if(this.selectedType == 'Kjønnsfordeling') {
-            //     for(let kommune of this.selectedKommuner) {
-            //         (<any>this.$refs)['kjonnsfordeling-' + kommune.id][0].init();
-            //     }
-            // } else if(this.selectedType == 'Sjangerfordeling') {
-            //     for(let kommune of this.selectedKommuner) {
-            //         (<any>this.$refs)['sjangerfordeling-' + kommune.id][0].init();
-            //     }
-            // }
         },
         isGeneratingPossible(): boolean {
             return this.selectedType !== '' && this.selectedYears.length > 0;

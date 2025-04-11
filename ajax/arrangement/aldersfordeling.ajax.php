@@ -30,4 +30,8 @@ try{
 
 $statArr = new StatistikkArrangement($arrangement->getId(), $arrangement->getSesong());
 
-$handleCall->sendToClient($statArr->getAldersfordeling());
+$retArr = [];
+$retArr['season'] = $arrangement->getSesong();
+$retArr['data'] = $statArr->getAldersfordeling();
+
+$handleCall->sendToClient($retArr);

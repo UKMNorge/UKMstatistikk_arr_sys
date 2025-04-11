@@ -2,13 +2,37 @@
     <div>
         <!-- Bare hvis data er fetched, kan chart opprettes -->
         <div v-if="dataFetched == true" class="as-card-1 as-padding-space-3 as-margin-top-space-4">
-            <div class="as-margin-bottom-space-2">
-                <h4>{{ selectedKommune.title }}</h4>
+            <div class="as-display-flex as-margin-bottom-space-4">
+                <div class="as-margin-auto as-margin-left-none">
+                    <h4>Sjangerfordeling nasjonalt {{ isProsentandel ? 'i prosent' : 'i antall innslag' }}</h4>
+                </div>
+                <div class="as-margin-auto as-margin-right-none">
+                    <v-switch 
+                        inset 
+                        color="primary" 
+                        v-model="isProsentandel" 
+                        label="Prosentandel">
+                    </v-switch>
+                </div>
             </div>
-            <MultiBarChart ref="chart"
-                :labels="getLabels()" 
-                :dataset="getDataset()"
-            />
+            
+            <template v-if="isProsentandel">
+                <MultiBarChart ref="chart"
+                    :labels="getLabels()" 
+                    :dataset="getDataset()"
+                    :labelCallbackFunction="(tooltipItem) => `${tooltipItem.raw} %`"
+                    :titleCallbackFunction="titleCallbackFunction"
+                />
+            </template>
+
+            <template v-if="!isProsentandel">
+                <MultiBarChart ref="chart"
+                    :labels="getLabels()" 
+                    :dataset="getDataset()"
+                    :labelCallbackFunction="(tooltipItem) => `${tooltipItem.raw} innslag`"
+                    :titleCallbackFunction="titleCallbackFunction"
+                />
+            </template>
 
             <div class="as-margin-top-space-4">
                 <PermanentNotification :typeNotification="'primary'" :isHTML="true" tittel="Info om statistikken" description="
@@ -17,11 +41,7 @@
                     </p>"
                 />
             </div>
-
-            <div>
-                <FlereKommunerMessage :alleKommuner="alleKommuner" :selectedKommuner="[selectedKommune]" />
-            </div>
-        </div>
+        </div>        
         <div v-else-if="fetchingStarted">
             <LoadingComponent />
         </div>
@@ -29,21 +49,14 @@
 </template>
 
 <script lang="ts">
-import MultiBarChart from '../charts/MultiBarChart.vue';
-import type Kommune from '../../objects/Kommune'; // Ensure Kommune is imported correctly
-import type { PropType } from 'vue';  // Use type-only import for PropType
+import MultiBarChart from '../charts/MultiBarChart.vue';;
 import LoadingComponent from '../Other/LoadingComponent.vue';
 import { getRandomColor } from '../../utils/Colors';
-import FlereKommunerMessage from '../Other/FlereKommunerMessage.vue';
 import { PermanentNotification } from 'ukm-components-vue3';
 
 
 export default {
     props: {
-        selectedKommune: {
-            type: Object as PropType<Kommune>,
-            required: true
-        },
         selectedYears: {
             type: Array as () => number[],
             required: true
@@ -55,64 +68,51 @@ export default {
     components: {
         MultiBarChart : MultiBarChart,
         LoadingComponent : LoadingComponent,
-        FlereKommunerMessage : FlereKommunerMessage,
         PermanentNotification,
     },
     data() {
         return {
             spaInteraction : (<any>window).spaInteraction, // Definert i main.ts
-            kommunerData: {} as any, //{kommune : Kommune, year : number, antall : number}[]
+            sjangerData: {} as any,
             dataFetched: false,
             alleSjangere: {} as any,
             fetchingStarted: false,
-            alleKommuner: {} as any,
+            isProsentandel: false,
         }
     },
     methods: {
         async init() {
             this.fetchingStarted = true;
             this.dataFetched = false;
-            this.kommunerData = [];
+            this.sjangerData = {};
             this.alleSjangere = {};
 
-            const promises = this.selectedYears.map(async (year) => {
+            const promises = this.selectedYears.map(async (year : number) => {
                 var data = {
                     action: 'UKMstatistikk_ajax',
-                    controller: 'kommune/sjangerfordeling',
-                    kommuneId: this.selectedKommune.id,
+                    controller: 'nasjonalt/sjangerfordeling',
                     season: year,
                     unike: true
                 };
 
                 var results = await this.spaInteraction.runAjaxCall('/', 'POST', data);
-
-                if (!this.alleKommuner[this.selectedKommune.id]) {
-                    this.alleKommuner[this.selectedKommune.id] = {};
-                }
-                if (!this.alleKommuner[this.selectedKommune.id][year]) {
-                    this.alleKommuner[this.selectedKommune.id][year] = {};
-                }
-                for (let oldKomKey in results.kommuner) {
-                    this.alleKommuner[this.selectedKommune.id][year][results.kommuner[oldKomKey]] = results.kommuner[oldKomKey];
-                }
-
-                for (let sjanger in results.data) {
+                
+                for (let sjanger in results) {
                     if (!(sjanger in this.alleSjangere)) {
                         this.alleSjangere[sjanger] = '';
                     }
                 }
 
                 var arr = {
-                    kommune: this.selectedKommune,
                     year: year,
-                    data: results.data
-                };
-
-                if (!this.kommunerData[year]) {
-                    this.kommunerData[year] = [];
+                    data: results
                 }
 
-                this.kommunerData[year].push(arr);
+                if(this.sjangerData[year] == undefined) {
+                    this.sjangerData[year] = [];
+                }
+
+                this.sjangerData[year].push(arr);
             });
 
             await Promise.all(promises);
@@ -137,29 +137,38 @@ export default {
             return retArr;
         },
         getDataset() : any {
-
             var dataArr = [] as any;
 
-            for(let kData in this.kommunerData) {
-                for(let d of this.kommunerData[kData]) {
-                    let year = d.year;
+            for(let kData in this.sjangerData) {
+                let d = this.sjangerData[kData][0];
+                let year = d.year;
 
-                    dataArr['' + year] = [];
+                dataArr['' + year] = [];
 
-                    for(let sjanger in this.alleSjangere) {
-                        dataArr['' + year][sjanger] = [];
+                for(let sjanger in this.alleSjangere) {
+                    dataArr['' + year][sjanger] = [];
+                }
+
+                if(this.isProsentandel) {
+                    let total = 0;
+                    for(let key in d.data) {
+                        total += d.data[key];
                     }
 
                     for(let key in d.data) {
                         let value = d.data[key];
+                        dataArr['' + year][key] = parseFloat(((value / total) * 100).toFixed(2));
+                    }
+                } else {
 
-                        dataArr['' + year][key] = parseInt(value.antall);;
+                    for(let key in d.data) {
+                        let value = d.data[key];
+                        dataArr['' + year][key] = parseInt(value);
                     }
                 }
             }
 
             var retArr = [] as any;
-
             let colorId = 0;
             for(let key in dataArr) {
                 let kData = dataArr[key];
@@ -174,12 +183,14 @@ export default {
                         data: (<any>Object).values(kData),
                         fill: true,
                     }
-                )
+                );
                 colorId++;
             }
 
             return retArr;
-
+        },
+        titleCallbackFunction(tooltipItem : any) {
+            return tooltipItem[0].dataset.label;
         }
     }
 }

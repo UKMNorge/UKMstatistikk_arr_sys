@@ -125,7 +125,7 @@ export default {
             retArr.push({
                 label: 'Uregistrerte',
                 data: arrUregistrerte,
-                backgroundColor: 'green',
+                backgroundColor: getRandomColor(1, 2),
             });
 
             retArr.push({
