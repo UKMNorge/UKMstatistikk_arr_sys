@@ -62,7 +62,6 @@ export default {
             this.alleFylker = {};
 
             const promises = [];
-            let tempFylkerData: any = {}; // Temporary storage
 
             for (let fylke of this.selectedFylker) {
                 for (let year of this.selectedYears) {
@@ -76,14 +75,20 @@ export default {
 
                     // Store promise instead of awaiting it
                     promises.push(
-                        this.spaInteraction.runAjaxCall('/', 'POST', data).then((results: any) => {
-                            if (!tempFylkerData[fylke]) {
-                                tempFylkerData[fylke] = {}; // Initialize fylke data
+                        this.spaInteraction.runAjaxCall('/', 'POST', data).then((results : any) => {
+                            if (!this.alleFylker[fylke]) {
+                                this.alleFylker[fylke] = {};
                             }
-                            if (!tempFylkerData[fylke][year]) {
-                                tempFylkerData[fylke][year] = []; // Initialize year data
+                            if (!this.alleFylker[fylke][year]) {
+                                this.alleFylker[fylke][year] = {};
                             }
-                            tempFylkerData[fylke][year].push({ fylke, year, antall: results.antall });
+
+                            const arr = { fylke, year, antall: results.antall, antallUregistrerte: results.antallUregistrerteDeltakere };
+
+                            if (!this.fylkerData[year]) {
+                                this.fylkerData[year] = [];
+                            }
+                            this.fylkerData[year].push(arr);
                         })
                     );
                 }
@@ -92,9 +97,6 @@ export default {
             // Wait for all AJAX calls to finish
             await Promise.all(promises);
 
-            // Assign the correctly structured data
-            this.fylkerData = tempFylkerData;
-            
             this.fetchingStarted = false;
             this.dataFetched = true;
         },
@@ -127,35 +129,39 @@ export default {
         getDataset() : any { 
             var retArr = [] as any;
             var singleRetArr = [] as any;
-
+            var arrUregistrerte = [] as any;
+                        
+            var count = 0;
             let colorId = 0;
-            for (let year of this.selectedYears) {
+            for(let year of this.selectedYears) {
                 var dataKomm = [];
-                
-                for (let fylke of this.selectedFylker) {
-                    // Make sure fylke and year are both checked
-                    const fylkeData = this.fylkerData[fylke] && this.fylkerData[fylke][year];
-                    if (fylkeData) {
-                        dataKomm.push(fylkeData[0].antall);
-                        singleRetArr.push(fylkeData[0].antall);
-                    }
-                }
+                for(let data of this.fylkerData[year]) {
+                    dataKomm.push(data.antall);
+                    singleRetArr.push(data.antall);
+                    arrUregistrerte.push(data.antallUregistrerte);
 
-                if (this.selectedFylker.length > 1) {
+                }
+                if(this.selectedFylker.length > 1) {
                     retArr.push({
                         label: year.toString(),
                         data: dataKomm, 
                         backgroundColor: getRandomColor(1, colorId),
                     });
                 }
+                count++;
                 colorId++;
             }
 
-            if (this.selectedFylker.length == 1) {
+            if(this.selectedFylker.length == 1) {
                 retArr.push({
                     label: 'Antall deltakere i ' + this._getFylkeById(this.selectedFylker[0]),
                     data: singleRetArr, 
                     backgroundColor: getRandomColor(1, 0),
+                });
+                retArr.push({
+                    label: 'Uregistrerte deltakere i ' + this._getFylkeById(this.selectedFylker[0]),
+                    data: arrUregistrerte, 
+                    backgroundColor: '#bebebe',
                 });
             }
 
