@@ -7,6 +7,7 @@
                 :dataset="getDataset()"
                 :labelCallbackFunction="(tooltipItem) => `${tooltipItem.raw} deltaker${tooltipItem.raw > 1 ? 'e' : ''}`"
                 :titleCallbackFunction="titleCallbackFunction"
+                :stacked="selectedFylker.length == 1"
             />
         </div>
         <div v-else-if="fetchingStarted">
@@ -83,7 +84,7 @@ export default {
                             if (!tempFylkerData[fylke][year]) {
                                 tempFylkerData[fylke][year] = []; // Initialize year data
                             }
-                            tempFylkerData[fylke][year].push({ fylke, year, antall: results.antall, antallUregistrerte: results.antallUregistrerteDeltakere });
+                            tempFylkerData[fylke][year].push({ fylke, year, antall: results.antall, antallUregistrerte: results.antallUregistrerteDeltakere, antallUregistrerteFylke: results.antallUregistrerteDeltakereFylke });
                         })
                     );
                 }
@@ -94,7 +95,6 @@ export default {
 
             // Assign the correctly structured data
             this.fylkerData = tempFylkerData;
-            
             this.fetchingStarted = false;
             this.dataFetched = true;
         },
@@ -128,6 +128,7 @@ export default {
             var retArr = [] as any;
             var singleRetArr = [] as any;
             var singleRetArrUregistrerte = [] as any;
+            var singleRetArrUregistrerteFylke = [] as any;
             
             let colorId = 0;
             for (let year of this.selectedYears) {
@@ -140,6 +141,7 @@ export default {
                         dataKomm.push(fylkeData[0].antall);
                         singleRetArr.push(fylkeData[0].antall);
                         singleRetArrUregistrerte.push(fylkeData[0].antallUregistrerte);
+                        singleRetArrUregistrerteFylke.push(fylkeData[0].antallUregistrerteFylke);
                     }
                 }
 
@@ -159,11 +161,19 @@ export default {
                     data: singleRetArr, 
                     backgroundColor: getRandomColor(1, 0),
                 });
-                retArr.push({
-                    label: 'Antall uregistrerte deltakere i ' + this._getFylkeById(this.selectedFylker[0]),
-                    data: singleRetArrUregistrerte, 
-                    backgroundColor: getRandomColor(1, 2),
-                });
+                if(this.endpoint === 'fylke/antallDeltakereFylke'){
+                    retArr.push({
+                        label: 'Antall uregistrerte deltakere i ' + this._getFylkeById(this.selectedFylker[0]),
+                        data: singleRetArrUregistrerteFylke, 
+                        backgroundColor: getRandomColor(1, 2),
+                    });
+                } else {
+                    retArr.push({
+                        label: 'Antall uregistrerte deltakere i ' + this._getFylkeById(this.selectedFylker[0]),
+                        data: singleRetArrUregistrerte, 
+                        backgroundColor: getRandomColor(1, 2),
+                    });
+                }
             }
 
             return retArr;
