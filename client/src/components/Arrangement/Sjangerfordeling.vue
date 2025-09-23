@@ -81,7 +81,7 @@ export default {
 
             for (let sjanger in results) {
                 if (!(sjanger in this.alleSjangere)) {
-                    this.alleSjangere[sjanger] = '';
+                    this.alleSjangere[sjanger] = results[sjanger].type_navn;
                 }
             }
 
@@ -109,9 +109,10 @@ export default {
         getLabels() : Array<string> {
             let retArr = [];
             for(let sjangerKey in this.alleSjangere) {
-                retArr.push(sjangerKey);
+                retArr.push(this.alleSjangere[sjangerKey]);
             }
 
+            console.log(retArr);
             return retArr;
         },
         getDataset() : any {
@@ -127,7 +128,8 @@ export default {
             var retArr = [] as any;
             let arrAll = [] as any;
             let colorId = 0;
-            for(let key in dataArr) {
+            for(let key in this.alleSjangere) {
+                console.warn(key);
                 arrAll.push(dataArr[key]);
             }
                 
