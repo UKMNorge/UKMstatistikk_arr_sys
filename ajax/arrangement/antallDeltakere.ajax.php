@@ -37,9 +37,11 @@ $retArr['season'] = $arrangement->getSesong();
 
 if($erUnike == 'true') {
     $retArr['antall'] = $statArr->getAntallUnikeDeltakere();
+    $retArr['antallUfullforte'] = $statArr->getAntallUnikeDeltakere(true);
 }
 else {
     $retArr['antall'] = $statArr->getAntallDeltakere();
+    $retArr['antallUfullforte'] = $statArr->getAntallDeltakere(true);
 }
 
 $handleCall->sendToClient($retArr);
