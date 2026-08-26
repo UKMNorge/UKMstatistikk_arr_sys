@@ -7,6 +7,7 @@
                 :dataset="getDataset()"
                 :labelCallbackFunction="(tooltipItem) => `${tooltipItem.raw} deltaker${tooltipItem.raw > 1 ? 'e' : ''}`"
                 :titleCallbackFunction="titleCallbackFunction"
+                :stacked="true"
             />
 
         </div>
@@ -83,7 +84,8 @@ export default {
             var arr = {
                 kommune: this.selectedArrangement,
                 year: this.season,
-                antall: results.antall
+                antall: results.antall,
+                antallUfullforte: results.antallUfullforte
             }
 
             if(this.kommunerData[this.season] == undefined) {
@@ -107,24 +109,25 @@ export default {
         },
         getDataset() : any { 
             var retArr = [] as any;
-            var singleRetArr = [] as any;
-            
-            var count = 0;
-            let colorId = 0;
-            // for(let year of this.selectedYears) {
-                var dataKomm = [];
-                for(let data of this.kommunerData[this.season]) {
-                    dataKomm.push(data.antall);
-                    singleRetArr.push(data.antall);
+            var arrFullforte = [] as any;
+            var arrUfullforte = [] as any;
 
-                }
-            // }
+            for(let data of this.kommunerData[this.season]) {
+                arrFullforte.push(data.antall);
+                arrUfullforte.push(data.antallUfullforte ?? 0);
+            }
 
-                retArr.push({
-                    label: 'Antall deltakere ',
-                    data: singleRetArr, 
-                    backgroundColor: getRandomColor(1, 0),
-                });
+            retArr.push({
+                label: 'Fullførte',
+                data: arrFullforte, 
+                backgroundColor: getRandomColor(1, 0),
+            });
+
+            retArr.push({
+                label: 'Ufullførte',
+                data: arrUfullforte,
+                backgroundColor: '#bebebe',
+            });
 
             return retArr;
         },

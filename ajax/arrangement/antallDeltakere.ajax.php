@@ -36,12 +36,18 @@ $retArr['erUnike'] = $erUnike == 'true';
 $retArr['season'] = $arrangement->getSesong();
 
 if($erUnike == 'true') {
-    $retArr['antall'] = $statArr->getAntallUnikeDeltakere();
-    $retArr['antallUfullforte'] = $statArr->getAntallUnikeDeltakere(true);
+    $antallUnikeAlle = intval($statArr->getAntallUnikeDeltakere());
+    $antallUnikeUfullforte = intval($statArr->getAntallUnikeDeltakere(true));
+
+    $retArr['antall'] = $antallUnikeAlle - $antallUnikeUfullforte;
+    $retArr['antallUfullforte'] = $antallUnikeUfullforte;
 }
 else {
-    $retArr['antall'] = $statArr->getAntallDeltakere();
-    $retArr['antallUfullforte'] = $statArr->getAntallDeltakere(true);
+    $antallDeltakereAlle = intval($statArr->getAntallDeltakere());
+    $antallDeltakereUfullforte = intval($statArr->getAntallDeltakere(true));
+
+    $retArr['antall'] = $antallDeltakereAlle - $antallDeltakereUfullforte;
+    $retArr['antallUfullforte'] = $antallDeltakereUfullforte;
 }
 
 $handleCall->sendToClient($retArr);
