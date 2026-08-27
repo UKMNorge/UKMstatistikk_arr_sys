@@ -40,6 +40,8 @@ try{
 $retArr = [];
 $retArr['erUnike'] = $erUnike;
 $retArr['kommuner'] = [];
+$retArr['kommuneId'] = $kommuneId;
+$retArr['kommuneNavn'] = $kommune->getNavn();
 
 foreach($kommune->getTidligereKommuner($season) as $tKommune) {
     $retArr['kommuner'][$tKommune->getNavn()] = $tKommune->getNavn();
