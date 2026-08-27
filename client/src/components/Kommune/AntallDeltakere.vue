@@ -7,6 +7,7 @@
                 :dataset="getDataset()"
                 :labelCallbackFunction="(tooltipItem) => `${tooltipItem.raw} deltaker${tooltipItem.raw > 1 ? 'e' : ''}`"
                 :titleCallbackFunction="titleCallbackFunction"
+                :stacked="true"
             />
 
             <div>
@@ -52,7 +53,7 @@ export default {
     data() {
         return {
             spaInteraction : (<any>window).spaInteraction, // Definert i main.ts
-            kommunerData: {} as any, //{kommune : Kommune, year : number, antall : number}[]
+            kommunerData: {} as any, //{kommune : Kommune, year : number, antall : number, antallUfullforte : number}[]
             dataFetched: false,
             colors : ['#FF6384', '#36A2EB', '#FFCE56'],
             fetchingStarted: false,
@@ -91,7 +92,8 @@ export default {
                     var arr = {
                         kommune: kommune,
                         year: year,
-                        antall: results.antall
+                        antall: results.antall,
+                        antallUfullforte: results.antallUfullforte ?? 0
                     }
 
                     if(this.kommunerData[year] == undefined) {
@@ -101,9 +103,6 @@ export default {
                     this.kommunerData[year].push(arr);
                 }
             }
-
-            console.log(1246);
-            console.log(this.alleKommuner);
 
             this.fetchingStarted = false;
             this.dataFetched = true;
@@ -127,35 +126,59 @@ export default {
         },
         getDataset() : any { 
             var retArr = [] as any;
-            var singleRetArr = [] as any;
-            
-            var count = 0;
-            let colorId = 0;
-            for(let year of this.selectedYears) {
-                var dataKomm = [];
-                for(let data of this.kommunerData[year]) {
-                    dataKomm.push(data.antall);
-                    singleRetArr.push(data.antall);
 
-                }
-                
-                if(this.selectedKommuner.length > 1) {
-                    retArr.push({
-                        label: year.toString(),
-                        data: dataKomm, 
-                        backgroundColor: getRandomColor(1, colorId),
-                    });
-                }
-                count++;
-                colorId++;
-            }
-
+            // Én kommune: år som labels, Fullførte + Ufullførte stablet
             if(this.selectedKommuner.length == 1) {
+                var arrFullforte = [] as any;
+                var arrUfullforte = [] as any;
+
+                for(let year of this.selectedYears) {
+                    for(let data of this.kommunerData[year]) {
+                        arrFullforte.push(data.antall);
+                        arrUfullforte.push(data.antallUfullforte ?? 0);
+                    }
+                }
+
                 retArr.push({
-                    label: 'Antall deltakere i ' + this.selectedKommuner[0].title,
-                    data: singleRetArr, 
+                    label: 'Fullførte',
+                    data: arrFullforte, 
                     backgroundColor: getRandomColor(1, 0),
                 });
+
+                retArr.push({
+                    label: 'Ufullførte',
+                    data: arrUfullforte,
+                    backgroundColor: '#bebebe',
+                });
+
+                return retArr;
+            }
+
+            // Flere kommuner: per år Fullførte + Ufullførte i samme stack-gruppe
+            let colorId = 0;
+            for(let year of this.selectedYears) {
+                var dataFullforte = [];
+                var dataUfullforte = [];
+                for(let data of this.kommunerData[year]) {
+                    dataFullforte.push(data.antall);
+                    dataUfullforte.push(data.antallUfullforte ?? 0);
+                }
+
+                retArr.push({
+                    label: year.toString() + ' Fullførte',
+                    data: dataFullforte, 
+                    backgroundColor: getRandomColor(1, colorId),
+                    stack: year.toString(),
+                });
+
+                retArr.push({
+                    label: year.toString() + ' Ufullførte',
+                    data: dataUfullforte,
+                    backgroundColor: '#bebebe',
+                    stack: year.toString(),
+                });
+
+                colorId++;
             }
 
             return retArr;
@@ -181,5 +204,3 @@ export default {
 <style scoped>
 
 </style>
-
-

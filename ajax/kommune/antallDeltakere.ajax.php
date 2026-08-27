@@ -48,9 +48,11 @@ foreach($kommune->getTidligereKommuner($season) as $tKommune) {
 
 if($erUnike) {
     $retArr['antall'] = $statKom->getAntallUnikeDeltakere();
+    $retArr['antallUfullforte'] = $statKom->getAntallUnikeDeltakere(true);
 }
 else {
     $retArr['antall'] = $statKom->getAntallDeltakere();
+    $retArr['antallUfullforte'] = $statKom->getAntallDeltakere(true);
 }
 
 $handleCall->sendToClient($retArr);
