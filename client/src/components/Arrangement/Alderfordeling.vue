@@ -88,7 +88,7 @@ export default {
         getDataset() : any {
 
             var dataArr = [] as any;
-
+            var totalAntall = 0;
             for(let d of this.arrangementData[this.season]) {
                 let year = d.year;
 
@@ -115,8 +115,11 @@ export default {
 
 
                     dataArr['' + year][idAlder] = dataArr['' + year][idAlder] ? dataArr['' + year][idAlder] + parseInt(alder.antall) : parseInt(alder.antall);
+                    totalAntall += parseInt(alder.antall);
                 }
             }
+
+            console.log('totalAntall', totalAntall);
 
             var retArr = [] as any;
             let colorId = 0;
