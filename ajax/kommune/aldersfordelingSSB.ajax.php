@@ -8,7 +8,7 @@ $handleCall = new HandleAPICall(['kommuneId', 'year'], [], ['GET', 'POST'], fals
 $kommuneId = $handleCall->getArgument('kommuneId');
 $year = $handleCall->getArgument('year');
 
-if ($year < date('Y')) {
+if ($year <= date('Y')) {
     $handleCall->sendToClient(StatistikkSSB::getAldersfordelingKommune($kommuneId, $year));
 } else {
     $handleCall->sendToClient([
