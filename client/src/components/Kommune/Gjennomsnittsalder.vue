@@ -87,6 +87,9 @@
                         let total = 0;
                         let antall = 0;
                         for(let res of results.data) {
+                            if(res.age == null || res.age == '') {
+                                continue;
+                            }
                             let age = parseInt(res.age);
                             if(age < 10) {
                                 age = 10;
