@@ -21,7 +21,7 @@ $antallFylker = 0;
 foreach($alleFylkerISesong as $fylkeId => $fylkeNavn) {
     $fylke = new Fylke($fylkeId, '', (string)$fylkeNavn, true);
     $statFylke = new StatistikkFylke($fylke, $season);
-    $gjennomsnitt += $statFylke->getGjennomsnittDeltakereIFylke($season);
+    $gjennomsnitt += $statFylke->getGjennomsnittDeltakereIAlleFylker($season);
     $antallFylker++;
 }
 
