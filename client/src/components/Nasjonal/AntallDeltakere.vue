@@ -14,11 +14,6 @@
                 <PermanentNotification :typeNotification="'primary'" tittel="Hvordan data genereres" :isHTML="true" description="
                 <br>
                 <p>
-                    Statistikken viser antall deltakere i både fullførte og ufullførte innslag. 
-                    <b>Et fullført innslag er et innslag der alle nødvendige data er sendt inn.</b>
-                </p>
-                <br>
-                <p>
                     Husk at statistikken viser antall deltakere, ikke antall innslag. 
                     Siden et innslag kan ha flere deltakere, kan det være flere deltakere per fullført eller ufullført innslag. 
                     For eksempel vil et band med fire medlemmer telles som fire deltakere.
